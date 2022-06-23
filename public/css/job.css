@@ -1,0 +1,54 @@
+/* ============== Job ============== */
+
+.jobs-container {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.job-card {
+    display: flex;
+    height: 170px;
+    margin-bottom: 15px;
+    background-color: #fff;
+    border: .5px solid rgba(0, 0, 0, .1);
+    border-radius: 5px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
+}
+
+.line {
+    width: 10px;
+    background-color: rgb(39, 50, 73)
+}
+
+.job-card-img img {
+    height: 168px;
+    width: 350px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.job-card-content {
+    margin-top: 10px;
+    margin-left: 15px
+}
+
+.job-card-content-title {
+    margin-bottom: 0;
+    width: auto;
+    font-size: 1.625rem;
+    line-height: 1.5;
+}
+
+.job-card-content-brand {
+    margin-bottom: 10px;
+    height: 30px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #3fa9f5;
+    line-height: 30px;
+}
+
+.job-card-content-tags {
+    font-size: 14px
+}
