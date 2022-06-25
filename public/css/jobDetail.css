@@ -1,0 +1,256 @@
+.main-container {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column
+}
+
+.basic-info {
+    margin: 20px 0;
+}
+
+.basic-info h1 {
+    font-weight: bold
+}
+
+.basic-info-row {
+    display: flex;
+    flex-direction: column;
+    min-width: 1000px;
+    width: 1000px;
+    margin: 0 auto 0;
+    height: 100%
+}
+
+.basic-info-title {
+    display: flex;
+    flex-direction: column;
+
+    position: relative
+}
+
+.basic-info-job-title {
+    margin-bottom: 10px
+}
+
+.basic-info-company-title {
+    display: flex;
+    margin-bottom: 10px
+}
+
+.basic-info-company-title img {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: solid 1px rgb(209, 209, 209);
+    margin-right: 10px
+}
+
+.basic-info-company-title a {
+    color: #0070c4 !important;
+}
+
+
+.basic-info-content {
+    display: flex;
+    justify-content: space-between;
+    height: 100%
+}
+
+.basic-info-main_image {
+    margin-right: 40px;
+    width: 640px;
+}
+
+
+.basic-info-main_image img {
+    width: 100%;
+    height: 100%
+}
+
+.basic-info-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 300px;
+}
+
+.basic-info-container {
+    padding-bottom: 15px;
+    font-size: 18px;
+    border-bottom: solid 1px #dadada
+}
+
+.basic-button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.other-images-container {
+    background-color: rgb(238, 238, 238);
+    padding: 15px 0;
+    display: flex;
+    width: 100%;
+    height: 170px;
+    justify-content: space-evenly;
+    margin-bottom: 3rem;
+}
+
+.other-images-item {
+    margin: 0 10px;
+    align-items: center;
+    width: 350px;
+    min-width: 350px;
+}
+
+.main-info {
+    margin-top: 3rem;
+    position: relative;
+    display: block;
+}
+
+.main-info h2 {
+    color: #1c5288;
+    font-size: 1.8rem;
+    font-weight: 1000;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+
+.main-info strong {
+    color: #000000;
+    font-weight: 1000;
+    margin-bottom: 0.7rem;
+    line-height: 1.2;
+}
+
+.main-info ul {
+    padding-left: 40px;
+}
+
+.main-info li {
+    list-style-type: disc;
+    color: #393939;
+    margin-bottom: 3px;
+    line-height: 1.5;
+}
+
+
+.main-info-container {
+    display: flex;
+    justify-content: space-between;
+    width: 1000px;
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative
+}
+
+
+.main-info-content {
+    position: relative;
+    width: 75%;
+    padding-right: 40px;
+}
+
+.sidebar {
+    width: 25%;
+    margin-bottom: 50px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.sidebar button {
+    margin-bottom: 10px !important;
+}
+
+.sidebar-button-container {
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 70px;
+}
+
+.content {
+    margin-bottom: 30px;
+}
+
+/* ======= job basic info ======= */
+
+.job-basic-info-type,
+.job-basic-info-location,
+.job-basic-info-catergory {
+    display: flex;
+    font-size: 16px;
+    margin-bottom: 5px
+}
+
+.job-basic-info-type a,
+.job-basic-info-location a,
+.job-basic-info-catergory a {
+    font-weight: 800;
+    color: rgb(67, 67, 67);
+}
+
+.job-basic-info-type:hover,
+.job-basic-info-brand:hover,
+.job-basic-info-location > a:hover,
+.job-basic-info-catergory > a:hover {
+    text-decoration: underline;
+}
+
+
+.job-card-category-item {
+    margin-right: 6px
+}
+
+.job-basic-info-tags {
+    margin-top: 10px;
+    line-height: 1.5px;
+    display: flex;
+    margin-bottom: 8px
+}
+
+.job-card-img img {
+    width: 380px;
+    height: 168px;
+}
+
+.job-tag {
+    color: #000000 !important;
+    display: inline-flex;
+    align-items: center;
+    padding: .25rem .3125rem;
+    font-size: 1rem;
+    white-space: nowrap;
+    background-color: #c2c2c2;
+    border-radius: 2px;
+    cursor: pointer;
+    font-weight: bold
+}
+
+.job-tag:hover {
+    background-color: #8d8d8d;
+}
+
+.basic-info-container svg,
+.basic-info-container path {
+    display: block;
+    color: rgb(52, 52, 52);
+    height: 16px;
+    width: 16px;
+}
+
+.basic-info-container svg {
+    margin: auto 6px auto 0
+}
+
+.basic-info-container a {
+    margin-left: 5px
+}
+
+.job-basic-update-time-text {
+    color: rgb(176, 176, 176);
+    font-size: 14px
+}

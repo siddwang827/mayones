@@ -1,4 +1,4 @@
-// require('dotenv').config()
+require('dotenv').config()
 const { queryDB } = require('../server/models/mysql_conn.js');
 const { user, seekers, companies, openings, categoryPosition, location, tags } = require('./seeds.js')
 
@@ -23,5 +23,5 @@ async function generateTags(tags) {
 
 
 generateCatergoryPosition(categoryPosition)
-generateLocation(location)
-generateTags(tags)
+// generateLocation(location)
+// generateTags(tags)
