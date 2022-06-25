@@ -28,7 +28,7 @@ class Job {
 
     static async getAllJobs(pageSize) {
         const sql = `
-        SELECT jobs.id, brand, job_title AS title, category_position.category, category_position.position, JSON_ARRAYAGG(tags.tag_name) AS tags, salary_top, salary_bottom, location, address, remote_work, logo_image, banner_image, jobs.update_at
+        SELECT jobs.id , companies.id AS company_id, brand, job_title AS title, category_position.category, category_position.position, JSON_ARRAYAGG(tags.tag_name) AS tags, salary_top, salary_bottom, location, address, remote_work, logo_image, banner_image, jobs.update_at
         FROM mayones.jobs
         INNER JOIN mayones.companies
         ON jobs.companies_id = companies.id
@@ -39,7 +39,7 @@ class Job {
         LEFT JOIN mayones.category_position
         ON jobs.category_position_id = category_position.id
         GROUP BY jobs.id
-        ORDER BY jobs.update_at DESC LIMIT 10
+        ORDER BY jobs.update_at DESC LIMIT ?
         `
         const result = await queryDB(sql, pageSize)
         return result
