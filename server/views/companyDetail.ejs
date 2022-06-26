@@ -9,7 +9,7 @@
 
 <body>
     <header>
-        <%- include /layout/header %>
+        <%- include layout/header %>
     </header>
     <main>
         <div class="main-container">
@@ -35,8 +35,7 @@
                                     <%= companyDetail.short_description %>
                                 </div>
                                 <div class="company-basic-info-location">
-                                    <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1"
-                                        xmlns="http://www.w3.org/2000/svg">
+                                    <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
                                         <g id="layer1">
                                             <path
                                                 d="M 6.5019531 0 A 0.50005 0.50005 0 0 0 6.2773438 0.052734375 L 0.27734375 3.0527344 A 0.50005 0.50005 0 0 0 0 3.5 L 0 19.5 A 0.50005 0.50005 0 0 0 0.72265625 19.947266 L 6.515625 17.050781 L 13.302734 19.958984 A 0.50005 0.50005 0 0 0 13.722656 19.947266 L 19.722656 16.947266 A 0.50005 0.50005 0 0 0 20 16.5 L 20 0.5 A 0.50005 0.50005 0 0 0 19.277344 0.052734375 L 13.484375 2.9492188 L 6.6972656 0.041015625 A 0.50005 0.50005 0 0 0 6.5019531 0 z M 6.515625 1.0507812 L 13.302734 3.9589844 A 0.50005 0.50005 0 0 0 13.722656 3.9472656 L 19 1.3085938 L 19 16.191406 L 13.484375 18.949219 L 6.6972656 16.041016 A 0.50005 0.50005 0 0 0 6.2773438 16.052734 L 1 18.691406 L 1 3.8085938 L 6.515625 1.0507812 z M 6.4921875 1.9921875 A 0.50005 0.50005 0 0 0 6 2.5 L 6 14.5 A 0.50005 0.50005 0 1 0 7 14.5 L 7 2.5 A 0.50005 0.50005 0 0 0 6.4921875 1.9921875 z M 13.492188 4.9921875 A 0.50005 0.50005 0 0 0 13 5.5 L 13 17.5 A 0.50005 0.50005 0 1 0 14 17.5 L 14 5.5 A 0.50005 0.50005 0 0 0 13.492188 4.9921875 z "
@@ -48,10 +47,9 @@
                                     </a>
                                 </div>
                                 <div class="company-basic-info-address">
-                                    <svg width="16px" height="16px" viewBox="0 0 21 21"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round"
-                                            stroke-linejoin="round" transform="translate(4 2)">
+                                    <svg width="16px" height="16px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
+                                        <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            transform="translate(4 2)">
                                             <path
                                                 d="m6.5 16.5407715.6311176-.7118691c.71585099-.8191184 1.36011688-1.5983525 1.93279767-2.3377022l.4733382-.6239608c1.97516433-2.6615039 2.96274653-4.77276704 2.96274653-6.33378943 0-3.33218241-2.6862915-6.03344997-6-6.03344997s-6 2.70126756-6 6.03344997c0 1.56102239.98758218 3.67228553 2.96274653 6.33378943l.4733382.6239608c.73630387.9505925 1.5909423 1.9671163 2.56391527 3.0495713z">
                                             </path>
@@ -63,8 +61,8 @@
                                     </p>
                                 </div>
                                 <div class="company-basic-info-catergory">
-                                    <svg width="16px" height="16px" viewBox="0 0 35 35" data-name="Layer 2"
-                                        id="e73e2821-510d-456e-b3bd-9363037e93e3" xmlns="http://www.w3.org/2000/svg">
+                                    <svg width="16px" height="16px" viewBox="0 0 35 35" data-name="Layer 2" id="e73e2821-510d-456e-b3bd-9363037e93e3"
+                                        xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M11.933,15.055H3.479A3.232,3.232,0,0,1,.25,11.827V3.478A3.232,3.232,0,0,1,3.479.25h8.454a3.232,3.232,0,0,1,3.228,3.228v8.349A3.232,3.232,0,0,1,11.933,15.055ZM3.479,2.75a.73.73,0,0,0-.729.728v8.349a.73.73,0,0,0,.729.728h8.454a.729.729,0,0,0,.728-.728V3.478a.729.729,0,0,0-.728-.728Z">
                                         </path>
@@ -78,15 +76,13 @@
                                             d="M27.3,15.055a7.4,7.4,0,1,1,7.455-7.4A7.437,7.437,0,0,1,27.3,15.055Zm0-12.3a4.9,4.9,0,1,0,4.955,4.9A4.935,4.935,0,0,0,27.3,2.75Z">
                                         </path>
                                     </svg>
-                                    <a class="company-card-category-item"
-                                        href="/companys?category[]=<%= companyDetail.category %>">
+                                    <a class="company-card-category-item" href="/companys?category[]=<%= companyDetail.category %>">
                                         <%= companyDetail.category %>
                                     </a>
                                 </div>
                                 <div class="company-basic-info-tags">
-                                    <svg width="16px" height="16px" viewBox="0 0 32 32" id="i-tag"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentcolor"
-                                        stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                    <svg width="16px" height="16px" viewBox="0 0 32 32" id="i-tag" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                                         <circle cx="24" cy="8" r="2"></circle>
                                         <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
                                     </svg>
@@ -157,15 +153,12 @@
         </div>
         </div>
     </main>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="./js/companyDetail.js"></script>
     <footer>
         <p>© 2022. All rights reserved.</p>
