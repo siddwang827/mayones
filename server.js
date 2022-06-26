@@ -25,6 +25,7 @@ app.set('view engine', 'ejs');
 app.use('/api/' + API_VERSION, [
     require('./server/routes/job_route'),
     require('./server/routes/company_route'),
+    require('./server/routes/user_route')
 ]);
 
 app.use('/', (req, res) => {

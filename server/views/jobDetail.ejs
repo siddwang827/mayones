@@ -9,7 +9,7 @@
 
 <body>
 	<header>
-		<%- include /layout/header %>
+		<%- include layout/header %>
 	</header>
 	<main>
 		<div class="main-container">
@@ -35,12 +35,10 @@
 						<div class="basic-info-column">
 							<div class="basic-info-container">
 								<div class="job-basic-info-type">
-									<svg width="32px" height="32px" viewBox="0 0 32 32"
-										xmlns="http://www.w3.org/2000/svg">
+									<svg width="32px" height="32px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
 										<title />
 										<g data-name="Layer 2" id="Layer_2">
-											<path
-												d="M16,14a6,6,0,1,1,6-6A6,6,0,0,1,16,14ZM16,4a4,4,0,1,0,4,4A4,4,0,0,0,16,4Z" />
+											<path d="M16,14a6,6,0,1,1,6-6A6,6,0,0,1,16,14ZM16,4a4,4,0,1,0,4,4A4,4,0,0,0,16,4Z" />
 											<path
 												d="M24,30H8a2,2,0,0,1-2-2V22a7,7,0,0,1,7-7h6a7,7,0,0,1,7,7v6A2,2,0,0,1,24,30ZM13,17a5,5,0,0,0-5,5v6H24V22a5,5,0,0,0-5-5Z" />
 										</g>
@@ -50,10 +48,9 @@
 									</a>
 								</div>
 								<div class="job-basic-info-location">
-									<svg width="16px" height="16px" viewBox="0 0 21 21"
-										xmlns="http://www.w3.org/2000/svg">
-										<g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round"
-											stroke-linejoin="round" transform="translate(4 2)">
+									<svg width="16px" height="16px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
+										<g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+											transform="translate(4 2)">
 											<path
 												d="m6.5 16.5407715.6311176-.7118691c.71585099-.8191184 1.36011688-1.5983525 1.93279767-2.3377022l.4733382-.6239608c1.97516433-2.6615039 2.96274653-4.77276704 2.96274653-6.33378943 0-3.33218241-2.6862915-6.03344997-6-6.03344997s-6 2.70126756-6 6.03344997c0 1.56102239.98758218 3.67228553 2.96274653 6.33378943l.4733382.6239608c.73630387.9505925 1.5909423 1.9671163 2.56391527 3.0495713z">
 											</path>
@@ -65,8 +62,8 @@
 									</a>
 								</div>
 								<div class="job-basic-info-catergory">
-									<svg width="16px" height="16px" viewBox="0 0 35 35" data-name="Layer 2"
-										id="e73e2821-510d-456e-b3bd-9363037e93e3" xmlns="http://www.w3.org/2000/svg">
+									<svg width="16px" height="16px" viewBox="0 0 35 35" data-name="Layer 2" id="e73e2821-510d-456e-b3bd-9363037e93e3"
+										xmlns="http://www.w3.org/2000/svg">
 										<path
 											d="M11.933,15.055H3.479A3.232,3.232,0,0,1,.25,11.827V3.478A3.232,3.232,0,0,1,3.479.25h8.454a3.232,3.232,0,0,1,3.228,3.228v8.349A3.232,3.232,0,0,1,11.933,15.055ZM3.479,2.75a.73.73,0,0,0-.729.728v8.349a.73.73,0,0,0,.729.728h8.454a.729.729,0,0,0,.728-.728V3.478a.729.729,0,0,0-.728-.728Z">
 										</path>
@@ -88,9 +85,8 @@
 									</a>
 								</div>
 								<div class="job-basic-info-tags">
-									<svg width="16px" height="16px" viewBox="0 0 32 32" id="i-tag"
-										xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentcolor"
-										stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+									<svg width="16px" height="16px" viewBox="0 0 32 32" id="i-tag" xmlns="http://www.w3.org/2000/svg" fill="none"
+										stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
 										<circle cx="24" cy="8" r="2"></circle>
 										<path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
 									</svg>
@@ -104,16 +100,14 @@
 								<div class="job-basic-update-time">
 									<p class="job-basic-update-time-text">
 										<% let updateTime=new Date(jobDetail.update_at)%>
-											最後更新於 <%= updateTime.getFullYear() %>-<%=
-													(updateTime.getMonth()+1).toString().padStart(2, '0' ) %>-<%=
+											最後更新於 <%= updateTime.getFullYear() %>-<%= (updateTime.getMonth()+1).toString().padStart(2, '0' ) %>-<%=
 														updateTime.getDate() %>
 									</p>
 								</div>
 							</div>
 							<div class="basic-button-container">
 								<button class="huge ui black button"><i class="paper plane icon"></i></i>立即應徵</button>
-								<button class="huge ui inverted red button"><i
-										class="heart outline icon"></i>加入收藏</button>
+								<button class="huge ui inverted red button"><i class="heart outline icon"></i>加入收藏</button>
 							</div>
 						</div>
 					</div>
@@ -148,8 +142,8 @@
 					</div>
 					<h2>薪資範圍</h2>
 					<div id="salary-range" class="content">
-						NTD. <%= thoundsAddComma(jobDetail.salary_bottom)%> ~ <%=
-								thoundsAddComma(jobDetail.salary_top)%> (<%= jobDetail.salary_type %>)
+						NTD. <%= thoundsAddComma(jobDetail.salary_bottom)%> ~ <%= thoundsAddComma(jobDetail.salary_top)%> (<%= jobDetail.salary_type
+									%>)
 					</div>
 
 				</div>
@@ -171,18 +165,15 @@
 		</div>
 
 	</main>
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 		crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-		crossorigin="anonymous"></script>
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-		crossorigin="anonymous"></script>
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script src="/js/jobDetail.js"></script>
 	<footer>
-		<p>© 2022. All rights reserved.</p>
+		<%- include layout/footer %>
 	</footer>
 </body>
 
