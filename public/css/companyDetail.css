@@ -29,27 +29,32 @@
     position: relative
 }
 
-.basic-info-job-title {
-    margin-bottom: 10px
-}
-
 .basic-info-company-title {
     display: flex;
-    margin-bottom: 10px
+    margin-bottom: 20px
 }
 
 .basic-info-company-title img {
-    width: 2rem;
-    height: 2rem;
+    width: 3rem;
+    height: 3rem;
     border-radius: 50%;
     border: solid 1px rgb(209, 209, 209);
     margin-right: 10px
 }
 
 .basic-info-company-title a {
-    color: #0070c4 !important;
+    margin-left: auto
 }
 
+.basic-info-company-title i {
+    font-size: 2rem !important;
+    color: rgb(152, 152, 152)
+}
+
+.basic-info-company-title i:hover {
+    font-size: 2rem !important;
+    color: rgb(109, 109, 109)
+}
 
 .basic-info-content {
     display: flex;
@@ -65,7 +70,7 @@
 
 .basic-info-main_image img {
     width: 100%;
-    height: 100%
+    height: auto
 }
 
 .basic-info-column {
@@ -83,13 +88,23 @@
 
 .basic-button-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
-    height: 120px;
+    height: 60px;
 }
 
 .basic-button-container button {
-    margin-top: 10px !important;
+    width: 145px;
+    padding: 15px !important;
+    margin: 0 !important;
+}
+
+.company-basic-description {
+    font-size: 14px;
+    color: rgb(32, 32, 32);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: solid 1px #dadada;
 }
 
 .other-images-container {
@@ -138,31 +153,13 @@
 
 .main-info ul {
     padding-left: 40px;
-    margin-bottom: 10px
 }
 
 .main-info li {
     list-style-type: disc;
     color: #393939;
-    margin: 3px 0;
-    line-height: 1.5;
-}
-
-.main-info ul li li {
-    list-style-type: circle;
-    color: #393939;
     margin-bottom: 3px;
     line-height: 1.5;
-}
-
-.main-info h3 {
-    font-size: 1.4rem;
-    margin-block-end: 1em;
-    margin-block-start: 1em;
-    display: block;
-    font-weight: 600;
-    color: rgb(66, 66, 66);
-    line-height: 1.2;
 }
 
 
@@ -205,62 +202,62 @@
     margin-bottom: 30px;
 }
 
-/* ======= job basic info ======= */
+/* ======= company basic info ======= */
 
-.job-basic-info-type,
-.job-basic-info-location,
-.job-basic-info-catergory {
+
+.company-basic-info-location,
+.company-basic-info-address,
+.company-basic-info-catergory {
     display: flex;
-    font-size: 16px;
-    margin-bottom: 5px
+    font-size: 14px;
+    margin-bottom: 10px
 }
 
-.job-basic-info-type a,
-.job-basic-info-location a,
-.job-basic-info-catergory a {
-    font-weight: 800;
+.company-basic-info-location a,
+.company-basic-info-address p,
+.company-basic-info-catergory a {
+    font-weight: 500;
     color: rgb(67, 67, 67);
 }
 
-.job-basic-info-type:hover,
-.job-basic-info-brand:hover,
-.job-basic-info-location > a:hover,
-.job-basic-info-catergory > a:hover {
+.company-basic-info-type:hover,
+.company-basic-info-brand:hover,
+.company-basic-info-location > a:hover,
+.company-basic-info-catergory > a:hover {
     text-decoration: underline;
 }
 
 
-.job-card-category-item {
+.company-card-category-item {
     margin-right: 6px
 }
 
-.job-basic-info-tags {
+.company-basic-info-tags {
     margin-top: 10px;
     line-height: 1.5px;
     display: flex;
     margin-bottom: 8px
 }
 
-.job-card-img img {
+.company-card-img img {
     width: 380px;
     height: 168px;
 }
 
-.job-tag {
-    color: #000000 !important;
+.company-tag {
+    color: #0070c4 !important;
     display: inline-flex;
     align-items: center;
     padding: .25rem .3125rem;
-    font-size: 1rem;
+    font-size: 12px !important;
     white-space: nowrap;
-    background-color: #c2c2c2;
+    background-color: #cdeaff;
     border-radius: 2px;
     cursor: pointer;
-    font-weight: bold
 }
 
-.job-tag:hover {
-    background-color: #8d8d8d;
+.company-tag:hover {
+    background-color: #b1d3ec;
 }
 
 .basic-info-container svg,
@@ -275,11 +272,12 @@
     margin: auto 6px auto 0
 }
 
-.basic-info-container a {
+.basic-info-container a,
+.basic-info-container p {
     margin-left: 5px
 }
 
-.job-basic-update-time-text {
+.company-basic-update-time-text {
     color: rgb(176, 176, 176);
     font-size: 14px
 }
