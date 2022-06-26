@@ -47,9 +47,28 @@ class Job {
 
     static async getJobDetailById(id) {
         const sql = `
-        SELECT join_table.id, brand, title, category, position, salary_top, salary_bottom, location, address, remote_work, logo_image, banner_image, tags, JSON_ARRAYAGG(other_images.other_image) AS other_images
+        SELECT join_table.id, company_id, brand, title, category, position, job_type,  job_description, skill_required, prefered_qualification,salary_top, salary_type, benifit, salary_bottom, location, address, remote_work, logo_image, banner_image, tags, update_at, JSON_ARRAYAGG(other_images.other_image) AS other_images
         FROM (
-            SELECT jobs.id, companies.id AS companies_id, brand, job_title AS title, category_position.category AS category, category_position.position AS position, salary_top, salary_bottom, location, address, remote_work, logo_image, banner_image, JSON_ARRAYAGG(tags.tag_name) AS tags
+            SELECT jobs.id AS id, 
+                companies.id AS company_id,
+                brand, job_title AS title, 
+                category_position.category AS category, 
+                category_position.position AS position,
+                job_description,
+                skill_required,
+                prefered_qualification,
+                companies.benifit AS benifit,
+                job_type,
+                salary_top,
+                salary_bottom, 
+                salary_type,
+                location, 
+                address, 
+                remote_work, 
+                logo_image,
+                banner_image, 
+                update_at,
+                JSON_ARRAYAGG(tags.tag_name) AS tags
             FROM mayones.jobs
             INNER JOIN mayones.companies
             ON jobs.companies_id = companies.id
@@ -63,7 +82,7 @@ class Job {
         ) 
         AS join_table
         LEFT JOIN mayones.other_images
-        ON join_table.companies_id = other_images.companies_id
+        ON join_table.company_id = other_images.companies_id
         WHERE join_table.id = ?
         GROUP BY join_table.id
         `

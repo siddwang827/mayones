@@ -1,6 +1,7 @@
 const Company = require('../models/company_model')
+const { thoundsAddComma } = require('../../utils/utils')
 const pageSize = 20
-
+const header = "company"
 
 
 const getAllCompanies = async (req, res) => {
@@ -23,7 +24,14 @@ const createCompany = async (req, res) => {
 
 const getCompanyDetail = async (req, res) => {
     const companyId = req.params.id
-    const result = Company.getCompanyDetailById(companyId)
+    try {
+        const [companyDetail] = await Company.getCompanyDetailById(companyId)
+        res.render('companyDetail', { companyDetail, thoundsAddComma, header })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).send(err)
+    }
 
 }
 

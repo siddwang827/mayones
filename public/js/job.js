@@ -6,8 +6,6 @@ let jobCategory = {
     "軟體開發": ["後端工程", "前端工程", "全端工程", "測試工程", "遊戲開發", "行動裝置開發", "DevOp]s / SRE"],
 }
 
-
-
 // async function creatSearchBar() {
 
 // }
@@ -26,7 +24,7 @@ async function getAllJobs() {
             const jobCard = $('<div class="job-card"></div>')
             const jobCardImg = $(`
             <div class="job-card-img">
-                <a href="/job/${job.id}">
+                <a href="/${api}/job/${job.id}">
                     <img src="${job.banner_image}" alt="${job.brand}">
                 </a>
             </div>
@@ -36,7 +34,7 @@ async function getAllJobs() {
             const jobCardContent = $(`
             <div class="job-card-content">
                 <div class="job-card-content-title">${job.title}</div>
-                <a href="/company/${job.company_id}">
+                <a href="/companyDetail.html?id=${job.company_id}">
                     <div class="job-card-content-brand">${job.brand}</div>
                 </a>
                 <div class="job-card-content-location" >

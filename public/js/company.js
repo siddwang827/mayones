@@ -11,7 +11,7 @@ async function getAllCompanies() {
     }
     else {
         for (let company of companies) {
-            const companyCard = $(`<a href="/company/${company.id}"class="company-card-container card-shadow"></a>`)
+            const companyCard = $(`<a href="${api}/company/${company.id}" class="company-card-container card-shadow"></a>`)
             const companyCardBanner = $(
                 `<div class="company-card-banner">
                     <img src="${company.banner_image}" alt="${company.brand}">

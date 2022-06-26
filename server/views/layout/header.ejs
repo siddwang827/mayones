@@ -1,0 +1,21 @@
+<div class="navigation">
+    <div class="navigation-logo">
+        <a id="logo" href="/">Mayones
+        </a>
+    </div>
+    <div class="navigation-list">
+        <% if (header==="job" ) { -%>
+            <a class="navigation-item active" href="/job.html">職缺</a>
+            <a class="navigation-item" href="/company.html">公司</a>
+            <% } else { -%>
+                <a class="navigation-item " href="/job.html">職缺</a>
+                <a class="navigation-item active" href="/company.html">公司</a>
+                <% } -%>
+
+
+    </div>
+    <div class="navigation-role">
+        <a class="navigation-item" href="/employer/signin">企業主</a>
+        <a class="navigation-item" href="/employer/signin">求職者</a>
+    </div>
+</div>
