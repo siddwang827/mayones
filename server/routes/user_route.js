@@ -15,10 +15,10 @@ router.route(['/employer/signup', '/employee/signup'])
 router.route(['/employer/signin', '/employee/signin'])
     .get(asyncHandlerWrapper(getSignInPage));
 
-router.route(['/employer/signup', '/employee/signup'])
+router.route('/signup')
     .post(asyncHandlerWrapper(signUp));
 
-router.route(['/employer/signin', '/employee/signin'])
+router.route('/signin')
     .post(asyncHandlerWrapper(signIn));
 
 module.exports = router
