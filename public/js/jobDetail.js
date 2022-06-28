@@ -1,16 +1,14 @@
-const api = 'api/1.0';
+const followBtns = document.querySelectorAll('.follow')
+followBtns.forEach(followBtn => followBtn.addEventListener('click', follow))
 
 
-async function getjobDetail() {
-    // const url = new URL(window.location)
-    // const id = url.searchParams.get('id')
-    // const fetchResult = await fetch(`${api}/job/${id}`)
-    // const restUrl = `${url.origin}/job/${id}`
-    // history.pushState('', '', restUrl)
-    // const jobDetail = await fetchResult.json()
-
-    const mainContainer = $('.main-constainer')
-    console.log(mainContainer)
-
+async function follow(event) {
+    const jobId = event.target.getAttribute('job-id')
+    const fetchResult = await fetch(`/api/1.0/follow`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ jobId })
+    })
+    event.stopPropagation();
+    event.preventDefault();
 }
-getjobDetail()

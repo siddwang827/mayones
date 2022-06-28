@@ -34,7 +34,7 @@ async function getAllJobs() {
             const jobCardContent = $(`
             <div class="job-card-content">
                 <div class="job-card-content-title">${job.title}</div>
-                <a href="/companyDetail.html?id=${job.company_id}">
+                <a href="/${api}/company/${job.company_id}">
                     <div class="job-card-content-brand">${job.brand}</div>
                 </a>
                 <div class="job-card-content-location" >

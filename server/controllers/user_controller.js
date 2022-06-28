@@ -1,10 +1,9 @@
 const User = require('../models/user_model');
 const validator = require('validator');
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { TOKEN_SECRET } = process.env
 const TOKEN_EXPIRE_TIME = parseInt(process.env.TOKEN_EXPIRE_TIME)
-const SALT_ROUND = parseInt(process.env.SALT_ROUND)
+
 
 
 const getSignUpPage = async (req, res) => {
@@ -19,7 +18,6 @@ const getSignInPage = async (req, res) => {
 
 const signUp = async (req, res) => {
     const { username, role, email, password } = req.body
-    console.log(username, email, password, role)
     if (!username || !email || !password) {
         res.status(400).json({ error: 'Error: Lack of necessary information.' });
         return;
@@ -31,23 +29,18 @@ const signUp = async (req, res) => {
     }
 
     try {
-        const result = await User.createUser(email, password, role, username)
-        // const createResult = await user.createUser()
-        let id = result.insertId
-        const accessToken = jwt.sign(
-            { id, username, email, role },
-            TOKEN_SECRET,
-            { expiresIn: TOKEN_EXPIRE_TIME }
-        )
+        const user = await User.createUser(email, password, role, username)
 
+
+        res.cookie('Authorization', `${user.accessToken}`)
         res.status(200).send({
             data: {
-                access_token: accessToken,
+                access_token: user.accessToken,
                 TOKEN_EXPIRE_TIME,
-                id,
-                username,
-                email,
-                role
+                id: user.id,
+                username: user.username,
+                email: user.email,
+                role: user.role
             }
         })
     } catch (err) {
@@ -65,15 +58,23 @@ const signIn = async (req, res) => {
     if (!email || !password) { res.status(400).json({ error: 'Lack of necessary information!' }); return }
 
     try {
-        const user = await User.signIn(email, password)
+        const result = await User.signIn(email, password, role)
 
-        if (user.error) {
-            res.status(user.status).json({ error: user.error })
-            return
+        if (result.error) {
+            const status_code = result.status ? result.status : 403;
+            res.status(status_code).send({ error: result.error });
+            return;
         }
+        const user = result.user
+
+        if (!user) {
+            res.status(500).json({ error: 'Error: Database Query Error' })
+            return;
+        }
+        res.cookie('Authorization', `${user.accessToken}`)
         res.status(200).json({
             data: {
-                accessToken: user.accessToken,
+                access_token: user.accessToken,
                 id: user.id,
                 username: user.username,
                 email: user.email,
