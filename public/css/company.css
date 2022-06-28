@@ -27,6 +27,7 @@
 
 .company-card-container:hover {
     border-color: #e5e5e5;
+    cursor: pointer
 }
 
 .card-shadow:hover {
@@ -115,9 +116,12 @@
 }
 
 .company-card-footer a {
-    color: rgb(100, 100, 100) !important;
-    font-weight: 800;
-    /* line-height: 1.5rem */
+    color: rgb(100, 100, 100);
+    font-weight: bold;
+}
+
+.company-card-footer a:hover {
+    text-decoration: underline
 }
 
 .company-card-info .category {
@@ -140,7 +144,7 @@
     white-space: nowrap;
     background: #cdeaff;
     border-radius: 2px;
-    /* line-height: 1; */
+    line-height: 1;
     cursor: pointer;
 }
 
@@ -151,7 +155,6 @@
 .company-card-content svg,
 .company-card-content path {
     display: block;
-    /* margin: auto; */
     color: rgb(138, 138, 138);
     height: 16px;
     width: 16px;

@@ -1,45 +1,38 @@
 <div class="navigation">
     <div class="navigation-logo">
-        <a id="logo" href="/job.html ">Mayones
+        <a id="logo" href="/api/1.0/jobs ">Mayones
         </a>
     </div>
     <div class="navigation-list">
-        <% if (!header) { %>
-            <a class="navigation-item " href="/job.html">職缺</a>
-            <a class="navigation-item " href="/company.html">公司</a>
+        <% if (!header.view) { %>
+            <a class="navigation-item " href="/api/1.0/jobs">職缺</a>
+            <a class="navigation-item " href="/api/1.0/companies">公司</a>
             <% } else { -%>
-                <% if (header==="job" ) { -%>
-                    <a class="navigation-item active" href="/job.html">職缺</a>
-                    <a class="navigation-item" href="/company.html">公司</a>
-                    <% } else if (header==="company" ) { -%>
-                        <a class="navigation-item " href="/job.html">職缺</a>
-                        <a class="navigation-item active" href="/company.html">公司</a>
+                <% if (header.view==="job" ) { -%>
+                    <a class="navigation-item active" href="/api/1.0//jobs">職缺</a>
+                    <a class="navigation-item" href="/api/1.0/companies">公司</a>
+                    <% } else if (header.view==="company" ) { -%>
+                        <a class="navigation-item " href="/api/1.0/jobs">職缺</a>
+                        <a class="navigation-item active" href="/api/1.0/companies">公司</a>
                         <% }else { -%>
-                            <a class="navigation-item " href="/job.html">職缺</a>
-                            <a class="navigation-item " href="/company.html">公司</a>
+                            <a class="navigation-item " href="/api/1.0/jobs">職缺</a>
+                            <a class="navigation-item " href="/api/1.0/companies">公司</a>
                             <% } %>
                                 <% } %>
-
-
-
-
     </div>
     <div class="navigation-role">
-        <% if (!header) { %>
-            <a class="navigation-item " href="/api/1.0/employer/signin">企業主</a>
-            <a class="navigation-item " href="/api/1.0/employee/signin">求職者</a>
+        <% if (header.auth) { %>
+            <a class="navigation-item" href="/api/1.0/employer/signin">
+                <%= header.username%>
+            </a>
             <% } else { -%>
-                <% if (header==="employer" ) { -%>
+                <% if (header.role==="employer" ) { -%>
                     <a class="navigation-item active" href="/api/1.0/employer/signin">企業主</a>
                     <a class="navigation-item" href="/api/1.0/employee/signin">求職者</a>
-                    <% } else if (header==="employee" ) { -%>
+                    <% } else { -%>
                         <a class="navigation-item" href="/api/1.0/employer/signin">企業主</a>
                         <a class="navigation-item active" href="/api/1.0/employee/signin">求職者</a>
-                        <% } else { -%>
-                            <a class="navigation-item " href="/api/1.0/employer/signin">企業主</a>
-                            <a class="navigation-item " href="/api/1.0/employee/signin">求職者</a>
+                        <% } %>
                             <% } %>
-                                <% } %>
-
     </div>
 </div>

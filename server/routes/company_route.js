@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { asyncHandlerWrapper } = require('../../utils/utils.js')
+const { authentication, asyncHandlerWrapper } = require('../../utils/utils.js')
 
 const { getAllCompanies,
     getCompanyDetail,
@@ -7,10 +7,10 @@ const { getAllCompanies,
     deleteCompany } = require('../controllers/company_controller.js')
 
 router.route('/companies')
-    .get(asyncHandlerWrapper(getAllCompanies))
+    .get(authentication(), asyncHandlerWrapper(getAllCompanies))
 
 router.route('/company/:id')
-    .get(asyncHandlerWrapper(getCompanyDetail))
+    .get(authentication(), asyncHandlerWrapper(getCompanyDetail))
 
 router.route('/company')
     .post(asyncHandlerWrapper(createCompany))
