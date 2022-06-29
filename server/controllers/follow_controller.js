@@ -1,9 +1,14 @@
 const Follow = require('../models/follow_model')
+let header = { auth: false };
 
 const getAllFollows = async (req, res) => {
-    const { id, role } = req.user
+    const { id, role, username } = req.user
+    if (req.user) {
+        header.auth = true
+    }
+    header.role = role
+    header.username = username
     const userFollows = await Follow.getAllFollowsByUser(id, role)
-    let header = role
     switch (role) {
         case "employee":
             res.render('employeeFollows', { userFollows, header })

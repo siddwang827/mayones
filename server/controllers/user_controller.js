@@ -7,12 +7,12 @@ const TOKEN_EXPIRE_TIME = parseInt(process.env.TOKEN_EXPIRE_TIME)
 
 
 const getSignUpPage = async (req, res) => {
-    const header = req.path.split('/')[1]
+    const header = { role: req.path.split('/')[1] }
     res.render('signup', { header })
 }
 
 const getSignInPage = async (req, res) => {
-    const header = req.path.split('/')[1]
+    const header = { role: req.path.split('/')[1] }
     res.render('signin', { header })
 }
 

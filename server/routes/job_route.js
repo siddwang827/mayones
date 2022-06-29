@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { asyncHandlerWrapper } = require('../../utils/utils.js')
+const { authentication, asyncHandlerWrapper } = require('../../utils/utils.js')
 
 const { getAllJobs,
     getJobDetail,
@@ -8,10 +8,10 @@ const { getAllJobs,
 
 
 router.route('/jobs')
-    .get(asyncHandlerWrapper(getAllJobs));
+    .get(authentication(), asyncHandlerWrapper(getAllJobs));
 
 router.route('/job/:id')
-    .get(asyncHandlerWrapper(getJobDetail));
+    .get(authentication(), asyncHandlerWrapper(getJobDetail));
 
 router.route('/job')
     .post(asyncHandlerWrapper(createJob));
