@@ -14,10 +14,10 @@ router.route('/job/:id')
     .get(authentication(), asyncHandlerWrapper(getJobDetail));
 
 router.route('/job')
-    .post(asyncHandlerWrapper(createJob));
+    .post(authentication(), asyncHandlerWrapper(createJob));
 
 router.route('/job')
-    .delete(asyncHandlerWrapper(deleteJob));
+    .delete(authentication(), asyncHandlerWrapper(deleteJob));
 
 
 module.exports = router;

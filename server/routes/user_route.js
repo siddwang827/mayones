@@ -1,11 +1,12 @@
 const router = require('express').Router();
 const { asyncHandlerWrapper } = require('../../utils/utils.js')
+
 const {
     getSignUpPage,
     getSignInPage,
     signIn,
     signUp,
-    logOut } = require('../controllers/user_controller')
+} = require('../controllers/user_controller')
 
 
 

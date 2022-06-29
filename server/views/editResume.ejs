@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include /layout/head %>
+        <link rel="stylesheet" type="text/css" href="/css/main.css">
+        <link rel="stylesheet" type="text/css" href="/css/resume.css">
+</head>
+
+<body>
+    <header>
+        <%- include layout/header %>
+    </header>
+    <main>
+        <h1>Resume editor</h1>
+        <div id="container">
+            <div id="editor">
+            </div>
+        </div>
+    </main>
+    <footer>
+        <%- include /layout/footer %>
+            <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/super-build/ckeditor.js"></script>
+            <script src="/js/editResume.js"></script>
+    </footer>
+</body>
+
+</html>
