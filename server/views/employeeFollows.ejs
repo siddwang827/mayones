@@ -4,7 +4,7 @@
 <head>
     <%- include layout/head %>
         <link rel="stylesheet" type="text/css" href="/css/main.css">
-        <link rel="stylesheet" type="text/css" href="/css/follow.css">
+        <link rel="stylesheet" type="text/css" href="/css/application.css">
 </head>
 
 <body>
@@ -18,21 +18,21 @@
             <div class="job-container">
                 <% for (let job of userFollows) { %>
                     <a href="/api/1.0/job/<%=job.job_id%>">
-                        <div class="job-follow-list">
-                            <div class="job-follow-content">
-                                <img class="job-follow-item logo" src=<%=job.logo_image %>>
-                                <div class="job-follow-item info">
-                                    <div class="job-follow-info job-title">
+                        <div class="job-list">
+                            <div class="job-content">
+                                <img class="job-item logo" src=<%=job.logo_image %>>
+                                <div class="job-item info">
+                                    <div class="job-info job-title">
                                         <%= job.job_title %>
                                     </div>
-                                    <div class="job-follow-info brand">
+                                    <div class="job-info brand">
                                         <%= job.brand %>
                                     </div>
 
                                 </div>
                             </div>
-                            <div class="job-follow-content">
-                                <div class="job-follow-item follow-heart" follow-id=<%=job.follow_id%>></div>
+                            <div class="job-content">
+                                <div class="job-item  follow-heart" follow-id=<%=job.follow_id%>></div>
                             </div>
                         </div>
                     </a>
@@ -43,6 +43,8 @@
     <footer>
         <%- include /layout/footer %>
             <script src="/js/auth.js"></script>
-            <script src="/js/follow.js"></script>
+            <script src="/js/application.js"></script>
     </footer>
 </body>
+
+</html>

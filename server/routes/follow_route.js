@@ -1,6 +1,5 @@
 const router = require('express').Router();
-const { asyncHandlerWrapper,
-    authentication } = require('../../utils/utils.js')
+const { asyncHandlerWrapper, authentication } = require('../../utils/utils.js')
 
 const { getAllFollows,
     addFollow,

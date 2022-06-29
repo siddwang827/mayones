@@ -28,7 +28,8 @@ app.use('/api/' + API_VERSION, [
     require('./server/routes/job_route'),
     require('./server/routes/company_route'),
     require('./server/routes/user_route'),
-    require('./server/routes/follow_route')
+    require('./server/routes/follow_route'),
+    require('./server/routes/profile_route')
 ]);
 
 app.use('/', (req, res) => {

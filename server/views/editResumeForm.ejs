@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include /layout/head %>
+        <link rel="stylesheet" type="text/css" href="/css/main.css">
+        <link rel="stylesheet" type="text/css" href="/css/resume.css">
+</head>
+
+<body>
+    <header>
+        <%- include layout/header %>
+    </header>
+    <main>
+        <div class="container">
+            <div class="resume-item">
+
+                <div class="resume-content">
+                    <form class="form" enctype="multipart/form-data" accept-charset="UTF-8" method="post">
+                        <div class="form-group require">
+                            <label for="name" class="required">姓名</label>
+                            <div class="input-wrap">
+                                <input name="name" class="form-control" id="name" value="王浩宇">
+                            </div>
+                        </div>
+                        <div class="form-group require">
+                            <label for="user-gender-male">性別</label>
+                            <div class="input-wrap">
+                                <input type="radio" name="gender" id="user-gender-male" value="male">
+                                <label for="user-gender-male">男</label>
+                                <input type="radio" name="gender" id="user-gender-female" value="female">
+                                <label for="user-gender-female">女</label>
+                                <input type="radio" name="gender" id="user-gender-others" value="others">
+                                <label for="user-gender-others">其他</label>
+                                <input type="radio" name="gender" id="user-gender-hidden" value="hidden">
+                                <label for="user-gender-hidden">不透露</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="birthday">生日
+                            </label>
+                            <div class="ui calendar">
+                                <div class="ui input left icon">
+                                    <i class="calendar icon"></i>
+                                    <input name="birthday" class="form-control" id="birthday" type="date" value="2020-02-03">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group require">
+                            <label for="phone">電話</label>
+                            <div class="input-wrap">
+                                <input name="phone" class="form-control" id="phone" type="tel" value="">
+                            </div>
+                        </div>
+                        <div class="form-group require" id="email-form-group">
+                            <label for="email" class="required">連絡信箱</label>
+                            <div class="input-wrap">
+                                <input name="emailContact" class="form-control" id="emailContact" type="email" value="awaitcabal@hotmail.com">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="personal-page-title">個人網站標題</label>
+                            <div class="input-wrap">
+                                <input name="personalPageTitle" class="form-control" id="personal-page-title" placeholder="此欄位留白時，將顯示個人網站之連結網址..."
+                                    value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="personal-page-url">個人網站連結</label>
+                            <div class="input-wrap">
+                                <input name="personalPageUrl" class="form-control" id="personal-page-url" value="">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </main>
+
+    <!-- <footer>
+        <%- include /layout/footer %>
+            <script src="/js/editResume.js"></script>
+    </footer> -->
+</body>
+
+</html>

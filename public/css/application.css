@@ -11,7 +11,7 @@
 
 
 
-.job-follow-list {
+.job-list {
     display: flex;
     justify-content: space-between;
     margin: 0 20px 20px;
@@ -22,18 +22,18 @@
     box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
 }
 
-.job-follow-content {
+.job-content {
     display: flex;
     align-items: center;
 }
 
-.job-follow-content > .logo {
+.job-content > .logo {
     border-radius: 50%;
     height: 60px;
     width: 60px
 }
 
-.job-follow-content > .info {
+.job-content > .info {
     margin-left: 10px
 }
 
@@ -42,7 +42,7 @@
     font-weight: bold;
 }
 
-.job-follow-item {
+.job-item {
     display: flex;
     flex-direction: column
 }

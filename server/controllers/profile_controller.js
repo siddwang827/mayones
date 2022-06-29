@@ -1,0 +1,41 @@
+// const Profile = require('../models/profile_model');
+const Resume = require('../models/schemas')
+const header = { auth: false }
+
+
+
+
+const getResumePage = async (req, res) => {
+    const { role, username } = req.user
+    if (req.user) {
+        header.auth = true
+    }
+    header.role = role
+    header.username = username
+    res.render('resumes', { header })
+}
+
+const getResumeEditPage = async (req, res) => {
+    const { role, username } = req.user
+    if (req.user) {
+        header.auth = true
+    }
+    header.role = role
+    header.username = username
+
+    res.render('editResumeForm', { header })
+}
+
+
+
+const uploadResume = async (req, res) => {
+
+}
+
+
+
+module.exports = {
+    getResumePage,
+    getResumeEditPage,
+    uploadResume
+}

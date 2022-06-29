@@ -13,7 +13,7 @@ router.route('/company/:id')
     .get(authentication(), asyncHandlerWrapper(getCompanyDetail))
 
 router.route('/company')
-    .post(asyncHandlerWrapper(createCompany))
+    .post(authentication(), asyncHandlerWrapper(createCompany))
 
 router.route('/company')
     .delete(asyncHandlerWrapper(deleteCompany))
