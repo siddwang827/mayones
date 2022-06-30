@@ -1,4 +1,3 @@
-
 // CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
 //     // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
 //     toolbar: {
@@ -136,3 +135,161 @@
 //         'MathType'
 //     ]
 // });
+
+
+const column = document.querySelector('.container');
+
+new Sortable(column, {
+
+    sort: true,
+    animation: 150,
+    ghostClass: 'on-dragging',
+    draggable: ".draggable",
+    filter: ".fixed",
+    forceFallback: true,
+});
+
+$('.icon-edit').on('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const modalId = $(e.target).attr('modal-id')
+    $(`#${modalId}`)
+        .modal({
+            blurring: true
+        })
+        .modal('show')
+        ;
+})
+
+$('.ui.confirm-btn').on('click', () => {
+    $('.modal').modal('hide')
+})
+
+$('#add-skill-btn').on('click', () => {
+    const skillsDOM = $('.resume-content.skill')
+    const index = skillsDOM.length ? parseInt(skillsDOM[skillsDOM.length - 1].getAttribute('skill-index')) + 1 : 0
+    const property = 'skill'
+    $('#resume-skill-list').append($(`
+        <div id="skill-item-${index}" class="resume-content skill" skill-index=${index}>
+            <div class="content-container">
+                <div class="form-group skill">
+                    <label for="skill-name">技能名稱</label>
+                    <div class="input-wrap">
+                        <input name="skillName" class="form-control" id="skill-name-${index}" value="">
+                    </div>
+                </div>
+                <div class="form-group skill">
+                    <label for="skill-proficiency">熟練程度</label>
+                    <div class="input-wrap">
+                        <select class="ui dropdown select" name="proficiency" id="skill-proficiency-${index}">
+                            <option value="beginner">初階</option>
+                            <option value="intermediate">熟練</option>
+                            <option value="expert">精通</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="skill-info">技能描述</label>
+                <div class="input-wrap">
+                    <textarea name="skillInfo" class="form-control" id="skill-info-${index}" rows=1 value=""></textarea>
+                </div>
+            </div>
+            <div class="remove-btn">
+                <button class="ui medium negative button" id="remove-skill-btn-${index}" skill-index="${index}">刪除</button>
+            </div>
+        </div>
+    `))
+
+    $(`#remove-skill-btn-${index}`).on('click', function (event) {
+        removeDOM(event, property)
+    })
+})
+
+$('#add-project-btn').on('click', () => {
+    const projectsDOM = $('.resume-content.project')
+    const index = skillsDOM.length ? parseInt(skillsDOM[skillsDOM.length - 1].getAttribute('skill-index')) + 1 : 0
+    const property = 'skill'
+    console.log($('#resume-project-list'))
+
+    $('#resume-project-list').append($(`
+    <div class="resume-content-project">
+        <div class="content-container-col">
+            <div class="form-group">
+                <label for="project-title">專案名稱</label>
+                <div class="input-wrap">
+                    <input name="projectTile" class="form-control" id="project-title"></input>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="project-link">專案連結</label>
+                <div class="input-wrap">
+                    <input name="projectLink" class="form-control" id="project-link"></input>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="project-info">專案描述</label>
+                <div class="input-wrap">
+                    <textarea name="projectInfo" class="form-control" id="project-info" rows=1 value=""></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="image-upload-wrap">
+            <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
+            <div class="drag-text">
+                <p>Drag and drop a file or select add Image</p>
+            </div>
+        </div>
+        <div class="file-upload-content">
+            <img class="file-upload-image" src="#" alt="your image" />
+            <div class="image-title-wrap">
+                <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded
+                        Image</span></button>
+            </div>
+        </div>
+    </div>`))
+})
+
+
+
+
+function removeDOM(e, property) {
+    const index = e.target.getAttribute(`${property}-index`)
+    $(`#${property}-item-${index}`).remove()
+
+}
+
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('.image-upload-wrap').hide();
+
+            $('.file-upload-image').attr('src', e.target.result);
+            $('.file-upload-content').show();
+
+            $('.image-title').html(input.files[0].name);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+
+    } else {
+        removeUpload();
+    }
+}
+
+function removeUpload() {
+    $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+    $('.file-upload-content').hide();
+    $('.image-upload-wrap').show();
+}
+$('.image-upload-wrap').bind('dragover', function () {
+    $('.image-upload-wrap').addClass('image-dropping');
+});
+$('.image-upload-wrap').bind('dragleave', function () {
+    $('.image-upload-wrap').removeClass('image-dropping');
+});
+
