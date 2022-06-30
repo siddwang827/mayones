@@ -208,48 +208,56 @@ $('#add-skill-btn').on('click', () => {
 
 $('#add-project-btn').on('click', () => {
     const projectsDOM = $('.resume-content.project')
-    const index = skillsDOM.length ? parseInt(skillsDOM[skillsDOM.length - 1].getAttribute('skill-index')) + 1 : 0
-    const property = 'skill'
-    console.log($('#resume-project-list'))
+    const index = projectsDOM.length ? parseInt(projectsDOM[projectsDOM.length - 1].getAttribute('project-index')) + 1 : 0
+    const property = 'project'
 
     $('#resume-project-list').append($(`
-    <div class="resume-content-project">
-        <div class="content-container-col">
-            <div class="form-group">
-                <label for="project-title">專案名稱</label>
-                <div class="input-wrap">
-                    <input name="projectTile" class="form-control" id="project-title"></input>
+    <div id="project-item-${index}" class="resume-content project col" project-index=${index}">
+        <div class="content-container">    
+            <div class="content-container-col">
+                <div class="form-group">
+                    <label for="project-title">專案名稱</label>
+                    <div class="input-wrap">
+                        <input name="projectTile" class="form-control" id="project-title-${index}"></input>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="project-link">專案連結</label>
+                    <div class="input-wrap">
+                        <input name="projectLink" class="form-control" id="project-link-${index}"></input>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="project-info">專案描述</label>
+                    <div class="input-wrap">
+                        <textarea name="projectInfo" class="form-control" id="project-info-${index}" rows=1></textarea>
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="project-link">專案連結</label>
-                <div class="input-wrap">
-                    <input name="projectLink" class="form-control" id="project-link"></input>
+            <div class="image-upload-wrap">
+                <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
+                <div class="drag-text">
+                    <p>Drag and drop a file or select add Image</p>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="project-info">專案描述</label>
-                <div class="input-wrap">
-                    <textarea name="projectInfo" class="form-control" id="project-info" rows=1 value=""></textarea>
+            <div class="file-upload-content">
+                <img class="file-upload-image" src="#" alt="your image" />
+                <div class="image-title-wrap">
+                    <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded
+                            Image</span></button>
                 </div>
             </div>
         </div>
-        <div class="image-upload-wrap">
-            <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
-            <div class="drag-text">
-                <p>Drag and drop a file or select add Image</p>
-            </div>
+        <div class="remove-btn">
+                <button class="ui medium negative button" id="remove-project-btn-${index}" project-index="${index}">刪除</button>
         </div>
-        <div class="file-upload-content">
-            <img class="file-upload-image" src="#" alt="your image" />
-            <div class="image-title-wrap">
-                <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded
-                        Image</span></button>
-            </div>
-        </div>
-    </div>`))
-})
+    </div>
+    `))
 
+    $(`#remove-project-btn-${index}`).on('click', function (event) {
+        removeDOM(event, property)
+    })
+})
 
 
 
