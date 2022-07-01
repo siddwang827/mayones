@@ -3,9 +3,26 @@ const { thoundsAddComma } = require('../../utils/utils')
 const pageSize = 20
 const header = { view: "job", auth: false }
 
+
+const getLocation = async () => {
+    const [locations] = await Job.getLocation()
+    return locations
+}
+
+const getCategory = async () => {
+    const category = await Job.getCategory()
+    return category
+}
+
+
+
 const getAllJobs = async (req, res) => {
+    const query = req.query ? req.query : null
     const paging = parseInt(req.query.paging) || 0
     const category = req.query.category || null
+    const { locations } = await getLocation()
+    const positions = await getCategory()
+    console.log(positions)
     if (req.user) {
         header.auth = true
         header.role = req.user.role
@@ -13,7 +30,7 @@ const getAllJobs = async (req, res) => {
     }
     try {
         const jobs = await Job.getAllJobs(pageSize, paging, category)
-        res.render('jobs', { jobs, header })
+        res.render('jobs', { jobs, header, locations, positions })
 
     }
     catch (err) {

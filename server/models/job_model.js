@@ -98,6 +98,27 @@ class Job {
         return result
     }
 
+    static async getLocation() {
+        const sql = `
+        SELECT json_arrayagg(location.name) locations 
+        FROM mayones.location 
+        GROUP BY 'name' 
+        ORDER BY location.order ASC;
+        `
+        const result = await queryDB(sql)
+        return result
+    }
+
+    static async getCategory() {
+        const sql = `
+        SELECT  category , JSON_ARRAYAGG(position) AS position 
+        FROM mayones.category_position 
+        GROUP BY category
+        ORDER by category_position.order ASC ;
+        `
+        const result = await queryDB(sql)
+        return result
+    }
 }
 
 module.exports = Job 

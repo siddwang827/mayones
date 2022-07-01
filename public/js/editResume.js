@@ -1,151 +1,10 @@
-// CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
-//     // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
-//     toolbar: {
-//         items: [
-//             'undo', 'redo', '|',
-//             'heading', '|',
-//             'fontFamily', 'fontSize', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
-//             'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', 'removeFormat', '|',
-//             'findAndReplace', 'selectAll', '|',
-//             '-',
-//             'bulletedList', 'numberedList', 'todoList', '|',
-//             'outdent', 'indent', '|',
-//             'alignment', '|',
-//             'link', 'insertImage', 'blockQuote', 'insertTable', 'codeBlock', '|',
-//             'specialCharacters', 'horizontalLine', '|',
-//             'exportPDF', 'sourceEditing', '|',
-
-
-//         ],
-//         shouldNotGroupWhenFull: true
-//     },
-//     // Changing the language of the interface requires loading the language file using the <script> tag.
-//     // language: 'es',
-//     list: {
-//         properties: {
-//             styles: true,
-//             startIndex: true,
-//             reversed: true
-//         }
-//     },
-//     // https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#configuration
-//     heading: {
-//         options: [
-//             { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-//             { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
-//             { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
-//             { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' }
-//         ]
-//     },
-//     // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
-//     placeholder: 'Edit Your Own Resume!',
-//     // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
-//     fontFamily: {
-//         options: [
-//             'default',
-//             'Microsoft JhengHei',
-//             'DFKai-sb',
-//             'PMingLiU',
-//             'Arial, Helvetica, sans-serif',
-//             'Courier New, Courier, monospace',
-//             'Georgia, serif',
-//             'Lucida Sans Unicode, Lucida Grande, sans-serif',
-//             'Tahoma, Geneva, sans-serif',
-//             'Times New Roman, Times, serif',
-//             'Trebuchet MS, Helvetica, sans-serif',
-//             'Verdana, Geneva, sans-serif',
-
-//         ],
-//         supportAllValues: true
-//     },
-//     // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-size-feature
-//     fontSize: {
-//         options: [10, 12, 14, 'default', 18, 20, 24, 28],
-//         supportAllValues: true
-//     },
-//     // Be careful with the setting below. It instructs CKEditor to accept ALL HTML markup.
-//     // https://ckeditor.com/docs/ckeditor5/latest/features/general-html-support.html#enabling-all-html-features
-//     htmlSupport: {
-//         allow: [
-//             {
-//                 name: /.*/,
-//                 attributes: true,
-//                 classes: true,
-//                 styles: true
-//             }
-//         ]
-//     },
-
-//     // https://ckeditor.com/docs/ckeditor5/latest/features/link.html#custom-link-attributes-decorators
-//     link: {
-//         decorators: {
-//             addTargetToExternalLinks: true,
-//             defaultProtocol: 'https://',
-//             toggleDownloadable: {
-//                 mode: 'manual',
-//                 label: 'Downloadable',
-//                 attributes: {
-//                     download: 'file'
-//                 }
-//             }
-//         }
-//     },
-//     // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
-//     mention: {
-//         feeds: [
-//             {
-//                 marker: '@',
-//                 feed: [
-//                     '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
-//                     '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
-//                     '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
-//                     '@sugar', '@sweet', '@topping', '@wafer'
-//                 ],
-//                 minimumCharacters: 1
-//             }
-//         ]
-//     },
-//     // The "super-build" contains more premium features that require additional configuration, disable them below.
-//     // Do not turn them on unless you read the documentation and know how to configure them and setup the editor.
-//     removePlugins: [
-//         // These two are commercial, but you can try them out without registering to a trial.
-//         // 'ExportPdf',
-//         // 'ExportWord',
-//         'CKBox',
-//         'CKFinder',
-//         'EasyImage',
-//         // This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
-//         // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/base64-upload-adapter.html
-//         // Storing images as Base64 is usually a very bad idea.
-//         // Replace it on production website with other solutions:
-//         // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html
-//         // 'Base64UploadAdapter',
-//         'RealTimeCollaborativeComments',
-//         'RealTimeCollaborativeTrackChanges',
-//         'RealTimeCollaborativeRevisionHistory',
-//         'PresenceList',
-//         'Comments',
-//         'TrackChanges',
-//         'TrackChangesData',
-//         'RevisionHistory',
-//         'Pagination',
-//         'WProofreader',
-//         // Careful, with the Mathtype plugin CKEditor will not load when loading this sample
-//         // from a local file system (file://) - load this site via HTTP server if you enable MathType
-//         'MathType'
-//     ]
-// });
-
-
 const column = document.querySelector('.container');
 
 new Sortable(column, {
-
     sort: true,
     animation: 150,
     ghostClass: 'on-dragging',
     draggable: ".draggable",
-    filter: ".fixed",
     forceFallback: true,
 });
 
@@ -161,11 +20,14 @@ $('.icon-edit').on('click', (e) => {
         ;
 })
 
-$('.ui.confirm-btn').on('click', () => {
+$('.ui.confirm-btn').on('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     $('.modal').modal('hide')
 })
 
-$('#add-skill-btn').on('click', () => {
+$('#add-skill-btn').on('click', (event) => {
+    event.preventDefault();
     const skillsDOM = $('.resume-content.skill')
     const index = skillsDOM.length ? parseInt(skillsDOM[skillsDOM.length - 1].getAttribute('skill-index')) + 1 : 0
     const property = 'skill'
@@ -173,15 +35,15 @@ $('#add-skill-btn').on('click', () => {
         <div id="skill-item-${index}" class="resume-content skill" skill-index=${index}>
             <div class="content-container">
                 <div class="form-group skill">
-                    <label for="skill-name">技能名稱</label>
+                    <label for="skill-name-${index}">技能名稱</label>
                     <div class="input-wrap">
-                        <input name="skillName" class="form-control" id="skill-name-${index}" value="">
+                        <input name="skillName" class="form-control" id="skill-name-${index}" >
                     </div>
                 </div>
                 <div class="form-group skill">
-                    <label for="skill-proficiency">熟練程度</label>
+                    <label for="skill-proficiency-${index}">熟練程度</label>
                     <div class="input-wrap">
-                        <select class="ui dropdown select" name="proficiency" id="skill-proficiency-${index}">
+                        <select class="ui dropdown select" name="skillProficiency" id="skill-proficiency-${index}">
                             <option value="beginner">初階</option>
                             <option value="intermediate">熟練</option>
                             <option value="expert">精通</option>
@@ -190,7 +52,7 @@ $('#add-skill-btn').on('click', () => {
                 </div>
             </div>
             <div class="form-group">
-                <label for="skill-info">技能描述</label>
+                <label for="skill-info-${index}">技能描述</label>
                 <div class="input-wrap">
                     <textarea name="skillInfo" class="form-control" id="skill-info-${index}" rows=1 value=""></textarea>
                 </div>
@@ -206,7 +68,8 @@ $('#add-skill-btn').on('click', () => {
     })
 })
 
-$('#add-project-btn').on('click', () => {
+$('#add-project-btn').on('click', (event) => {
+    event.preventDefault();
     const projectsDOM = $('.resume-content.project')
     const index = projectsDOM.length ? parseInt(projectsDOM[projectsDOM.length - 1].getAttribute('project-index')) + 1 : 0
     const property = 'project'
@@ -216,34 +79,34 @@ $('#add-project-btn').on('click', () => {
         <div class="content-container">    
             <div class="content-container-col">
                 <div class="form-group">
-                    <label for="project-title">專案名稱</label>
+                    <label for="project-title-${index}">專案名稱</label>
                     <div class="input-wrap">
                         <input name="projectTile" class="form-control" id="project-title-${index}"></input>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="project-link">專案連結</label>
+                    <label for="project-link-${index}">專案連結</label>
                     <div class="input-wrap">
                         <input name="projectLink" class="form-control" id="project-link-${index}"></input>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="project-info">專案描述</label>
+                    <label for="project-info-${index}">專案描述</label>
                     <div class="input-wrap">
                         <textarea name="projectInfo" class="form-control" id="project-info-${index}" rows=1></textarea>
                     </div>
                 </div>
             </div>
-            <div class="image-upload-wrap">
-                <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
+            <div class="image-upload-wrap" id="image-upload-wrap-${index}">
+                <input class="file-upload-input" name="projectImage" id="project-image-${index}" project-index="${index}" type='file' onchange="readURL(this);" accept="image/*" />
                 <div class="drag-text">
                     <p>Drag and drop a file or select add Image</p>
                 </div>
             </div>
-            <div class="file-upload-content">
-                <img class="file-upload-image" src="#" alt="your image" />
+            <div class="file-upload-content" id="file-upload-content-${index}">
+                <img id="file-upload-image-${index}" class="file-upload-image" project-index="${index}" src="#" alt="your image" />
                 <div class="image-title-wrap">
-                    <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded
+                    <button type="button" id="remove-image-btn-${index}" class="remove-image" project-index="${index}">Remove <span id="image-title-${index}" class="image-title">Uploaded
                             Image</span></button>
                 </div>
             </div>
@@ -257,29 +120,127 @@ $('#add-project-btn').on('click', () => {
     $(`#remove-project-btn-${index}`).on('click', function (event) {
         removeDOM(event, property)
     })
+    $(`#remove-image-btn-${index}`).on('click', removeUpload)
 })
 
+$('#add-experience-btn').on('click', (event) => {
+    event.preventDefault();
+    const experienceDOM = $('.resume-content.experience')
+    const index = experienceDOM.length ? parseInt(experienceDOM[experienceDOM.length - 1].getAttribute('experience-index')) + 1 : 0
+    const property = 'experience'
 
+    $('#resume-experience-list').append($(`
+    <div id="experience-item-${index}" class="resume-content experience" experience-index="${index}">
+        <div class="content-container experience">
+            <div class="form-group">
+                <label for="experience-title-${index}">職位</label>
+                <div class="input-wrap">
+                    <input name="experienceName" class="form-control" id="experience-title-${index}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="experience-company-name-${index}">組織名稱</label>
+                <div class="input-wrap">
+                    <input name="experienceCompanyName" class="form-control" id="experience-company-name-${index}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="experience-time-start-${index}">起始時間</label>
+                <div class="input-wrap">
+                    <input name="experienceTimeStart" class="form-control" id="experience-time-start-${index}" type="month">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="experience-time-end-${index}">結束時間</label>
+                <div class="input-wrap">
+                    <input name="experienceTimeEnd" class="form-control" id="experience-time-end-${index}" type="month">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="experience-info-${index}">內容描述</label>
+            <div class="input-wrap">
+                <textarea name="experienceInfo" class="form-control" id="experience-info-${index}" rows=1></textarea>
+            </div>
+        </div>
+        <div class="remove-btn">
+            <button class="ui medium negative button" id="remove-experience-btn-${index}" experience-index="${index}">刪除</button>
+        </div>
+    </div>
+    `))
+
+    $(`#remove-experience-btn-${index}`).on('click', function (event) {
+        removeDOM(event, property)
+    })
+})
+
+$('#add-education-btn').on('click', (event) => {
+    event.preventDefault();
+    const educationDOM = $('.resume-content.education')
+    const index = educationDOM.length ? parseInt(educationDOM[educationDOM.length - 1].getAttribute('education-index')) + 1 : 0
+    const property = 'education'
+
+    $('#resume-education-list').append($(`
+    <div id="education-item-${index}" class="resume-content education" education-index="${index}">
+        <div class="form-group">
+            <label for="education-title-${index}">學校名稱</label>
+            <div class="input-wrap">
+                <input name="educationName" class="form-control" id="education-title-${index}">
+            </div>
+        </div>
+        <div class="content-container education">
+            <div class="form-group">
+                <label for="education-department-${index}">系所</label>
+                <div class="input-wrap">
+                    <input name="educationDepartment" class="form-control" id="education-department-${index}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="education-degree-${index}">學位</label>
+                <div class="input-wrap">
+                    <input name="educationDegree" class="form-control" id="education-degree-${index}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="education-time-start-${index}">起始時間</label>
+                <div class="input-wrap">
+                    <input name="educationTimeStart" class="form-control" id="education-time-start-${index}" type="month">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="education-time-end-${index}">結束時間</label>
+                <div class="input-wrap">
+                    <input name="educationTimeEnd" class="form-control" id="education-time-end-${index}" type="month">
+                </div>
+            </div>
+        </div>
+        <div class="remove-btn">
+            <button class="ui medium negative button" id="remove-education-btn-${index}" education-index="${index}">刪除</button>
+        </div>
+    </div>
+    `))
+
+    $(`#remove-education-btn-${index}`).on('click', function (event) {
+        removeDOM(event, property)
+    })
+})
 
 function removeDOM(e, property) {
+    e.preventDefault()
     const index = e.target.getAttribute(`${property}-index`)
     $(`#${property}-item-${index}`).remove()
-
 }
-
 
 function readURL(input) {
     if (input.files && input.files[0]) {
-
-        var reader = new FileReader();
+        const index = input.getAttribute('project-index')
+        let reader = new FileReader();
 
         reader.onload = function (e) {
-            $('.image-upload-wrap').hide();
-
-            $('.file-upload-image').attr('src', e.target.result);
-            $('.file-upload-content').show();
-
-            $('.image-title').html(input.files[0].name);
+            $(`#image-upload-wrap-${index}`).hide();
+            $(`#file-upload-image-${index}`).attr('src', e.target.result);
+            $(`#file-upload-content-${index}`).show();
+            $(`#image-title-${index}`).html(input.files[0].name);
         };
 
         reader.readAsDataURL(input.files[0]);
@@ -289,15 +250,37 @@ function readURL(input) {
     }
 }
 
-function removeUpload() {
-    $('.file-upload-input').replaceWith($('.file-upload-input').clone());
-    $('.file-upload-content').hide();
-    $('.image-upload-wrap').show();
+function removeUpload(input) {
+    const imageIndex = input.target.getAttribute('project-index')
+
+    $(`#project-image-${imageIndex}`).replaceWith($(`#project-image-${imageIndex}`).clone());
+    $(`#file-upload-content-${imageIndex}`).hide();
+    $(`#image-upload-wrap-${imageIndex}`).show();
+    $(`#project-image-${imageIndex}`).val('')
 }
+
+
 $('.image-upload-wrap').bind('dragover', function () {
     $('.image-upload-wrap').addClass('image-dropping');
 });
 $('.image-upload-wrap').bind('dragleave', function () {
     $('.image-upload-wrap').removeClass('image-dropping');
 });
+
+
+$('#update-resume-btn').on('click', (event) => {
+    event.preventDefault();
+    const resumeForm = document.getElementById('resume-form')
+    const formData = new FormData(resumeForm)
+
+    fetch("/api/1.0/resume", {
+        method: "POST",
+        body: formData,
+    })
+        .then(console.log("send to server sucess!"))
+        .catch((err) => {
+            console.log(err);
+        });
+});
+
 

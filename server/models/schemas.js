@@ -8,13 +8,18 @@ mongoose.connect("mongodb://localhost:27017/resume", () => {
 
 
 const resumeSchema = new mongoose.Schema({
-
     name: String,
+    gender: String,
+    birthday: Date,
+    showBirthday: Boolean,
+    phone: String,
+    emailContact: String,
     infomation: Object,
     summary: String,
-    skill: Object,
-    experience: Object,
-    education: Object,
+    project: [Object],
+    skill: [Object],
+    experience: [Object],
+    education: [Object],
 
 
 })

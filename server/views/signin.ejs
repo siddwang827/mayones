@@ -14,12 +14,12 @@
     <main>
         <div class="sign-in profile-container">
             <div class="auth-header">SIGN IN</div>
-            <div class="greeting">Welcome to MAYONES</div>
+            <div class="greeting">Hi <%=header.role%><br><br>Welcome to MAYONES</div>
             <div class="title">Email</div>
             <input class="account-input" id="signin-email-input" placeholder="example@gmail.com">
             <div class="title">Password</div>
             <input class="password-input" id="signin-password-input" type="password">
-            <div class="ask-sign">New user? <a href="/api/1.0/<%=header%>/signup" id="anchor-sign-up">Sign Up</a></div>
+            <div class="ask-sign">New user? <a href="/api/1.0/<%=header.role%>/signup" id="anchor-sign-up">Sign Up</a></div>
             <button class="btn-submit" id="btn-signin" type="button">Sign In</button>
         </div>
     </main>

@@ -1,6 +1,7 @@
 // const Profile = require('../models/profile_model');
-const Resume = require('../models/schemas')
+const { Resume } = require('../models/schemas')
 const header = { auth: false }
+
 
 
 
@@ -30,8 +31,10 @@ const getResumeEditPage = async (req, res) => {
 
 const uploadResume = async (req, res) => {
 
+    console.log(req.body)
+    const resume = new Resume(req.body)
+    console.log(resume)
 }
-
 
 
 module.exports = {

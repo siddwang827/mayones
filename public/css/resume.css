@@ -182,6 +182,14 @@ label {
     width: 100%
 }
 
+.content-container.experience,
+.content-container.education {
+    justify-content: space-between;
+}
+
+
+
+
 .content-container-col {
     display: flex;
     flex-direction: column;
@@ -217,7 +225,16 @@ label {
     margin-top: auto
 }
 
-.remove-btn {
+.action-bar.only {
+    justify-content: right
+}
+
+.remove-btn,
+.update-btn {
     display: flex;
     justify-content: right
+}
+
+.update-btn {
+    margin-top: 50px
 }
