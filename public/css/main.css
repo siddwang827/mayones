@@ -144,11 +144,10 @@ main {
 #search-bar {
     display: flex;
     justify-content: space-between;
-    height: 40px;
 }
 
 .ui.input {
-    width: 500px
+    width: 250px
 }
 
 .search-input {
@@ -162,8 +161,7 @@ main {
 .search-filter-container {
     display: flex;
     justify-content: space-between;
-    height: 40px;
-    width: 400px;
+    /* width: 400px; */
 }
 
 .search-filter {
@@ -175,6 +173,19 @@ main {
     background-color: rgb(247, 247, 247);
     cursor: pointer;
     text-align: center;
+}
+
+.price,
+select.price {
+    width: 80px !important
+}
+
+.r1 {
+    display: flex;
+}
+
+.price-dropdown {
+    width: 100px !important
 }
 
 /* ========== footer ========== */

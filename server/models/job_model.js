@@ -1,5 +1,21 @@
 const { queryDB } = require('./mysql_conn.js')
 
+const jobType = ['正職', '兼職', '約聘', '實習']
+const jobLocations = [
+    "台北市",
+    "新北市",
+    "桃園市",
+    "新竹市",
+    "新竹縣",
+    "台中市",
+    "彰化縣",
+    "嘉義市",
+    "台南市",
+    "高雄市",
+    "花蓮縣",
+    "海外"
+]
+
 class Job {
     constructor(companyId, jobTitle, jobDescription, skillReqired, preferedQualification, salaryTop, salaryBottom, lacation, address, remoteWrok, category, position) {
         this.companyId = companyId
@@ -114,11 +130,24 @@ class Job {
         SELECT  category , JSON_ARRAYAGG(position) AS position 
         FROM mayones.category_position 
         GROUP BY category
-        ORDER by category_position.order ASC ;
+        ORDER BY category_position.order ASC ;
         `
         const result = await queryDB(sql)
         return result
     }
+
+    static async getJobTags() {
+        const sql = `
+        SELECT JSON_ARRAYAGG(tags_arr.tags) tags
+        FROM (
+            SELECT tag_name AS tags
+            FROM mayones.tags
+            ORDER BY tags.count DESC
+            LIMIT 15) AS tags_arr
+        `
+        const [result] = await queryDB(sql)
+        return result
+    }
 }
 
-module.exports = Job 
+module.exports = { Job, jobType, jobLocations }

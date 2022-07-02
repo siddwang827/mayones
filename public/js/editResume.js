@@ -28,6 +28,7 @@ $('.ui.confirm-btn').on('click', (e) => {
 
 $('#add-skill-btn').on('click', (event) => {
     event.preventDefault();
+    event.stopPropagation()
     const skillsDOM = $('.resume-content.skill')
     const index = skillsDOM.length ? parseInt(skillsDOM[skillsDOM.length - 1].getAttribute('skill-index')) + 1 : 0
     const property = 'skill'
@@ -70,6 +71,7 @@ $('#add-skill-btn').on('click', (event) => {
 
 $('#add-project-btn').on('click', (event) => {
     event.preventDefault();
+    event.stopPropagation()
     const projectsDOM = $('.resume-content.project')
     const index = projectsDOM.length ? parseInt(projectsDOM[projectsDOM.length - 1].getAttribute('project-index')) + 1 : 0
     const property = 'project'
@@ -125,6 +127,7 @@ $('#add-project-btn').on('click', (event) => {
 
 $('#add-experience-btn').on('click', (event) => {
     event.preventDefault();
+    event.stopPropagation()
     const experienceDOM = $('.resume-content.experience')
     const index = experienceDOM.length ? parseInt(experienceDOM[experienceDOM.length - 1].getAttribute('experience-index')) + 1 : 0
     const property = 'experience'
@@ -176,6 +179,7 @@ $('#add-experience-btn').on('click', (event) => {
 
 $('#add-education-btn').on('click', (event) => {
     event.preventDefault();
+    event.stopPropagation()
     const educationDOM = $('.resume-content.education')
     const index = educationDOM.length ? parseInt(educationDOM[educationDOM.length - 1].getAttribute('education-index')) + 1 : 0
     const property = 'education'
@@ -270,6 +274,7 @@ $('.image-upload-wrap').bind('dragleave', function () {
 
 $('#update-resume-btn').on('click', (event) => {
     event.preventDefault();
+    event.stopPropagation()
     const resumeForm = document.getElementById('resume-form')
     const formData = new FormData(resumeForm)
 

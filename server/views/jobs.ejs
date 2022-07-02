@@ -14,82 +14,85 @@
     <main>
         <div class="container">
             <div id="search-bar" class="search-bar-container">
-                <div class="ui action input">
+                <div class="ui icon input">
                     <input type="text" placeholder="Search...">
-                    <button class="ui icon button">
-                        <i class="search icon"></i>
-                    </button>
+                    <i class="inverted circular search link icon"></i>
                 </div>
                 <div class="search-filter-container">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            工作地點
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <% for (let location of locations) { %>
-                                <a class="dropdown-item" href="/api/1.0/jobs?location[]=<%=location%>">
-                                    <%=location%>
-                                </a>
-                                <% } %>
-
-                        </div>
-                    </div>
                     <div class="ui menu">
                         <div class="ui pointing dropdown link item">
-                            <span class="text">Shopping</span>
+                            <span class="text">選擇地點</span>
                             <i class="dropdown icon"></i>
                             <div class="menu">
-                                <div class="header">Categories</div>
-                                <div class="item">
-                                    <i class="dropdown icon"></i>
-                                    <span class="text">Clothing</span>
-                                    <div class="menu">
-                                        <div class="header">Mens</div>
-                                        <div class="item">Shirts</div>
-                                        <div class="item">Pants</div>
-                                        <div class="item">Jeans</div>
-                                        <div class="item">Shoes</div>
-                                        <div class="divider"></div>
-                                        <div class="header">Womens</div>
-                                        <div class="item">Dresses</div>
-                                        <div class="item">Shoes</div>
-                                        <div class="item">Bags</div>
+                                <% for (let location of jobLocations) { %>
+                                    <div class="item query" query="location">
+                                        <%=location%>
                                     </div>
-                                </div>
-                                <div class="item">Home Goods</div>
-                                <div class="item">Bedroom</div>
-                                <div class="divider"></div>
-                                <div class="header">Order</div>
-                                <div class="item">Status</div>
-                                <div class="item">Cancellations</div>
+                                    <% } %>
+
+                            </div>
+                        </div>
+                        <div class="ui pointing dropdown link item">
+                            <span class="text">選擇產業</span>
+                            <i class="dropdown icon"></i>
+                            <div class="menu">
+                                <% for (let category of categoryPositions) { %>
+                                    <div class="item">
+                                        <i class="dropdown icon"></i>
+                                        <span class="text">
+                                            <%= category.category %>
+                                        </span>
+                                        <div class="menu">
+                                            <% for (let position of category.position) { %>
+                                                <div class="item query" query="position">
+                                                    <%=position%>
+                                                </div>
+                                                <% } %>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                            </div>
+                        </div>
+                        <div class="ui pointing dropdown link item">
+                            <span class="text">工作類型</span>
+                            <i class="dropdown icon"></i>
+                            <div class="menu">
+                                <% for (let type of jobType) { %>
+                                    <div class="item query" query="jobType">
+                                        <%= type %>
+                                    </div>
+                                    <% } %>
+                            </div>
+                        </div>
+                        <div class="ui pointing dropdown link item">
+                            <span class="text">工作標籤</span>
+                            <i class="dropdown icon"></i>
+                            <div class="menu">
+                                <% for (let tag of tags) { %>
+                                    <div class="item query" query="tags">
+                                        <%= tag %>
+                                    </div>
+                                    <% } %>
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            產業類別
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-                            <a class="dropdown-item" href="#">IT</a>
-                            <a class="dropdown-item" href="#">Semi-conductor</a>
-                        </div>
-                    </div> -->
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            薪資範圍
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">30,000 ~ 50,000 / year</a>
-                            <a class="dropdown-item" href="#">50,000 ~ 75,000 / year</a>
-                            <a class="dropdown-item" href="#">75,000 ~ 100,000 / year</a>
-                        </div>
-                    </div>
+                </div>
+                <div>
+                    <div class="ui input price"><input type="text" placeholder="下限"></div>
+                    ~
+                    <div class="ui input price"><input type="text" placeholder="上限"></div>
+                    <!-- <select class="ui dropdown">
+                        <option value="年薪">年薪</option>
+                        <option value="月薪">月薪</option>
+                    </select> -->
                 </div>
             </div>
+            <!-- <div class="tag-list">
+                <div class="tag">
+                    <p>python</p>
+                    <i class="close icon"></i>
+                </div>
+            </div> -->
             <div id="jobs" class="jobs-container">
                 <% for (let job of jobs) { %>
                     <div class="job-card">
@@ -117,7 +120,7 @@
                                         <circle cx="6.5" cy="6.5" r="2.5" />
                                     </g>
                                 </svg>
-                                <a href="/jobs?location[]=<%=job.location%>">
+                                <a href="/api/1.0/jobs?location[]=<%=job.location%>">
                                     <%=job.location%>
                                 </a>
                             </div>
@@ -133,10 +136,10 @@
                                     <path
                                         d="M27.3,15.055a7.4,7.4,0,1,1,7.455-7.4A7.437,7.437,0,0,1,27.3,15.055Zm0-12.3a4.9,4.9,0,1,0,4.955,4.9A4.935,4.935,0,0,0,27.3,2.75Z" />
                                 </svg>
-                                <a class="job-card-category-item" href="/jobs?category[]=<%= job.category%>">
+                                <a class="job-card-category-item" href="/api/1.0/jobs?category[]=<%= job.category%>">
                                     <%= job.category%>
                                 </a>
-                                <a class="job-card-category-item" href="/jobs?position[]=<%= job.position%>">
+                                <a class="job-card-category-item" href="/api/1.0/jobs?position[]=<%= job.position%>">
                                     <%= job.position%>
                                 </a>
                             </div>
@@ -147,7 +150,7 @@
                                     <path d="M2 18 L18 2 30 2 30 14 14 30 Z" />
                                 </svg>
                                 <% for (let tag of job.tags) { %>
-                                    <a class="job-tag">
+                                    <a class="job-tag" href="/api/1.0/jobs?tags[]=<%= tag%>">
                                         <%= tag%>
                                     </a>
                                     <% } %>
@@ -160,6 +163,7 @@
     </main>
     <footer>
         <%- include layout/footer %>
+            <script src="/js/job.js"></script>
     </footer>
 </body>
 
