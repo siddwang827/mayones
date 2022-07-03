@@ -42,9 +42,75 @@ class Job {
         return result
     }
 
+    static async findJobs(pageSize, paging, jobQuery) {
+        let condition = []
+        let binding = []
+
+        Object.keys(jobQuery).forEach(queryType => {
+            switch (queryType) {
+                case 'location': {
+                    jobQuery[queryType].forEach(location => {
+                        condition.push('all_jobs.location = ?')
+                        binding.push(location)
+                    })
+                    break
+                }
+                case 'category': {
+                    jobQuery[queryType].forEach(category => {
+                        condition.push('all_jobs.category = ?')
+                        binding.push(category)
+                    })
+                    break
+                }
+                case 'position': {
+                    jobQuery[queryType].forEach(position => {
+                        condition.push('all_jobs.position = ?')
+                        binding.push(position)
+                    })
+                    break
+                }
+                case 'jobType': {
+                    jobQuery[queryType].forEach(job_type => {
+                        condition.push('all_jobs.job_type = ?')
+                        binding.push(job_type)
+                    })
+                    break
+                }
+                case 'tag': {
+                    jobQuery[queryType].forEach(tag => {
+                        condition.push("all_jobs.tags like ?")
+                        binding.push(`%${tag}%`)
+                    })
+                    break
+                }
+            }
+        })
+
+        let sql = `
+        SELECT * FROM
+            (SELECT jobs.id , companies.id AS company_id, brand, job_title AS title, job_type, category_position.category, category_position.position,  salary_top, salary_bottom, location, address, remote_work, logo_image, banner_image, jobs.update_at ,JSON_ARRAYAGG(tags.tag_name) AS tags
+            FROM mayones.jobs
+            left JOIN mayones.companies
+            ON jobs.companies_id = companies.id
+            LEFT JOIN mayones.jobs_tags
+            ON jobs.id = jobs_tags.jobs_id
+            LEFT JOIN mayones.tags
+            ON jobs_tags.tags_id = tags.id
+            LEFT JOIN mayones.category_position
+            ON jobs.category_position_id = category_position.id
+            GROUP BY jobs.id
+            ORDER BY jobs.update_at DESC ) AS all_jobs
+        `
+        sql += 'WHERE ' + condition.join(' AND ')
+
+        const result = await queryDB(sql, binding)
+        return result
+    }
+
+
     static async getAllJobs(pageSize) {
         const sql = `
-        SELECT jobs.id , companies.id AS company_id, brand, job_title AS title, category_position.category, category_position.position, JSON_ARRAYAGG(tags.tag_name) AS tags, salary_top, salary_bottom, location, address, remote_work, logo_image, banner_image, jobs.update_at
+        SELECT jobs.id , companies.id AS company_id, brand, job_title AS title, category_position.category, category_position.position, salary_top, salary_bottom, location, address, remote_work, logo_image, banner_image, jobs.update_at, JSON_ARRAYAGG(tags.tag_name) AS tags
         FROM mayones.jobs
         INNER JOIN mayones.companies
         ON jobs.companies_id = companies.id

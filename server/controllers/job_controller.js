@@ -9,10 +9,8 @@ let header = { view: "job", auth: false }
 
 
 const getJobs = async (req, res) => {
-    const jobQuery = req.query
-    console.log(jobQuery)
+    let jobQuery = req.query
     const paging = parseInt(req.query.paging) || 0
-    const category = req.query.category || null
 
     // render tempale parameter
     const categoryPositions = await Job.getCategory()
@@ -43,7 +41,10 @@ const getJobs = async (req, res) => {
     }
 
     try {
-        const jobs = await Job.getAllJobs(pageSize, paging, jobQuery)
+        let jobs;
+
+        if (Object.keys(jobQuery).length !== 0) { jobs = await Job.findJobs(pageSize, paging, jobQuery) }
+        else { jobs = await Job.getAllJobs(pageSize, paging) }
         res.render('jobs', { jobs, header, jobLocations, categoryPositions, jobTypes, jobTags })
 
     }

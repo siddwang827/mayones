@@ -15,29 +15,6 @@ const companyLocations = [
     "海外"
 ]
 
-// const companyCategories = [
-//     "網路",
-//     "教育 / 線上課程",
-//     "FinTech / 區塊",
-//     "行銷 / 媒體 / 廣告",
-//     "旅遊",
-//     "軟體開發",
-//     "實體零售",
-//     "半導體",
-//     "生物 / 醫療科技",
-//     "運動 / 健康",
-//     "社會企",
-//     "電商 / O2O",
-//     "設計 / 文創",
-//     "物聯網 / 硬體",
-//     "VR / 動畫 / 遊戲",
-//     "SaaS / 商務服務",
-//     "娛樂媒體",
-//     "金融",
-//     "服務 / 物業管理",
-//     "資訊安全",
-// ]
-
 class Company {
     constructor(ownerId, brand, website, category, shrotDescription, location, address, introduction, philosophy, story, benifit, logoImage, bannerImage) {
         this.ownerId,
@@ -58,6 +35,53 @@ class Company {
     async createCompany() {
 
     }
+
+    static async findCompanies(pageSize, paging, companyQuery) {
+        let condition = []
+        let binding = []
+        Object.keys(companyQuery).forEach(queryType => {
+            switch (queryType) {
+                case 'location': {
+                    companyQuery[queryType].forEach(location => {
+                        condition.push('all_companies.location = ?')
+                        binding.push(location)
+                    })
+                    break
+                }
+                case 'category': {
+                    companyQuery[queryType].forEach(category => {
+                        condition.push('all_companies.category = ?')
+                        binding.push(category)
+                    })
+                    break
+                }
+                case 'tag': {
+                    companyQuery[queryType].forEach(tag => {
+                        condition.push("all_companies.tags like ?")
+                        binding.push(`%${tag}%`)
+                    })
+                    break
+                }
+            }
+        })
+
+        let sql = `
+        SELECT * FROM
+            (SELECT companies.id, brand, short_description, category, company_location AS location, logo_image, banner_image, JSON_ARRAYAGG(tags.tag_name) AS tags
+            FROM mayones.companies
+            LEFT JOIN mayones.companies_tags
+            ON companies.id = companies_tags.companies_id
+            LEFT JOIN mayones.tags
+            ON companies_tags.tags_id = tags.id
+            GROUP BY companies.id) AS all_companies
+        `
+        sql += 'WHERE ' + condition.join(' AND ')
+
+        const result = await queryDB(sql, binding)
+        return result
+
+    }
+
 
     static async getAllCompanies(pageSize, paging) {
         const sql = `

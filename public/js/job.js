@@ -1,11 +1,5 @@
 const api = 'api/1.0';
 
-
-let jobLocation = ["台北市", "新北市", "桃園市", "新竹市", "新竹縣", "台中市", "彰化縣", "嘉義市", "台南市", "高雄市", "花蓮縣", "海外"];
-let jobCategory = {
-    "軟體開發": ["後端工程", "前端工程", "全端工程", "測試工程", "遊戲開發", "行動裝置開發", "DevOp]s / SRE"],
-}
-
 async function createTagsDOMFromSearch() {
     function createDOM(queryType, tag) {
         tag = decodeURIComponent(tag)
@@ -34,7 +28,6 @@ async function createTagsDOMFromSearch() {
             createDOM(queryType, tag)
         })
     }
-    // tag = decodeURIComponent(tag)
 }
 
 // async function getAllJobs() {
@@ -112,13 +105,12 @@ $('.query').on('click', (e) => {
     const queryType = e.target.getAttribute('query')
     const newParam = `${queryType}[]=${tag}`
     const params = window.location.search
+    const nowURL = window.location
     const timeStamp = e.timeStamp
     if (!params) {
-        // history.pushState(null, null, `${window.location}?${newParam}`)
-        window.location = `${window.location}?${newParam}`
+        window.location = `${nowURL}?${newParam}`
     } else {
-        // history.pushState(null, null, `${window.location}&${newParam}`)
-        window.location = `${window.location}&${newParam}`
+        window.location = `${nowURL}&${newParam}`
     }
     if (!$('.tag-list').length) {
         $('<div class="tag-list"></div>').insertBefore($('#jobs'))
@@ -146,7 +138,23 @@ async function removeTag(event) {
     if (searchArr.length === 0) {
         window.location = "/api/1.0/jobs"
     } else {
-        const newSearch = `?${searchArr.join('&')}`
-        window.location = newSearch
+        window.location = `?${searchArr.join('&')}`
     }
 }
+
+
+$('#search-input').on('keypress', event => {
+    if (event.key === 'Enter' || event.keyCode === 13) {
+        let keyword = event.target.value;
+        window.location.href = `?tag[]=${keyword}`
+    }
+})
+
+$('#search-btn').on('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const inputID = event.target.getAttribute('input-id')
+    const keyword = $(`#${inputID}`).val()
+    window.location.href = `?tag[]=${keyword}`
+})
+

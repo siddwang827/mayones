@@ -15,8 +15,8 @@
         <div class="container">
             <div id="search-bar" class="search-bar-container">
                 <div class="ui icon input">
-                    <input type="text" placeholder="Search...">
-                    <i class="inverted circular search link icon"></i>
+                    <input id="search-input" type="text" placeholder="請輸入欲搜尋之關鍵字">
+                    <i id="search-btn" class="inverted circular search link icon" input-id="search-input"></i>
                 </div>
                 <div class="search-filter-container">
                     <div class="ui menu">
@@ -77,15 +77,15 @@
                         </div>
                     </div>
                 </div>
-                <div>
+                <!-- <div>
                     <div class="ui input price"><input type="text" placeholder="下限"></div>
                     ~
                     <div class="ui input price"><input type="text" placeholder="上限"></div>
-                    <!-- <select class="ui dropdown">
+                    <select class="ui dropdown">
                         <option value="年薪">年薪</option>
                         <option value="月薪">月薪</option>
-                    </select> -->
-                </div>
+                    </select>
+                </div> -->
             </div>
             <div class="tag-list">
             </div>

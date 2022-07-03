@@ -8,9 +8,9 @@ let header = { view: "company", auth: false }
 
 
 const getCompanies = async (req, res) => {
-    const companyQuery = req.query
+    let companyQuery = req.query
     const paging = parseInt(req.query.paging) || 0
-    const category = req.query.category || null
+
 
     // render tempale parameter
     const { companyCatories } = await Company.getCategories()
@@ -37,8 +37,15 @@ const getCompanies = async (req, res) => {
         header.role = req.user.role
         header.username = req.user.username
     }
+
     try {
-        const companies = await Company.getAllCompanies(pageSize, companyQuery)
+        let companies
+        if (Object.keys(companyQuery).length !== 0) {
+            companies = await Company.findCompanies(pageSize, paging, companyQuery)
+        }
+        else {
+            companies = await Company.getAllCompanies(pageSize,)
+        }
         res.render('companies', { companies, header, companyLocations, companyCatories, companyTags })
     }
     catch (err) {
