@@ -20,11 +20,14 @@
                             <% } %>
                                 <% } %>
     </div>
-    <div class="navigation-role">
+    <div class="navigation-role profile">
         <% if (header.auth) { %>
-            <a class="navigation-item" href="/api/1.0/employee/signin">
-                <%= header.username%>
-            </a>
+            <div id="profile-btn" class="navigation-item profile-btn">
+                <i class="user icon"></i>
+                <p>
+                    <%= header.username%>
+                </p>
+            </div>
             <% } else { -%>
                 <% if (header.role==="employer" ) { -%>
                     <a class="navigation-item active" href="/api/1.0/employer/signin">企業主</a>
@@ -37,5 +40,24 @@
                             <a class="navigation-item" href="/api/1.0/employee/signin">求職者</a>
                             <% } %>
                                 <% } %>
+
+    </div>
+    <div id="profile-dropdown" class="profile-dropdown">
+        <div class="profile-dropdown-items">
+            <i class="file alternate icon profile-icon"></i>
+            <a href="/api/1.0/resumeEdit">編輯履歷</a>
+        </div>
+        <div class="profile-dropdown-items">
+            <i class="heart icon profile-icon"></i>
+            <a href="/api/1.0/follows">收藏職缺</a>
+        </div>
+        <div class="profile-dropdown-items">
+            <i class="paper plane icon profile-icon"></i>
+            <a href="/api/1.0/application">投遞職缺</a>
+        </div>
+        <div class="profile-dropdown-items">
+            <i class="user outline icon profile-icon"></i>
+            <a href="/api/1.0/logout">登出</a>
+        </div>
     </div>
 </div>
