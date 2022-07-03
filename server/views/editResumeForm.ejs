@@ -3,6 +3,8 @@
 
 <head>
     <%- include /layout/head %>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="/css/main.css">
         <link rel="stylesheet" type="text/css" href="/css/resume.css">
 </head>
@@ -12,79 +14,323 @@
         <%- include layout/header %>
     </header>
     <main>
-        <div class="container">
-            <div class="resume-item">
 
-                <div class="resume-content">
-                    <form class="form" enctype="multipart/form-data" accept-charset="UTF-8" method="post">
-                        <div class="form-group require">
-                            <label for="name" class="required">姓名</label>
-                            <div class="input-wrap">
-                                <input name="name" class="form-control" id="name" value="王浩宇">
+        <div class="container">
+            <div class="resume-item fixed">
+                <h3 class="resume-item-title"><strong>基本資料</strong></h3>
+                <div class="icon-edit"><i class="edit outline icon" modal-id="info-modal"></i></div>
+            </div>
+            <div class="resume-item fixed">
+                <h3 class="resume-item-title"><strong>簡歷</strong></h3>
+                <div class="icon-edit"><i class="edit outline icon" modal-id="bio-modal"></i></div>
+            </div>
+            <div class="resume-item draggable">
+                <div class="icon"><i class="bars icon"></i></div>
+                <h3 class="resume-item-title"><strong>專業技能</strong></h3>
+                <div class="icon-edit"><i class="edit outline icon" modal-id="skill-modal"></i></div>
+
+            </div>
+            <div class="resume-item draggable">
+                <div class="icon"><i class="bars icon"></i></div>
+                <h3 class="resume-item-title"><strong>專案及作品集</strong></h3>
+                <div class="icon-edit"><i class="edit outline icon" modal-id="project-modal"></i></div>
+
+            </div>
+            <div class="resume-item draggable">
+                <div class="icon"><i class="bars icon"></i></div>
+                <h3 class="resume-item-title"><strong>工作經驗</strong></h3>
+                <div class="icon-edit"><i class="edit outline icon" modal-id="experience-modal"></i></div>
+
+            </div>
+            <div class="resume-item draggable">
+                <div class="icon"><i class="bars icon"></i></div>
+                <h3 class="resume-item-title"><strong>學歷</strong></h3>
+                <div class="icon-edit"><i class="edit outline icon" modal-id="education-modal"></i></div>
+            </div>
+            <div class="update-btn">
+                <button class="ui medium inverted secondary button confirm-btn" id="update-resume-btn">上傳履歷</button>
+            </div>
+        </div>
+        <form id="resume-form">
+            <div class="modal-container">
+                <div class="modal" id="info-modal">
+                    <div class="resume-item-modal">
+                        <h3 class="resume-item-modal-title"><strong>基本資料</strong></h3>
+                        <div class="resume-content">
+                            <div class="form-group">
+                                <label for="name" class="required">姓名</label>
+                                <div class="input-wrap">
+                                    <input name="name" class="form-control" id="name">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group require">
-                            <label for="user-gender-male">性別</label>
-                            <div class="input-wrap">
-                                <input type="radio" name="gender" id="user-gender-male" value="male">
-                                <label for="user-gender-male">男</label>
-                                <input type="radio" name="gender" id="user-gender-female" value="female">
-                                <label for="user-gender-female">女</label>
-                                <input type="radio" name="gender" id="user-gender-others" value="others">
-                                <label for="user-gender-others">其他</label>
-                                <input type="radio" name="gender" id="user-gender-hidden" value="hidden">
-                                <label for="user-gender-hidden">不透露</label>
+                            <div class="form-group">
+                                <label for="user-gender-male">性別</label>
+                                <div class="input-wrap">
+                                    <input type="radio" name="gender" id="user-gender-male" value="男">
+                                    <label for="user-gender-male">男</label>
+                                    <input type="radio" name="gender" id="user-gender-female" value="女">
+                                    <label for="user-gender-female">女</label>
+                                    <input type="radio" name="gender" id="user-gender-others" value="其他">
+                                    <label for="user-gender-others">其他</label>
+                                    <input type="radio" name="gender" id="user-gender-hidden" value="hidden">
+                                    <label for="user-gender-hidden">不透露</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="birthday">生日
-                            </label>
-                            <div class="ui calendar">
-                                <div class="ui input left icon">
-                                    <i class="calendar icon"></i>
-                                    <input name="birthday" class="form-control" id="birthday" type="date" value="2020-02-03">
+                            <div class="form-group">
+                                <label for="birthday">生日
+                                </label>
+                                <div class="ui calendar">
+                                    <div class="ui input left icon">
+                                        <i class="calendar icon"></i>
+                                        <input name="birthday" class="form-control" id="birthday" type="date" value="2020-02-03">
+                                    </div>
+                                    <input id="show-birthday-input" type="checkbox" name="showBirthday" value=true>
+                                    <label for="show-birthday-input" class="show-checkbox">公開生日資訊</label>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">電話</label>
+                                <div class="input-wrap">
+                                    <input name="phone" class="form-control" id="phone" type="tel" value="">
+                                </div>
+                            </div>
+                            <div class="form-group" id="email-form-group">
+                                <label for="email" class="required">連絡信箱</label>
+                                <div class="input-wrap">
+                                    <input name="emailContact" class="form-control" id="emailContact" type="email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="personal-page-url">個人網站連結</label>
+                                <div class="input-wrap">
+                                    <input name="personalPageUrl" class="form-control" id="personal-page-url">
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group require">
-                            <label for="phone">電話</label>
-                            <div class="input-wrap">
-                                <input name="phone" class="form-control" id="phone" type="tel" value="">
+                        <div class="action-bar only">
+                            <button class="ui medium secondary button confirm-btn">確定</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal" id="bio-modal">
+                    <div class="resume-item-modal">
+                        <h3 class="resume-item-modal-title"><strong>簡歷</strong></h3>
+                        <div class="resume-content">
+                            <div class="form-group require">
+                                <div class="input-wrap">
+                                    <textarea name="bio" class="form-control" id="bio" rows=20 value=""></textarea>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group require" id="email-form-group">
-                            <label for="email" class="required">連絡信箱</label>
-                            <div class="input-wrap">
-                                <input name="emailContact" class="form-control" id="emailContact" type="email" value="awaitcabal@hotmail.com">
-                            </div>
+                        <div class="action-bar only">
+                            <button class="ui medium secondary button confirm-btn">確定</button>
                         </div>
-                        <div class="form-group">
-                            <label for="personal-page-title">個人網站標題</label>
-                            <div class="input-wrap">
-                                <input name="personalPageTitle" class="form-control" id="personal-page-title" placeholder="此欄位留白時，將顯示個人網站之連結網址..."
-                                    value="">
+                    </div>
+                </div>
+                <div class="modal" id="skill-modal">
+                    <div class="resume-item-modal">
+                        <h3 class="resume-item-modal-title"><strong>專業技能</strong></h3>
+                        <div id="resume-skill-list">
+                            <!-- <div id="skill-item-0" class="resume-content skill" skill-index="0">
+                            <div class="content-container">
+                                <div class="form-group skill">
+                                    <label for="skill-name">技能名稱</label>
+                                    <div class="input-wrap">
+                                        <input name="skillName" class="form-control" id="skill-name-0">
+                                    </div>
+                                </div>
+                                <div class="form-group skill">
+                                    <label for="skill-proficiency">熟練程度</label>
+                                    <div class="input-wrap">
+                                        <select class="ui dropdown select" name="proficiency" id="skill-proficiency-0">
+                                            <option value="beginner">初階</option>
+                                            <option value="intermediate">熟練</option>
+                                            <option value="expert">精通</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="personal-page-url">個人網站連結</label>
-                            <div class="input-wrap">
-                                <input name="personalPageUrl" class="form-control" id="personal-page-url" value="">
+                            <div class="form-group">
+                                <label for="skill-info">技能描述</label>
+                                <div class="input-wrap">
+                                    <textarea name="skillInfo" class="form-control" id="skill-info-0" rows=1></textarea>
+                                </div>
                             </div>
+                            <div class="remove-btn">
+                                <button class="ui medium negative button" id="remove-skill-btn-0" skill-index="0">刪除</button>
+                            </div>
+                        </div> -->
                         </div>
-                    </form>
+                        <div class="action-bar">
+                            <button class="ui medium inverted secondary button" id="add-skill-btn">新增技能</button>
+                            <button class="ui medium secondary button confirm-btn">確定</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal" id="project-modal">
+                    <div class="resume-item-modal">
+                        <h3 class="resume-item-modal-title"><strong>專案及作品集</strong></h3>
+                        <div id="resume-project-list">
+                            <!-- <div class="resume-content-project col">
+                            <div class="content-container">
+                                <div class="content-container-col">
+                                    <div class="form-group">
+                                        <label for="project-title">專案名稱</label>
+                                        <div class="input-wrap">
+                                            <input name="projectTile" class="form-control" id="project-title"></input>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="project-link">專案連結</label>
+                                        <div class="input-wrap">
+                                            <input name="projectLink" class="form-control" id="project-link"></input>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="project-info">專案描述</label>
+                                        <div class="input-wrap">
+                                            <textarea name="projectInfo" class="form-control" id="project-info" rows=1 value=""></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="image-upload-wrap">
+                                    <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
+                                    <div class="drag-text">
+                                        <p>Drag and drop a file or select add Image</p>
+                                    </div>
+                                </div>
+                                <div class="file-upload-content">
+                                    <img class="file-upload-image" src="#" alt="your image" />
+                                    <div class="image-title-wrap">
+                                        <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded
+                                                Image</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="remove-btn">
+                                <button class="ui medium negative button" id="remove-project-btn-0" skill-index="0">刪除</button>
+                            </div>
+                        </div> -->
+                        </div>
+                        <div class="action-bar">
+                            <button class="ui medium inverted secondary button" id="add-project-btn">新增專案</button>
+                            <button class="ui medium secondary button confirm-btn">確定</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal" id="experience-modal">
+                    <div class="resume-item-modal">
+                        <h3 class="resume-item-modal-title"><strong>工作經驗</strong></h3>
+                        <div id="resume-experience-list" class="resume-experience-list">
+                            <!-- <div id="experience-item-0" class="resume-content experience" experience-index="0">
+                            <div class="content-container experience">
+                                <div class="form-group">
+                                    <label for="experience-title">職位</label>
+                                    <div class="input-wrap">
+                                        <input name="experienceName" class="form-control" id="experience-title-0">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="experience-company-name">組織名稱</label>
+                                    <div class="input-wrap">
+                                        <input name="experienceCompanyName" class="form-control" id="experience-company-name-0">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="experience-time-start">起始時間</label>
+                                    <div class="input-wrap">
+                                        <input name="experienceTimeStart" class="form-control" id="experience-time-start-0" type="month">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="experience-time-end">結束時間</label>
+                                    <div class="input-wrap">
+                                        <input name="experienceTimeEnd" class="form-control" id="experience-time-end-0" type="month">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="experience-info-0">內容描述</label>
+                                <div class="input-wrap">
+                                    <textarea name="experienceInfo" class="form-control" id="experience-info-0" rows=1></textarea>
+                                </div>
+                            </div>
+                            <div class="remove-btn">
+                                <button class="ui medium negative button" id="remove-experience-btn-0" experience-index="0">刪除</button>
+                            </div>
+                        </div> -->
+                        </div>
+                        <div class="action-bar">
+                            <button class="ui medium inverted secondary button" id="add-experience-btn">新增經歷</button>
+                            <button class="ui medium secondary button confirm-btn">確定</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal" id="education-modal">
+                    <div class="resume-item-modal">
+                        <h3 class="resume-item-modal-title"><strong>學歷</strong></h3>
+                        <div id="resume-education-list" class="resume-education-list">
+                            <!-- <div id="education-item-0" class="resume-content education" education-index="0">
+                            <div class="form-group">
+                                <label for="education-title">學校名稱</label>
+                                <div class="input-wrap">
+                                    <input name="experienceName" class="form-control" id="education-title-0">
+                                </div>
+                            </div>
+                            <div class="content-container education">
+                                <div class="form-group">
+                                    <label for="education-department">系所</label>
+                                    <div class="input-wrap">
+                                        <input name="educationDepartment" class="form-control" id="education-department-0">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="education-degree">學位</label>
+                                    <div class="input-wrap">
+                                        <input name="educationeDegree" class="form-control" id="education-degree-0">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="education-time-start">起始時間</label>
+                                    <div class="input-wrap">
+                                        <input name="educationTimeStart" class="form-control" id="education-time-start-0" type="month">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="education-time-end">結束時間</label>
+                                    <div class="input-wrap">
+                                        <input name="educationTimeEnd" class="form-control" id="education-time-end-0" type="month">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="remove-btn">
+                                <button class="ui medium negative button" id="remove-education-btn-0" education-index="0">刪除</button>
+                            </div>
+                        </div> -->
+                        </div>
+                        <div class="action-bar">
+                            <button class="ui medium inverted secondary button" id="add-education-btn">新增學歷</button>
+                            <button class="ui medium secondary button confirm-btn">確定</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-        </div>
-
-
-
+        </form>
     </main>
 
-    <!-- <footer>
+    <footer>
         <%- include /layout/footer %>
+            <!-- for bootstrap modal -->
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"
+                integrity="sha512-zYXldzJsDrNKV+odAwFYiDXV2Cy37cwizT+NkuiPGsa9X1dOz04eHvUWVuxaJ299GvcJT31ug2zO4itXBjFx4w==" crossorigin="anonymous"
+                referrerpolicy="no-referrer"></script>
             <script src="/js/editResume.js"></script>
-    </footer> -->
+    </footer>
 </body>
 
 </html>

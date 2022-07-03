@@ -1,16 +1,16 @@
 const router = require('express').Router();
 const { authentication, asyncHandlerWrapper } = require('../../utils/utils.js')
 
-const { getAllCompanies,
+const { getCompanies,
     getCompanyDetail,
     createCompany,
     deleteCompany } = require('../controllers/company_controller.js')
 
 router.route('/companies')
-    .get(authentication(), asyncHandlerWrapper(getAllCompanies))
+    .get(asyncHandlerWrapper(getCompanies))
 
 router.route('/company/:id')
-    .get(authentication(), asyncHandlerWrapper(getCompanyDetail))
+    .get(asyncHandlerWrapper(getCompanyDetail))
 
 router.route('/company')
     .post(authentication(), asyncHandlerWrapper(createCompany))

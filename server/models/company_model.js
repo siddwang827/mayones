@@ -1,5 +1,20 @@
 const { queryDB } = require('./mysql_conn.js')
 
+const companyLocations = [
+    "台北市",
+    "新北市",
+    "桃園市",
+    "新竹市",
+    "新竹縣",
+    "台中市",
+    "彰化縣",
+    "嘉義市",
+    "台南市",
+    "高雄市",
+    "花蓮縣",
+    "海外"
+]
+
 class Company {
     constructor(ownerId, brand, website, category, shrotDescription, location, address, introduction, philosophy, story, benifit, logoImage, bannerImage) {
         this.ownerId,
@@ -20,6 +35,53 @@ class Company {
     async createCompany() {
 
     }
+
+    static async findCompanies(pageSize, paging, companyQuery) {
+        let condition = []
+        let binding = []
+        Object.keys(companyQuery).forEach(queryType => {
+            switch (queryType) {
+                case 'location': {
+                    companyQuery[queryType].forEach(location => {
+                        condition.push('all_companies.location = ?')
+                        binding.push(location)
+                    })
+                    break
+                }
+                case 'category': {
+                    companyQuery[queryType].forEach(category => {
+                        condition.push('all_companies.category = ?')
+                        binding.push(category)
+                    })
+                    break
+                }
+                case 'tag': {
+                    companyQuery[queryType].forEach(tag => {
+                        condition.push("all_companies.tags like ?")
+                        binding.push(`%${tag}%`)
+                    })
+                    break
+                }
+            }
+        })
+
+        let sql = `
+        SELECT * FROM
+            (SELECT companies.id, brand, short_description, category, company_location AS location, logo_image, banner_image, JSON_ARRAYAGG(tags.tag_name) AS tags
+            FROM mayones.companies
+            LEFT JOIN mayones.companies_tags
+            ON companies.id = companies_tags.companies_id
+            LEFT JOIN mayones.tags
+            ON companies_tags.tags_id = tags.id
+            GROUP BY companies.id) AS all_companies
+        `
+        sql += 'WHERE ' + condition.join(' AND ')
+
+        const result = await queryDB(sql, binding)
+        return result
+
+    }
+
 
     static async getAllCompanies(pageSize, paging) {
         const sql = `
@@ -77,8 +139,34 @@ class Company {
         `
         const result = await queryDB(sql, id)
         return result
+    }
 
+    static async getCompanyTags() {
+        const sql = `
+        SELECT JSON_ARRAYAGG(tags_arr.tags) companyTags
+        FROM (
+            SELECT tag_name AS tags
+            FROM mayones.tags
+            WHERE classification = 'company'
+            ORDER BY tags.counts DESC
+            ) AS tags_arr
+        `
+        const [result] = await queryDB(sql)
+        return result
+    }
+
+    static async getCategories() {
+        const sql = `
+        SELECT JSON_ARRAYAGG(categories_arr.category) companyCatories
+        FROM (
+            SELECT category 
+            FROM mayones.categories
+            ORDER BY categories.counts DESC
+            ) AS categories_arr
+        `
+        const [result] = await queryDB(sql)
+        return result
     }
 }
 
-module.exports = Company
+module.exports = { Company, companyLocations }

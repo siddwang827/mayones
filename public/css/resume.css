@@ -1,6 +1,109 @@
+/* ===== image upload ===== */
+
+body {
+    font-family: sans-serif;
+    background-color: #eeeeee;
+}
+
+.file-upload {
+    background-color: #ffffff;
+    width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.file-upload-content {
+    display: none;
+    text-align: center;
+}
+
+.file-upload-input {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.image-upload-wrap {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+    border: 4px dashed #666666;
+    position: relative;
+    border-radius: 10px;
+}
+
+.image-dropping,
+.image-upload-wrap:hover {
+    background-color: #bebebe;
+    border: 4px dashed #ffffff;
+}
+
+.image-title-wrap {
+
+    padding: 0 15px 15px 15px;
+    color: #222;
+}
+
+.drag-text {
+    text-align: center;
+}
+
+.drag-text p {
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #666666;
+    padding: 60px 0;
+}
+
+.file-upload-image {
+    max-height: 200px;
+    max-width: 200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.remove-image {
+    width: 200px;
+    margin: 0;
+    color: #fff;
+    background: #cd4535;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    border-bottom: 4px solid #b02818;
+    transition: all .2s ease;
+    outline: none;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.remove-image:hover {
+    background: #c13b2a;
+    color: #ffffff;
+    transition: all .2s ease;
+    cursor: pointer;
+}
+
+.remove-image:active {
+    border: 0;
+    transition: all .2s ease;
+}
+
+/* ===== resume ===== */
+
 #container {
     width: 1000px;
     margin: 20px auto;
+}
+
+label {
+    font-weight: bold
 }
 
 .ck-editor__editable[role="textbox"] {
@@ -12,4 +115,126 @@
     /* block images */
     max-width: 80%;
     margin: 20px auto;
+}
+
+.resume-item {
+    display: flex;
+    align-items: center;
+    margin: 10px 5px;
+    background: #fff;
+    border: 1px solid #f2f2f2;
+    border-radius: 8px;
+    box-shadow: 2px 3px 0 #f2f2f2;
+    padding: 20px 15px
+}
+
+
+.draggable:hover {
+    box-shadow: 2px 3px 4px #dbdbdb;
+    cursor: grab;
+}
+
+
+.fixed {
+    padding-left: 40px
+}
+
+.on-dragging,
+.sortable-chosen {
+    cursor: grabbing !important;
+}
+
+.resume-item-container {
+    display: flex;
+}
+
+.resume-item-title {
+    margin: 0 5px;
+}
+
+.icon-edit {
+    margin-left: auto;
+    cursor: pointer
+}
+
+.icon-edit:hover {
+    color: rgb(199, 0, 0);
+    transition: color 200ms
+}
+
+.resume-content {
+    background: #fff;
+    border: 1px solid #c0c0c0;
+    border-radius: 8px;
+    box-shadow: 2px 3px 3px #b3b3b3;
+    padding: 15px 20px;
+    margin-bottom: 20px
+}
+
+
+.resume-content.project.col {
+    display: flex;
+    flex-direction: column
+}
+
+.content-container {
+    display: flex;
+    width: 100%
+}
+
+.content-container.experience,
+.content-container.education {
+    justify-content: space-between;
+}
+
+
+
+
+.content-container-col {
+    display: flex;
+    flex-direction: column;
+    width: 100%
+}
+
+.content-container .skill {
+    width: 200px;
+    margin-right: 40px
+}
+
+
+.resume-item-modal {
+    display: flex;
+    flex-direction: column;
+    margin: 100px auto;
+    width: 1000px;
+    background: #fff;
+    background: #fff;
+    border: 1px solid #f2f2f2;
+    border-radius: 8px;
+    box-shadow: 2px 3px 0 #f2f2f2;
+    padding: 20px 15px
+}
+
+.resume-item-modal-title {
+    margin-bottom: 10px
+}
+
+.action-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto
+}
+
+.action-bar.only {
+    justify-content: right
+}
+
+.remove-btn,
+.update-btn {
+    display: flex;
+    justify-content: right
+}
+
+.update-btn {
+    margin-top: 50px
 }

@@ -11,6 +11,38 @@ async function viewCompanyDetail(event) {
 }
 
 
+
+async function createTagsDOMFromSearch() {
+    function createDOM(queryType, tag) {
+        tag = decodeURIComponent(tag)
+        const timeStamp = Date.now()
+        if (!$('.tag-list').length) {
+            $('<div class="tag-list"></div>').insertAfter($('#search-bar'))
+        }
+        $('.tag-list').append(`
+            <div class= "tag-label ${queryType}" id = "${queryType}-${timeStamp}">
+                <p>${tag}</p>
+                <i class="close icon" tag-label="${queryType}-${timeStamp}" data-type="${queryType}"></i>
+            </div>
+            `)
+        $(`#${queryType}-${timeStamp}`).on('click', removeTag)
+    }
+    const search = window.location.search.slice(1)
+    if (!search) { return }
+    let queryItems = search.split('&')
+    if (queryItems.length === 1) {
+        let [queryType, tag] = queryItems[0].split('[]=')
+        createDOM(queryType, tag)
+    }
+    else {
+        queryItems.forEach((queryItem) => {
+            let [queryType, tag] = queryItem.split('[]=')
+            createDOM(queryType, tag)
+        })
+    }
+    // tag = decodeURIComponent(tag)
+}
+
 // async function getAllCompanies() {
 
 //     const fetchResult = await fetch(`./companiesjs`)
@@ -83,3 +115,53 @@ async function viewCompanyDetail(event) {
 
 
 
+
+$(document).ready(function () {
+    createTagsDOMFromSearch();
+    $('.ui.dropdown').dropdown();
+});
+
+
+$('.query').on('click', (e) => {
+    const tag = e.target.innerText
+    const queryType = e.target.getAttribute('query')
+    const newParam = `${queryType}[]=${tag}`
+    const params = window.location.search
+    const timeStamp = e.timeStamp
+    if (!params) {
+        // history.pushState(null, null, `${window.location}?${newParam}`)
+        window.location = `${window.location}?${newParam}`
+    } else {
+        // history.pushState(null, null, `${window.location}&${newParam}`)
+        window.location = `${window.location}&${newParam}`
+    }
+    if (!$('.tag-list').length) {
+        $('<div class="tag-list"></div>').insertAfter($('#search-bar'))
+    }
+
+    $('.tag-list').append(`
+        <div class= "tag-label ${queryType}" id = "${queryType}-${timeStamp}">
+            <p>${tag}</p>
+            <i class="close icon" tag-label="${queryType}-${timeStamp}" data-type="${queryType}"></i>
+        </div>
+        `)
+
+    $(`#${queryType}-${timeStamp}`).on('click', removeTag)
+
+})
+
+async function removeTag(event) {
+    const label = event.target.getAttribute('tag-label')
+    const queryType = event.target.getAttribute('data-type')
+    const query = document.getElementById(`${label}`).innerText
+    $(`#${label}`).remove()
+    const search = window.location.search.slice(1).replaceAll('/', '%2F')
+    const thisTag = `${queryType}[]=${encodeURIComponent(query)}`
+    const searchArr = search.split('&').filter(param => param !== thisTag)
+    if (searchArr.length === 0) {
+        window.location = "/api/1.0/companies"
+    } else {
+        const newSearch = `?${searchArr.join('&')}`
+        window.location = newSearch
+    }
+}

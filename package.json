@@ -24,6 +24,7 @@
     "semantic-ui-icon": "^2.3.3",
     "serve-favicon": "^2.5.0",
     "simplemde": "^1.11.2",
+    "sortablejs": "^1.15.0",
     "validator": "^13.7.0"
   }
 }
