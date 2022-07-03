@@ -57,7 +57,7 @@
                             <span class="text">工作類型</span>
                             <i class="dropdown icon"></i>
                             <div class="menu">
-                                <% for (let type of jobType) { %>
+                                <% for (let type of jobTypes) { %>
                                     <div class="item query" query="jobType">
                                         <%= type %>
                                     </div>
@@ -68,8 +68,8 @@
                             <span class="text">工作標籤</span>
                             <i class="dropdown icon"></i>
                             <div class="menu">
-                                <% for (let tag of tags) { %>
-                                    <div class="item query" query="tags">
+                                <% for (let tag of jobTags) { %>
+                                    <div class="item query" query="tag">
                                         <%= tag %>
                                     </div>
                                     <% } %>
@@ -87,12 +87,8 @@
                     </select> -->
                 </div>
             </div>
-            <!-- <div class="tag-list">
-                <div class="tag">
-                    <p>python</p>
-                    <i class="close icon"></i>
-                </div>
-            </div> -->
+            <div class="tag-list">
+            </div>
             <div id="jobs" class="jobs-container">
                 <% for (let job of jobs) { %>
                     <div class="job-card">
@@ -150,7 +146,7 @@
                                     <path d="M2 18 L18 2 30 2 30 14 14 30 Z" />
                                 </svg>
                                 <% for (let tag of job.tags) { %>
-                                    <a class="job-tag" href="/api/1.0/jobs?tags[]=<%= tag%>">
+                                    <a class="job-tag" href="/api/1.0/jobs?tag[]=<%= tag%>">
                                         <%= tag%>
                                     </a>
                                     <% } %>

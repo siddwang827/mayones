@@ -13,47 +13,50 @@
     </header>
     <main>
         <div class="container">
-            <div id="search-bar">
-                <div class="ui action input">
+            <div id="search-bar" class="search-bar-container">
+                <div class="ui icon input">
                     <input type="text" placeholder="Search...">
-                    <button class="ui icon button">
-                        <i class="search icon"></i>
-                    </button>
+                    <i class="inverted circular search link icon"></i>
                 </div>
                 <div class="search-filter-container">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            產業類別
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">軟體開發</a>
-                            <a class="dropdown-item" href="#">半導體</a>
-                            <a class="dropdown-item" href="#">金融</a>
+                    <div class="ui menu">
+                        <div class="ui pointing dropdown link item">
+                            <span class="text">公司產業</span>
+                            <i class="dropdown icon"></i>
+                            <div class="menu">
+                                <% for (let category of companyCatories) { %>
+                                    <div class="item query" query="category">
+                                        <%= category %>
+                                    </div>
+                                    <% } %>
+                            </div>
                         </div>
-                    </div>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            其他標籤
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">IT</a>
-                            <a class="dropdown-item" href="#">Semi-conductor</a>
+                        <div class="ui pointing dropdown link item">
+                            <span class="text">公司標籤</span>
+                            <i class="dropdown icon"></i>
+                            <div class="menu">
+                                <% for (let tag of companyTags) { %>
+                                    <div class="item query" query="tags">
+                                        <%= tag %>
+                                    </div>
+                                    <% } %>
+                            </div>
                         </div>
-                    </div>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            總部位置
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Taipei</a>
-                            <a class="dropdown-item" href="#">Taichung</a>
-                            <a class="dropdown-item" href="#">Kaohsiung</a>
+                        <div class="ui pointing dropdown link item">
+                            <span class="text">公司位置</span>
+                            <i class="dropdown icon"></i>
+                            <div class="menu">
+                                <% for (let location of companyLocations) { %>
+                                    <div class="item query" query="location">
+                                        <%=location%>
+                                    </div>
+                                    <% } %>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="tag-list">
             </div>
             <div id="companies" class="company-container">
                 <% for (let company of companies) { %>
@@ -84,7 +87,7 @@
                                                 <circle cx="6.5" cy="6.5" r="2.5" />
                                             </g>
                                         </svg>
-                                        <a href="/companies?location[]=<%= company.company_location %>">
+                                        <a href="/api/1.0//companies?location[]=<%= company.company_location %>">
                                             <%= company.company_location %>
                                         </a>
                                     </div>
@@ -93,7 +96,7 @@
                                             <path
                                                 d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z" />
                                         </svg>
-                                        <a href="/companies?category[]=<%= company.category %>">
+                                        <a href="/api/1.0//companies?category[]=<%= company.category %>">
                                             <%= company.category %>
                                         </a>
                                     </div>
@@ -104,14 +107,11 @@
                                             <path d="M2 18 L18 2 30 2 30 14 14 30 Z" />
                                         </svg>
                                         <% for (let tag of company.tags) { %>
-                                            <a class="card-tag" href="/companies?tag[]=<%= tag %>">
+                                            <a class="card-tag" href="/api/1.0/companies?tag[]=<%= tag %>">
                                                 <%= tag %>
                                             </a>
                                             <% } %>
                                     </div>
-                                </div>
-                                <div class="company-card-follow">
-                                    <button class=""></button>
                                 </div>
                             </div>
                         </div>

@@ -1,5 +1,43 @@
 const { queryDB } = require('./mysql_conn.js')
 
+const companyLocations = [
+    "台北市",
+    "新北市",
+    "桃園市",
+    "新竹市",
+    "新竹縣",
+    "台中市",
+    "彰化縣",
+    "嘉義市",
+    "台南市",
+    "高雄市",
+    "花蓮縣",
+    "海外"
+]
+
+// const companyCategories = [
+//     "網路",
+//     "教育 / 線上課程",
+//     "FinTech / 區塊",
+//     "行銷 / 媒體 / 廣告",
+//     "旅遊",
+//     "軟體開發",
+//     "實體零售",
+//     "半導體",
+//     "生物 / 醫療科技",
+//     "運動 / 健康",
+//     "社會企",
+//     "電商 / O2O",
+//     "設計 / 文創",
+//     "物聯網 / 硬體",
+//     "VR / 動畫 / 遊戲",
+//     "SaaS / 商務服務",
+//     "娛樂媒體",
+//     "金融",
+//     "服務 / 物業管理",
+//     "資訊安全",
+// ]
+
 class Company {
     constructor(ownerId, brand, website, category, shrotDescription, location, address, introduction, philosophy, story, benifit, logoImage, bannerImage) {
         this.ownerId,
@@ -77,8 +115,34 @@ class Company {
         `
         const result = await queryDB(sql, id)
         return result
+    }
 
+    static async getCompanyTags() {
+        const sql = `
+        SELECT JSON_ARRAYAGG(tags_arr.tags) companyTags
+        FROM (
+            SELECT tag_name AS tags
+            FROM mayones.tags
+            WHERE classification = 'company'
+            ORDER BY tags.counts DESC
+            ) AS tags_arr
+        `
+        const [result] = await queryDB(sql)
+        return result
+    }
+
+    static async getCategories() {
+        const sql = `
+        SELECT JSON_ARRAYAGG(categories_arr.category) companyCatories
+        FROM (
+            SELECT category 
+            FROM mayones.categories
+            ORDER BY categories.counts DESC
+            ) AS categories_arr
+        `
+        const [result] = await queryDB(sql)
+        return result
     }
 }
 
-module.exports = Company
+module.exports = { Company, companyLocations }

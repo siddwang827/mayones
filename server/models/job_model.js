@@ -1,6 +1,6 @@
 const { queryDB } = require('./mysql_conn.js')
 
-const jobType = ['正職', '兼職', '約聘', '實習']
+const jobTypes = ['正職', '兼職', '約聘', '實習']
 const jobLocations = [
     "台北市",
     "新北市",
@@ -142,7 +142,7 @@ class Job {
         FROM (
             SELECT tag_name AS tags
             FROM mayones.tags
-            ORDER BY tags.count DESC
+            ORDER BY tags.counts DESC
             LIMIT 15) AS tags_arr
         `
         const [result] = await queryDB(sql)
@@ -150,4 +150,4 @@ class Job {
     }
 }
 
-module.exports = { Job, jobType, jobLocations }
+module.exports = { Job, jobTypes, jobLocations }

@@ -14,7 +14,7 @@ async function createTagsDOMFromSearch() {
             $('<div class="tag-list"></div>').insertBefore($('#jobs'))
         }
         $('.tag-list').append(`
-            <div class= "tag ${queryType}" id = "${queryType}-${timeStamp}">
+            <div class= "tag-label ${queryType}" id = "${queryType}-${timeStamp}">
                 <p>${tag}</p>
                 <i class="close icon" tag-label="${queryType}-${timeStamp}" data-type="${queryType}"></i>
             </div>
@@ -100,9 +100,10 @@ async function createTagsDOMFromSearch() {
 
 // getAllJobs()
 
-createTagsDOMFromSearch()
+
 
 $(document).ready(function () {
+    createTagsDOMFromSearch();
     $('.ui.dropdown').dropdown();
 });
 
@@ -113,18 +114,18 @@ $('.query').on('click', (e) => {
     const params = window.location.search
     const timeStamp = e.timeStamp
     if (!params) {
-        history.pushState(null, null, `${window.location}?${newParam}`)
-        // window.location.search = newParam
+        // history.pushState(null, null, `${window.location}?${newParam}`)
+        window.location = `${window.location}?${newParam}`
     } else {
-        history.pushState(null, null, `${window.location}&${newParam}`)
-        // window.location.search += `& ${ newParam }`
+        // history.pushState(null, null, `${window.location}&${newParam}`)
+        window.location = `${window.location}&${newParam}`
     }
     if (!$('.tag-list').length) {
         $('<div class="tag-list"></div>').insertBefore($('#jobs'))
     }
 
     $('.tag-list').append(`
-        <div class= "tag ${queryType}" id = "${queryType}-${timeStamp}">
+        <div class= "tag-label ${queryType}" id = "${queryType}-${timeStamp}">
             <p>${tag}</p>
             <i class="close icon" tag-label="${queryType}-${timeStamp}" data-type="${queryType}"></i>
         </div>

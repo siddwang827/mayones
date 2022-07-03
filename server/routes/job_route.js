@@ -1,17 +1,17 @@
 const router = require('express').Router();
 const { authentication, asyncHandlerWrapper } = require('../../utils/utils.js')
 
-const { getAllJobs,
+const { getJobs,
     getJobDetail,
     createJob,
     deleteJob } = require('../controllers/job_controller.js')
 
 
 router.route('/jobs')
-    .get(authentication(), asyncHandlerWrapper(getAllJobs));
+    .get(asyncHandlerWrapper(getJobs));
 
 router.route('/job/:id')
-    .get(authentication(), asyncHandlerWrapper(getJobDetail));
+    .get(asyncHandlerWrapper(getJobDetail));
 
 router.route('/job')
     .post(authentication(), asyncHandlerWrapper(createJob));
