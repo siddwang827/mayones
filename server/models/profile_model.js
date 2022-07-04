@@ -62,6 +62,16 @@ async function createResume(userId, resume) {
 
 }
 
+async function getResumeDetail() {
+    const sql = ` 
+    `
+}
+
+async function getUserAllResumes() {
+    const sql = `
+    `
+}
+
 
 
 

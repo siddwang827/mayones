@@ -56,6 +56,12 @@
                     <div class="resume-item-modal">
                         <h3 class="resume-item-modal-title"><strong>基本資料</strong></h3>
                         <div class="resume-content">
+                            <div class="form-group ">
+                                <label for="resume-name" class="required resume-name">履歷名稱</label>
+                                <input name="resumeName" class="form-control resume-name" id="resume-name">
+                                <input id="show-resume-input" type="checkbox" name="showResume" value="">
+                                <label for="show-resume-input" class="show-checkbox">開放履歷搜尋</label>
+                            </div>
                             <div class="form-group">
                                 <label for="name" class="required">姓名</label>
                                 <div class="input-wrap">
@@ -64,7 +70,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="user-gender-male">性別</label>
-                                <div class="input-wrap">
+                                <div class="input-wrap" value="男">
                                     <input type="radio" name="gender" id="user-gender-male" value="男">
                                     <label for="user-gender-male">男</label>
                                     <input type="radio" name="gender" id="user-gender-female" value="女">
@@ -81,11 +87,10 @@
                                 <div class="ui calendar">
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
-                                        <input name="birthday" class="form-control" id="birthday" type="date" value="2020-02-03">
+                                        <input name="birthday" class="form-control" id="birthday" type="date" value="">
                                     </div>
-                                    <input id="show-birthday-input" type="checkbox" name="showBirthday" value=true>
+                                    <input id="show-birthday-input" type="checkbox" name="showBirthday" value="">
                                     <label for="show-birthday-input" class="show-checkbox">公開生日資訊</label>
-
                                 </div>
                             </div>
                             <div class="form-group">
@@ -97,13 +102,13 @@
                             <div class="form-group" id="email-form-group">
                                 <label for="email" class="required">連絡信箱</label>
                                 <div class="input-wrap">
-                                    <input name="emailContact" class="form-control" id="contactEmail" type="email">
+                                    <input name="emailContact" class="form-control" id="contactEmail" type="email" value="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="personal-page-url">個人網站連結</label>
                                 <div class="input-wrap">
-                                    <input name="personalPageUrl" class="form-control" id="personal-page-url">
+                                    <input name="personalPageUrl" class="form-control" id="personal-page-url" value="">
                                 </div>
                             </div>
                         </div>

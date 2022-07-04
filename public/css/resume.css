@@ -238,3 +238,21 @@ label {
 .update-btn {
     margin-top: 50px
 }
+
+.form-control.resume-name {
+    width: 43%;
+    display: inline-block
+}
+
+.required.resume-name {
+    display: block;
+}
+
+.required::before {
+    display: inline-block;
+    margin: 0 5px 0 -8px;
+    content: '*';
+    font-size: 1rem;
+    color: #f44336;
+    vertical-align: middle;
+}

@@ -8,6 +8,10 @@ new Sortable(column, {
     forceFallback: true,
 });
 
+$('.ui.dropdown')
+    .dropdown()
+    ;
+
 $('.icon-edit').on('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
