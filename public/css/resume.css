@@ -5,6 +5,10 @@ body {
     background-color: #eeeeee;
 }
 
+main {
+    position: relative
+}
+
 .file-upload {
     background-color: #ffffff;
     width: 600px;
@@ -255,4 +259,46 @@ label {
     font-size: 1rem;
     color: #f44336;
     vertical-align: middle;
+}
+
+.left-side-bar {
+    position: absolute;
+    left: 8%;
+    top: 4rem;
+    width: 250px;
+    background-color: rgb(36, 36, 36);
+    border-radius: 15px;
+    border: 1px solid #818181;
+    border-radius: 8px;
+    box-shadow: 2px 3px 3px #727272;
+}
+
+.resume-items {
+    position: relative;
+    color: white;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    font-size: 1.2rem;
+    padding: 14px 2em;
+    cursor: pointer;
+    text-align: center
+}
+
+.resume-items.item:hover {
+    background-color: #5f5f5f;
+    transition: background-color 170ms
+}
+
+.resume-items.item:active {
+    background-color: #414141;
+    transition: background-color 170ms
+}
+
+.resume-items.title {
+    color: white;
+    font-weight: bold;
+    font-size: 1.3rem;
+    cursor: default
 }

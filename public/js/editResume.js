@@ -233,6 +233,13 @@ $('#add-education-btn').on('click', (event) => {
     })
 })
 
+document.querySelectorAll('.ui.medium.negative.button').forEach(ele => {
+    ele.addEventListener('click', function (event) {
+        const property = event.target.getAttribute('id').split('-')[1]
+        removeDOM(event, property)
+    })
+})
+
 function removeDOM(e, property) {
     e.preventDefault()
     const index = e.target.getAttribute(`${property}-index`)

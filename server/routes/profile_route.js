@@ -13,7 +13,7 @@ const upload = multer({ dest: 'uploads/' })
 router.route('/resume')
     .get(authentication(), asyncHandlerWrapper(getResumePage));
 
-router.route('/resumeEdit')
+router.route('/resume/:id')
     .get(authentication(), asyncHandlerWrapper(getResumeEditPage));
 
 router.route('/resume')
