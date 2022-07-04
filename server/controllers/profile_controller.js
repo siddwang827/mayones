@@ -3,17 +3,6 @@ const { Resume } = require('../models/schemas')
 const header = { auth: false }
 
 
-const getProfilePage = async (req, res) => {
-    const { role, username } = req.user
-    if (!req.user) { res.status(400).json({ error: 'Unauthorized' }); return }
-    header.auth = true
-    header.role = role
-    header.username = username
-
-    res.render('profile', { header })
-}
-
-
 const getResumePage = async (req, res) => {
     const { role, username } = req.user
     if (!req.user) { res.status(400).json({ error: 'Unauthorized' }); return }
@@ -45,7 +34,6 @@ const uploadResume = async (req, res) => {
 
 
 module.exports = {
-    getProfilePage,
     getResumePage,
     getResumeEditPage,
     uploadResume

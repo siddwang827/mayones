@@ -89,9 +89,7 @@ const signIn = async (req, res) => {
 }
 
 const logout = async (req, res) => {
-    console.log(1)
     const user = req.user;
-    console.log(user)
 
     res.status(200).clearCookie('Authorization', { path: "/" })
     res.redirect('/api/1.0/jobs')
