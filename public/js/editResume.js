@@ -81,7 +81,7 @@ $('#add-project-btn').on('click', (event) => {
                 <div class="form-group">
                     <label for="project-title-${index}">專案名稱</label>
                     <div class="input-wrap">
-                        <input name="projectTile" class="form-control" id="project-title-${index}"></input>
+                        <input name="projectTitle" class="form-control" id="project-title-${index}"></input>
                     </div>
                 </div>
                 <div class="form-group">
