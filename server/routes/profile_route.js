@@ -2,12 +2,16 @@ const router = require('express').Router();
 const { asyncHandlerWrapper, authentication } = require('../../utils/utils.js')
 const multer = require('multer')
 const {
+    getProfilePage,
     getResumePage,
     getResumeEditPage,
     uploadResume
 } = require('../controllers/profile_controller')
 
 const upload = multer({ dest: 'uploads/' })
+
+router.route('/profile')
+    .get(authentication(), asyncHandlerWrapper(getProfilePage));
 
 router.route('/resume')
     .get(authentication(), asyncHandlerWrapper(getResumePage));

@@ -1,11 +1,12 @@
 const router = require('express').Router();
-const { asyncHandlerWrapper } = require('../../utils/utils.js')
+const { asyncHandlerWrapper, authentication } = require('../../utils/utils.js')
 
 const {
     getSignUpPage,
     getSignInPage,
     signIn,
     signUp,
+    logout
 } = require('../controllers/user_controller')
 
 
@@ -21,5 +22,8 @@ router.route('/signup')
 
 router.route('/signin')
     .post(asyncHandlerWrapper(signIn));
+
+router.route('/logout')
+    .get(authentication(), asyncHandlerWrapper(logout));
 
 module.exports = router
