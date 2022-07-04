@@ -22,25 +22,34 @@ async function createResume(userId, resume) {
         await conn.query('START TRANSACTION');
         const [result] = await conn.query("INSERT INTO mayones.resume SET ?", [profile])
 
-        for (let i = 0; i < resume.skillName.length; i++) {
-            skills.push([result.insertId, resume.skillName[i], resume.skillProficiency[i], resume.skillInfo[i]])
+        if (resume.skillName) {
+            for (let i = 0; i < resume.skillName.length; i++) {
+                skills.push([result.insertId, resume.skillName[i], resume.skillProficiency[i], resume.skillInfo[i]])
+            }
+            await conn.query("INSERT INTO mayones.resume_skills (resume_id, skill_name,skill_proficiency, skill_intro) VALUES ? ", [skills])
         }
 
-        for (let i = 0; i < resume.projectTitle.length; i++) {
-            projects.push([result.insertId, resume.projectTitle[i], resume.projectLink[i], resume.projectInfo[i]])
+        if (resume.projectTitle) {
+            for (let i = 0; i < resume.projectTitle.length; i++) {
+                projects.push([result.insertId, resume.projectTitle[i], resume.projectLink[i], resume.projectInfo[i]])
+            }
+            await conn.query("INSERT INTO mayones.resume_projects (resume_id, project_title, project_link, project_intro) VALUES ? ", [projects])
         }
 
-        for (let i = 0; i < resume.experienceName.length; i++) {
-            experience.push([result.insertId, resume.experienceName[i], resume.experienceCompanyName[i], resume.experienceTimeStart[i], resume.experienceTimeEnd[i], resume.experienceInfo[i]])
+        if (resume.experienceName) {
+            for (let i = 0; i < resume.experienceName.length; i++) {
+                experience.push([result.insertId, resume.experienceName[i], resume.experienceCompanyName[i], resume.experienceTimeStart[i], resume.experienceTimeEnd[i], resume.experienceInfo[i]])
+            }
+            await conn.query("INSERT INTO mayones.resume_experience(resume_id, experience_title, experience_org, experience_start, experience_end, experience_intro) VALUES ? ", [experience])
         }
 
-        for (let i = 0; i < resume.educationName.length; i++) {
-            education.push([result.insertId, resume.educationName, resume.educationDepartment[i], resume.educationDegree[i], resume.educationTimeStart[i], resume.educationTimeEnd[i]])
+        if (resume.educationName) {
+            for (let i = 0; i < resume.educationName.length; i++) {
+                education.push([result.insertId, resume.educationName, resume.educationDepartment[i], resume.educationDegree[i], resume.educationTimeStart[i], resume.educationTimeEnd[i]])
+            }
+            await conn.query("INSERT INTO mayones.resume_education (resume_id, education_title, education_department, education_degree, education_start, education_end) VALUES ? ", [education])
         }
-        await conn.query("INSERT INTO mayones.resume_skills (resume_id, skill_name,skill_proficiency, skill_intro) VALUES ? ", [skills])
-        await conn.query("INSERT INTO mayones.resume_experience(resume_id, experience_title, experience_org, experience_start, experience_end, experience_intro) VALUES ? ", [experience])
-        await conn.query("INSERT INTO mayones.resume_education (resume_id, education_title, education_department, education_degree, education_start, education_end) VALUES ? ", [education])
-        await conn.query("INSERT INTO mayones.resume_projects (resume_id, project_title, project_link, project_intro) VALUES ? ", [projects])
+
         await conn.query('COMMIT');
         return result.insertId;
     } catch (error) {
@@ -50,8 +59,6 @@ async function createResume(userId, resume) {
     } finally {
         await conn.release()
     }
-
-
 
 }
 
