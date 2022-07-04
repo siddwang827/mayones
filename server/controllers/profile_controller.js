@@ -23,11 +23,9 @@ const getResumeEditPage = async (req, res) => {
     }
     header.role = role
     header.username = username
-    console.log(resumeId)
 
     const resumeDetail = await getResumeDetail(resumeId)
     const allResumes = await getUserAllResumes(id)
-    console.log(resumeDetail)
 
     res.render('editResumeForm', { header, resumeDetail, allResumes })
 }
@@ -36,7 +34,7 @@ const uploadResume = async (req, res) => {
     const userId = req.user.id
     let resume = req.body
 
-    console.log(resume)
+
     for (let item in resume) {
         resume[item] = typeof (resume[item]) === 'string' ? [resume[item]] : resume[item]
     }
@@ -48,7 +46,7 @@ const uploadResume = async (req, res) => {
         res.status(500).json({ error: "Upload resume Failed" })
     }
 
-    res.redirect('/api/1.0/resumes')
+    res.redirect('/api/1.0/resume')
 }
 
 module.exports = {
