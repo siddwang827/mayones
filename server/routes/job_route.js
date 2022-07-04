@@ -2,9 +2,13 @@ const router = require('express').Router();
 const { authentication, asyncHandlerWrapper } = require('../../utils/utils.js')
 
 const {
+    getJobs,
     getJobDetail,
     createJob,
     deleteJob } = require('../controllers/job_controller.js')
+
+router.route('/jobs')
+    .get(asyncHandlerWrapper(getJobs))
 
 
 router.route('/job/:id')
