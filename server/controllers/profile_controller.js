@@ -1,9 +1,7 @@
 // const Profile = require('../models/profile_model');
 const { Resume } = require('../models/schemas')
+const { createResume } = require('../models/profile_model.js')
 const header = { auth: false }
-
-
-
 
 
 const getResumePage = async (req, res) => {
@@ -27,15 +25,18 @@ const getResumeEditPage = async (req, res) => {
     res.render('editResumeForm', { header })
 }
 
-
-
 const uploadResume = async (req, res) => {
+    const userId = req.user.id
+    let resume = req.body
 
-    console.log(req.body)
-    const resume = new Resume(req.body)
-    console.log(resume)
+    for (let item in resume) {
+        resume[item] = typeof (resume[item]) === 'string' ? [resume[item]] : resume[item]
+    }
+
+    const result = await createResume(userId, resume)
+    console.log(result)
+
 }
-
 
 module.exports = {
     getResumePage,
