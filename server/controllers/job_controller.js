@@ -60,7 +60,6 @@ const createJob = async (req, res) => {
 
 const getJobDetail = async (req, res) => {
     let accessToken = req.cookies.Authorization
-    console.log(accessToken)
     if (!accessToken) { header = { view: "job", auth: false } }
     else {
         try {
@@ -80,7 +79,6 @@ const getJobDetail = async (req, res) => {
 
     const jobId = req.params.id
     try {
-        console.log(header)
         const [jobDetail] = await Job.getJobDetailById(jobId)
         res.render('jobDetail', { jobDetail, thoundsAddComma, header })
     }
