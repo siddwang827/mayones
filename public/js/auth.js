@@ -27,7 +27,7 @@ async function signUpFetch() {
 
     if (fetchResult.status !== 200) { alert(signUpResponse.error); return }
     localStorage.setItem('access_token', "Bearer " + signUpResponse.data.access_token)
-    window.location.href = '/api/1.0/follows'
+    window.location.href = '/api/1.0/jobs'
 
 };
 
@@ -48,7 +48,7 @@ async function signInFetch() {
     const signInResponse = await fetchResult.json()
     if (fetchResult.status !== 200) { alert(signInResponse.error); return }
     localStorage.setItem('access_token', "Bearer " + signInResponse.data.access_token)
-    window.location.href = '/api/1.0/follows'
+    window.location.href = '/api/1.0/jobs'
 };
 
 
