@@ -39,48 +39,50 @@ class Company {
     static async findCompanies(pageSize, paging, companyQuery) {
         let condition = []
         let binding = []
-        Object.keys(companyQuery).forEach(queryType => {
-            switch (queryType) {
-                case 'location': {
-                    companyQuery[queryType].forEach(location => {
-                        condition.push('all_companies.location = ?')
-                        binding.push(location)
-                    })
-                    break
-                }
-                case 'category': {
-                    companyQuery[queryType].forEach(category => {
-                        condition.push('all_companies.category = ?')
-                        binding.push(category)
-                    })
-                    break
-                }
-                case 'tag': {
-                    companyQuery[queryType].forEach(tag => {
-                        condition.push("all_companies.tags like ?")
-                        binding.push(`%${tag}%`)
-                    })
-                    break
-                }
-            }
-        })
-
+        let queryKeys = Object.keys(companyQuery)
         let sql = `
-        SELECT * FROM
-            (SELECT companies.id, brand, short_description, category, company_location , logo_image, banner_image, JSON_ARRAYAGG(tags.tag_name) AS tags
+            SELECT companies.id, brand, short_description, category, company_location , logo_image, banner_image, JSON_ARRAYAGG(tags.tag_name) AS tags
             FROM mayones.companies
             LEFT JOIN mayones.companies_tags
             ON companies.id = companies_tags.companies_id
             LEFT JOIN mayones.tags
             ON companies_tags.tags_id = tags.id
-            GROUP BY companies.id) AS all_companies
+            GROUP BY companies.id
         `
-        sql += 'WHERE ' + condition.join(' AND ')
+
+        if (queryKeys.length > 0) {
+            sql = 'SELECT * FROM ( ' + sql + ') AS all_companies '
+
+            queryKeys.forEach(queryType => {
+                switch (queryType) {
+                    case 'location': {
+                        companyQuery[queryType].forEach(location => {
+                            condition.push('all_companies.company_location = ?')
+                            binding.push(location)
+                        })
+                        break
+                    }
+                    case 'category': {
+                        companyQuery[queryType].forEach(category => {
+                            condition.push('all_companies.category = ?')
+                            binding.push(category)
+                        })
+                        break
+                    }
+                    case 'tag': {
+                        companyQuery[queryType].forEach(tag => {
+                            condition.push("all_companies.tags like ?")
+                            binding.push(`%${tag}%`)
+                        })
+                        break
+                    }
+                }
+            })
+            sql += 'WHERE ' + condition.join(' AND ')
+        }
 
         const result = await queryDB(sql, binding)
-        console.log(result)
         return result
-
     }
 
 
@@ -96,7 +98,6 @@ class Company {
         LIMIT ? 
         `
         const result = await queryDB(sql, pageSize)
-        console.log(result)
         return result
     }
 

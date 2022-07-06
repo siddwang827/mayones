@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { TOKEN_SECRET, PORT } = process.env; // 30 days by seconds
-const User = require('../server/models/user_model')
+const { User } = require('../server/models/user_model')
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
 
@@ -40,15 +40,11 @@ const thoundsAddComma = (value) => {
     else { return '' }
 }
 
-const authentication = () => {
+const authentication = (required) => {
     return async function (req, res, next) {
 
         // use cookie for ejs authorization
         let accessToken = req.cookies.Authorization
-        if (!accessToken) {
-            res.status(401).json({ error: 'Unauthorized' });
-            return;
-        }
 
         // user header jwt token
         // let accessToken = req.get('Authorization');
@@ -57,38 +53,70 @@ const authentication = () => {
         //     return;
         // }
 
-        accessToken = accessToken.replace('Bearer ', '');
-        if (accessToken == 'null') {
-            res.status(401).json({ error: 'Unauthorized' });
-            return;
-        }
-
-        try {
-            const user = await promisify(jwt.verify)(accessToken, TOKEN_SECRET);
-            req.user = user;
-
-            const userDetail = await User.getUserDetail(user.email);
-
-            if (!userDetail) {
-                res.status(403).json({ error: 'Forbidden' });
-            } else {
-                next()
+        if (accessToken) {
+            accessToken = accessToken.replace('Bearer ', '');
+            if (accessToken == 'null') {
+                res.status(401).json({ error: 'Unauthorized' });
+                return;
             }
-            return
 
-        } catch (err) {
-            console.log(err)
-            res.status(403).json({ error: 'Forbidden' });
-            return;
+            try {
+                const user = await promisify(jwt.verify)(accessToken, TOKEN_SECRET);
+                req.user = user;
+
+                const userDetail = await User.getUserDetail(user.email);
+
+                if (!userDetail) {
+                    res.status(403).json({ error: 'Forbidden' });
+                } else {
+                    next()
+                }
+                return
+
+            } catch (err) {
+                console.log(err)
+                res.status(403).json({ error: 'Forbidden' });
+                return;
+            }
         }
+        else {
+            if (required) {
+                res.status(401).json({ error: 'Unauthorized' });
+                return;
+            }
+            else {
+                next()
+                return
+            }
+        };
     };
-};
+}
+const setViewHeader = (view) => {
+    return async function (req, res, next) {
+        if (!req.user) {
+            let headerInfo = { view }
 
+            req.header = headerInfo
+            next();
+            return
+        }
+
+        let headerInfo = {
+            view,
+            auth: true,
+            username: req.user.username
+        }
+        req.header = headerInfo
+        next()
+        return
+    }
+}
 
 
 module.exports = {
     asyncHandlerWrapper,
     rateLimiterRoute,
     thoundsAddComma,
-    authentication
+    authentication,
+    setViewHeader
 }

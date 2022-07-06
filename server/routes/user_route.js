@@ -1,11 +1,9 @@
 const router = require('express').Router();
-const { asyncHandlerWrapper, authentication } = require('../../utils/utils.js')
-
+const { asyncHandlerWrapper, authentication, setViewHeader } = require('../../utils/utils.js')
+const { AUTH } = require('../models/user_model')
 const {
     getSignUpPage,
     getSignInPage,
-    signIn,
-    signUp,
     logout
 } = require('../controllers/user_controller')
 
@@ -17,13 +15,7 @@ router.route(['/employer/signup', '/employee/signup'])
 router.route(['/employer/signin', '/employee/signin'])
     .get(asyncHandlerWrapper(getSignInPage));
 
-router.route('/signup')
-    .post(asyncHandlerWrapper(signUp));
-
-router.route('/signin')
-    .post(asyncHandlerWrapper(signIn));
-
 router.route('/logout')
-    .get(authentication(), asyncHandlerWrapper(logout));
+    .get(authentication(AUTH.required), asyncHandlerWrapper(logout));
 
 module.exports = router

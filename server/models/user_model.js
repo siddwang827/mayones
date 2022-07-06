@@ -11,6 +11,11 @@ const USER_ROLE = {
     employer: 2
 }
 
+const AUTH = {
+    required: true,
+    nonRequired: false
+}
+
 class User {
     constructor(email, password, role, username) {
         this.username = username || null
@@ -94,4 +99,4 @@ class User {
     }
 }
 
-module.exports = User
+module.exports = { User, AUTH }

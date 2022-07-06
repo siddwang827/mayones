@@ -301,3 +301,23 @@ $('#update-resume-btn').on('click', (event) => {
             console.log(err);
         });
 });
+
+$('#delete-resume-btn').on('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation()
+    let check = confirm("是否確認刪除此履歷?")
+    if (!check) {
+        return
+    }
+    const resumeForm = document.getElementById('resume-form')
+    const formData = new FormData(resumeForm)
+
+    fetch("/resume", {
+        method: "POST",
+        body: formData,
+    })
+        .then(console.log("send to server sucess!"))
+        .catch((err) => {
+            console.log(err);
+        });
+});

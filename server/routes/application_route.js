@@ -1,21 +1,17 @@
 const router = require('express').Router();
-const { asyncHandlerWrapper, authentication } = require('../../utils/utils.js')
-
+const { asyncHandlerWrapper, authentication, setViewHeader } = require('../../utils/utils.js')
+const { AUTH } = require('../models/user_model')
 const {
     getApplicationPage,
-    sendApplication,
     getApplicationListPage
 } = require('../controllers/application_controller.js')
 
 
 router.route('/application/:jobId')
-    .get(authentication(), asyncHandlerWrapper(getApplicationPage));
-
-router.route('/application/')
-    .post(authentication(), asyncHandlerWrapper(sendApplication));
+    .get(authentication(AUTH.required), setViewHeader(), asyncHandlerWrapper(getApplicationPage));
 
 router.route('/applications')
-    .get(authentication(), asyncHandlerWrapper(getApplicationListPage));
+    .get(authentication(AUTH.required), setViewHeader(), asyncHandlerWrapper(getApplicationListPage));
 
 
 

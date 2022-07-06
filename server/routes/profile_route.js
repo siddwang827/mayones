@@ -1,22 +1,23 @@
 const router = require('express').Router();
-const { asyncHandlerWrapper, authentication } = require('../../utils/utils.js')
+const { asyncHandlerWrapper, authentication, setViewHeader } = require('../../utils/utils.js')
 const multer = require('multer')
+const { getAllFollows } = require('../controllers/follow_controller.js')
 const {
     getResumePage,
     getResumeEditPage,
-    uploadResume
 } = require('../controllers/profile_controller')
+const { AUTH } = require('../models/user_model')
 
-const upload = multer({ dest: 'uploads/' })
+
 
 
 router.route('/resume/:id')
-    .get(authentication(), asyncHandlerWrapper(getResumeEditPage));
+    .get(authentication(AUTH.required), setViewHeader(), asyncHandlerWrapper(getResumeEditPage));
 
 router.route('/resumes')
-    .get(authentication(), asyncHandlerWrapper(getResumePage));
+    .get(authentication(AUTH.required), setViewHeader(), asyncHandlerWrapper(getResumePage));
 
-router.route('/resume')
-    .post(authentication(), upload.array('projectImage', 3), asyncHandlerWrapper(uploadResume));
+router.route('/follows')
+    .get(authentication(AUTH.nonRequired), asyncHandlerWrapper(getAllFollows));
 
 module.exports = router

@@ -1,21 +1,29 @@
 // const { Resume } = require('../models/schemas')
 const { createResume, getResumeDetail, getUserAllResumes } = require('../models/profile_model.js')
-const header = { auth: false }
-
+const headerINfo = { auth: false }
 
 const getResumePage = async (req, res) => {
-    const { role, username, id } = req.user
-    if (!req.user) { res.status(400).json({ error: 'Unauthorized' }); return }
-    header.auth = true
-    header.role = role
-    header.username = username
+    const header = req.header
+    const userId = req.user.id
 
-    const resumes = await getUserAllResumes(id)
+    const resumes = await getUserAllResumes(userId)
 
     return res.render('resumes', { header, resumes })
 }
 
 const getResumeEditPage = async (req, res) => {
+    const header = req.header
+    const userId = req.user.id
+    const resumeId = req.params.id
+
+    const resumeDetail = await getResumeDetail(resumeId)
+    const allResumes = await getUserAllResumes(userId)
+
+    return res.render('resumeEdit', { header, resumeDetail, allResumes })
+
+}
+
+const fetchResumeDetail = async (req, res) => {
     const resumeId = req.params.id
     const { role, username, id } = req.user
     if (req.user) {
@@ -23,12 +31,11 @@ const getResumeEditPage = async (req, res) => {
     }
     header.role = role
     header.username = username
-    const resumeDetail = await getResumeDetail(resumeId)
-    const allResumes = await getUserAllResumes(id)
 
+}
 
+const deleteResume = async (req, res) => {
 
-    return res.render('resumeEdit', { header, resumeDetail, allResumes })
 
 }
 
@@ -54,5 +61,7 @@ const uploadResume = async (req, res) => {
 module.exports = {
     getResumePage,
     getResumeEditPage,
-    uploadResume
+    fetchResumeDetail,
+    uploadResume,
+    deleteResume
 }

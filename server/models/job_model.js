@@ -43,14 +43,12 @@ class Job {
     }
 
     static async findJobs(pageSize, paging, jobQuery) {
+
         let condition = []
         let binding = []
-
-
-
+        let queryKeys = Object.keys(jobQuery)
         let sql = `
-        SELECT * FROM
-            (SELECT jobs.id , companies.id AS company_id, brand, job_title AS title, job_type, category_position.category, category_position.position,  salary_top, salary_bottom, location, address, remote_work, logo_image, banner_image, jobs.update_at ,JSON_ARRAYAGG(tags.tag_name) AS tags
+            SELECT jobs.id , companies.id AS company_id, brand, job_title AS title, job_type, category_position.category, category_position.position,  salary_top, salary_bottom, location, address, remote_work, logo_image, banner_image, jobs.update_at ,JSON_ARRAYAGG(tags.tag_name) AS tags
             FROM mayones.jobs
             left JOIN mayones.companies
             ON jobs.companies_id = companies.id
@@ -61,12 +59,12 @@ class Job {
             LEFT JOIN mayones.category_position
             ON jobs.category_position_id = category_position.id
             GROUP BY jobs.id
-            ORDER BY jobs.update_at DESC ) AS all_jobs
+            ORDER BY jobs.update_at DESC
         `
 
-        if (jobQuery) {
+        if (queryKeys.length > 0) {
 
-
+            sql = 'SELECT * FROM (' + sql + ' ) AS all_jobs '
             Object.keys(jobQuery).forEach(queryType => {
                 switch (queryType) {
                     case 'location': {

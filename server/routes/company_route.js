@@ -1,21 +1,23 @@
 const router = require('express').Router();
-const { authentication, asyncHandlerWrapper } = require('../../utils/utils.js')
-
+const { authentication, asyncHandlerWrapper, setViewHeader } = require('../../utils/utils.js')
+const { AUTH } = require('../models/user_model')
 const { getCompanies,
     getCompanyDetail,
     createCompany,
     deleteCompany } = require('../controllers/company_controller.js')
+const view = "company"
+
 
 router.route('/companies')
-    .get(asyncHandlerWrapper(getCompanies))
+    .get(authentication(AUTH.nonRequired), setViewHeader(view), asyncHandlerWrapper(getCompanies))
 
 router.route('/company/:id')
-    .get(asyncHandlerWrapper(getCompanyDetail))
+    .get(authentication(AUTH.nonRequired), setViewHeader(view), asyncHandlerWrapper(getCompanyDetail))
 
 router.route('/company')
-    .post(authentication(), asyncHandlerWrapper(createCompany))
+    .post(authentication(AUTH.required), asyncHandlerWrapper(createCompany))
 
 router.route('/company')
-    .delete(asyncHandlerWrapper(deleteCompany))
+    .delete(authentication(AUTH.required), asyncHandlerWrapper(deleteCompany))
 
 module.exports = router

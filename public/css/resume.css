@@ -319,3 +319,7 @@ label {
     padding: 8px 20px;
     border-bottom: 2px solid #414141;
 }
+
+#update-resume-btn {
+    margin-left: auto !important;
+}

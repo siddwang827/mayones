@@ -4,23 +4,16 @@ const {
 
 } = require('../models/application_model.js')
 
-let header = { auth: false }
 
 const getApplicationPage = async (req, res) => {
     const jobId = req.params.jobId
-    const { role, id, username } = req.user
-    if (!req.user) { res.status(400).json({ error: 'Unauthorized' }); return }
-    header.auth = true
-    header.role = role
-    header.username = username
+    const userId = req.user.id
+    const header = req.header
 
     const opening = await Job.getJobSimpleInfo(jobId)
-    const allResumes = await getUserAllResumes(id)
-
+    const allResumes = await getUserAllResumes(userId)
 
     res.render('application', { header, opening, allResumes })
-
-
 }
 
 
@@ -29,15 +22,11 @@ const sendApplication = async (req, res) => {
 
 }
 
-
 const getApplicationListPage = async (req, res) => {
-    const { role, id, username } = req.user
-    if (!req.user) { res.status(400).json({ error: 'Unauthorized' }); return }
-    header.auth = true
-    header.role = role
-    header.username = username
-    const allResumes = await getUserAllResumes(id)
+    const userId = req.user.id
+    const header = req.header
 
+    const allResumes = await getUserAllResumes(userId)
 
     res.render('application', { header, allResumes })
 }
