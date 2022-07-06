@@ -64,7 +64,7 @@ const createResume = async (userId, resume) => {
 
 }
 
-const getResumeDetail = async (resumeId) => {
+const getResumeDetail = async (resumeId, userId) => {
 
     const [resume] = await queryDB(`
     SELECT resume_id, resume_name, user_id, show_resume, user_name, gender, 
@@ -113,7 +113,7 @@ const getResumeDetail = async (resumeId) => {
     GROUP BY education.resume_id) AS skills
     RIGHT JOIN mayones.resume
     ON skills.resume_id = resume.id
-    WHERE resume.id = ?`, [resumeId, resumeId])
+    WHERE resume.id = ? AND user_id = ?`, [resumeId, resumeId, userId])
 
     return resume
 }

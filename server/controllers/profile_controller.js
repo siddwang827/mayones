@@ -16,7 +16,7 @@ const getResumeEditPage = async (req, res) => {
     const userId = req.user.id
     const resumeId = req.params.id
 
-    const resumeDetail = await getResumeDetail(resumeId)
+    const resumeDetail = await getResumeDetail(resumeId, userId)
     const allResumes = await getUserAllResumes(userId)
 
     return res.render('resumeEdit', { header, resumeDetail, allResumes })
@@ -25,13 +25,20 @@ const getResumeEditPage = async (req, res) => {
 
 const fetchResumeDetail = async (req, res) => {
     const resumeId = req.params.id
-    const { role, username, id } = req.user
-    if (req.user) {
-        header.auth = true
-    }
-    header.role = role
-    header.username = username
+    const userId = req.user.id
+    try {
 
+        const resumeDetail = await getResumeDetail(resumeId, userId)
+        if (!resumeDetail) {
+            res.status(401).json({ error: 'Resume is not exisited!' })
+        }
+        res.status(200).json(resumeDetail)
+
+    }
+    catch (error) {
+        console.log(error)
+        res.status(500).json({ error })
+    }
 }
 
 const deleteResume = async (req, res) => {
@@ -41,15 +48,16 @@ const deleteResume = async (req, res) => {
 
 const uploadResume = async (req, res) => {
     const userId = req.user.id
-    let resume = req.body
-
+    const resume = req.body
 
     for (let item in resume) {
         resume[item] = typeof (resume[item]) === 'string' ? [resume[item]] : resume[item]
     }
+
     try {
+
         const result = await createResume(userId, resume)
-        console.log(result)
+
     } catch (error) {
         console.log(error)
         res.status(500).json({ error: "Upload resume Failed" })

@@ -11,7 +11,7 @@ const {
 const upload = multer({ dest: 'uploads/' })
 
 
-router.route('/resume/')
+router.route('/resume/:id')
     .get(authentication(), asyncHandlerWrapper(fetchResumeDetail));
 
 

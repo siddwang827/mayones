@@ -7,6 +7,6 @@ $('.item.resume').on('click', async (event) => {
 
     const fetchResult = await fetch(`/api/1.0/resume/${resumeId}`)
 
-    const resume = fetchResult.json()
+    const resume = await fetchResult.json()
     console.log(resume)
 })
