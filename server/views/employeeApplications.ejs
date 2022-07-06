@@ -17,7 +17,7 @@
             <h1>Following Jobs</h1>
             <div class="job-container">
                 <% for (let job of userFollows) { %>
-                    <a href="/api/1.0/job/<%=job.job_id%>">
+                    <a href="/job/<%=job.job_id%>">
                         <div class="job-follow-list">
                             <div class="job-follow-content">
                                 <img class="job-follow-item logo" src=<%=job.logo_image %>>

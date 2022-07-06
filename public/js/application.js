@@ -12,6 +12,6 @@ async function clickHeart(event) {
         body: JSON.stringify({ followId })
     })
     const result = await fetchResult.json()
-    window.location.href = '/api/1.0/follows'
+    window.location.href = '/follows'
     console.log(result)
 }

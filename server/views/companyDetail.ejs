@@ -42,7 +42,7 @@
                                                 style="fill:#222222; fill-opacity:1; stroke:none; stroke-width:0px;" />
                                         </g>
                                     </svg>
-                                    <a href="/api/1.0/companies?location[]=<%= companyDetail.company_location %>">
+                                    <a href="/companies?location[]=<%= companyDetail.company_location %>">
                                         <%= companyDetail.company_location %>
                                     </a>
                                 </div>
@@ -76,7 +76,7 @@
                                             d="M27.3,15.055a7.4,7.4,0,1,1,7.455-7.4A7.437,7.437,0,0,1,27.3,15.055Zm0-12.3a4.9,4.9,0,1,0,4.955,4.9A4.935,4.935,0,0,0,27.3,2.75Z">
                                         </path>
                                     </svg>
-                                    <a class="company-card-category-item" href="/api/1.0/companies?category[]=<%= companyDetail.category %>">
+                                    <a class="company-card-category-item" href="/companies?category[]=<%= companyDetail.category %>">
                                         <%= companyDetail.category %>
                                     </a>
                                 </div>
@@ -87,7 +87,7 @@
                                         <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
                                     </svg>
                                     <% for (let tag of companyDetail.tags) { %>
-                                        <a href="/api/1.0/companies?tag[]=<%= tag %>" class="company-tag">
+                                        <a href="/companies?tag[]=<%= tag %>" class="company-tag">
                                             <%=tag %>
                                         </a>
                                         <% } %>

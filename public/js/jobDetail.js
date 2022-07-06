@@ -11,5 +11,11 @@ async function follow(event) {
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ jobId })
     })
-
+    const result = await fetchResult.json()
+    const followBtns = document.querySelectorAll('.follow')
+    followBtns.forEach(btn => {
+        btn.classList.add("active")
+        btn.innerText = "已收藏"
+    })
 }
+

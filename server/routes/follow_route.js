@@ -10,11 +10,7 @@ const { getAllFollows,
 router.route('/follows')
     .get(authentication(), asyncHandlerWrapper(getAllFollows));
 
-router.route('/follow/')
-    .post(authentication(), asyncHandlerWrapper(addFollow));
 
-router.route('/unfollow')
-    .post(authentication(), asyncHandlerWrapper(unFollow));
 
 
 module.exports = router;

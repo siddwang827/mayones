@@ -12,7 +12,7 @@ const getResumePage = async (req, res) => {
 
     const resumes = await getUserAllResumes(id)
 
-    res.render('resumes', { header, resumes })
+    return res.render('resumes', { header, resumes })
 }
 
 const getResumeEditPage = async (req, res) => {
@@ -23,11 +23,13 @@ const getResumeEditPage = async (req, res) => {
     }
     header.role = role
     header.username = username
-
     const resumeDetail = await getResumeDetail(resumeId)
     const allResumes = await getUserAllResumes(id)
 
-    res.render('editResumeForm', { header, resumeDetail, allResumes })
+
+
+    return res.render('resumeEdit', { header, resumeDetail, allResumes })
+
 }
 
 const uploadResume = async (req, res) => {
@@ -46,7 +48,7 @@ const uploadResume = async (req, res) => {
         res.status(500).json({ error: "Upload resume Failed" })
     }
 
-    res.redirect('/api/1.0/resume')
+    res.redirect('/resumes')
 }
 
 module.exports = {

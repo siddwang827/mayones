@@ -116,7 +116,7 @@
                                         <circle cx="6.5" cy="6.5" r="2.5" />
                                     </g>
                                 </svg>
-                                <a href="/api/1.0/jobs?location[]=<%=job.location%>">
+                                <a href="/jobs?location[]=<%=job.location%>">
                                     <%=job.location%>
                                 </a>
                             </div>
@@ -132,10 +132,10 @@
                                     <path
                                         d="M27.3,15.055a7.4,7.4,0,1,1,7.455-7.4A7.437,7.437,0,0,1,27.3,15.055Zm0-12.3a4.9,4.9,0,1,0,4.955,4.9A4.935,4.935,0,0,0,27.3,2.75Z" />
                                 </svg>
-                                <a class="job-card-category-item" href="/api/1.0/jobs?category[]=<%= job.category%>">
+                                <a class="job-card-category-item" href="/jobs?category[]=<%= job.category%>">
                                     <%= job.category%>
                                 </a>
-                                <a class="job-card-category-item" href="/api/1.0/jobs?position[]=<%= job.position%>">
+                                <a class="job-card-category-item" href="/jobs?position[]=<%= job.position%>">
                                     <%= job.position%>
                                 </a>
                             </div>
@@ -146,7 +146,7 @@
                                     <path d="M2 18 L18 2 30 2 30 14 14 30 Z" />
                                 </svg>
                                 <% for (let tag of job.tags) { %>
-                                    <a class="job-tag" href="/api/1.0/jobs?tag[]=<%= tag%>">
+                                    <a class="job-tag" href="/jobs?tag[]=<%= tag%>">
                                         <%= tag%>
                                     </a>
                                     <% } %>

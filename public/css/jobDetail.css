@@ -283,3 +283,18 @@
     color: rgb(176, 176, 176);
     font-size: 14px
 }
+
+.follow.active {
+    background-color: red;
+    color: white;
+}
+
+.application,
+.follow {
+    height: 100%;
+    width: 100%;
+}
+
+.sidebar-button-container a {
+    margin-top: 10px
+}

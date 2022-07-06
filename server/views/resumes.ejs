@@ -17,7 +17,7 @@
         <div class="left-side-bar resume-list">
             <div class="resume-items title">我的履歷</div>
             <% for (let resume of resumes) { %>
-                <a href="/api/1.0/resume/<%= resume.resume_id%>">
+                <a href="/resume/<%= resume.resume_id%>">
                     <div class="resume-items item">
                         <%= resume.resume_name %>
                     </div>
@@ -57,7 +57,7 @@
                 <div class="icon-edit"><i class="edit outline icon" modal-id="education-modal"></i></div>
             </div>
             <div class="update-btn">
-                <button class="ui medium inverted secondary button confirm-btn" id="update-resume-btn">上傳履歷</button>
+                <button class="ui big inverted secondary button confirm-btn" id="update-resume-btn">新建履歷</button>
             </div>
         </div>
         <form id="resume-form">

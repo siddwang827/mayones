@@ -159,7 +159,7 @@ async function removeTag(event) {
     const thisTag = `${queryType}[]=${encodeURIComponent(query)}`
     const searchArr = search.split('&').filter(param => param !== thisTag)
     if (searchArr.length === 0) {
-        window.location = "/api/1.0/companies"
+        window.location = "/companies"
     } else {
         const newSearch = `?${searchArr.join('&')}`
         window.location = newSearch

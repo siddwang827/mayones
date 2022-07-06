@@ -10,11 +10,11 @@ const {
 const upload = multer({ dest: 'uploads/' })
 
 
-router.route('/resume')
-    .get(authentication(), asyncHandlerWrapper(getResumePage));
-
 router.route('/resume/:id')
     .get(authentication(), asyncHandlerWrapper(getResumeEditPage));
+
+router.route('/resumes')
+    .get(authentication(), asyncHandlerWrapper(getResumePage));
 
 router.route('/resume')
     .post(authentication(), upload.array('projectImage', 3), asyncHandlerWrapper(uploadResume));

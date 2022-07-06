@@ -46,45 +46,7 @@ class Job {
         let condition = []
         let binding = []
 
-        Object.keys(jobQuery).forEach(queryType => {
-            switch (queryType) {
-                case 'location': {
-                    jobQuery[queryType].forEach(location => {
-                        condition.push('all_jobs.location = ?')
-                        binding.push(location)
-                    })
-                    break
-                }
-                case 'category': {
-                    jobQuery[queryType].forEach(category => {
-                        condition.push('all_jobs.category = ?')
-                        binding.push(category)
-                    })
-                    break
-                }
-                case 'position': {
-                    jobQuery[queryType].forEach(position => {
-                        condition.push('all_jobs.position = ?')
-                        binding.push(position)
-                    })
-                    break
-                }
-                case 'jobType': {
-                    jobQuery[queryType].forEach(job_type => {
-                        condition.push('all_jobs.job_type = ?')
-                        binding.push(job_type)
-                    })
-                    break
-                }
-                case 'tag': {
-                    jobQuery[queryType].forEach(tag => {
-                        condition.push("all_jobs.tags like ?")
-                        binding.push(`%${tag}%`)
-                    })
-                    break
-                }
-            }
-        })
+
 
         let sql = `
         SELECT * FROM
@@ -101,7 +63,51 @@ class Job {
             GROUP BY jobs.id
             ORDER BY jobs.update_at DESC ) AS all_jobs
         `
-        sql += 'WHERE ' + condition.join(' AND ')
+
+        if (jobQuery) {
+
+
+            Object.keys(jobQuery).forEach(queryType => {
+                switch (queryType) {
+                    case 'location': {
+                        jobQuery[queryType].forEach(location => {
+                            condition.push('all_jobs.location = ?')
+                            binding.push(location)
+                        })
+                        break
+                    }
+                    case 'category': {
+                        jobQuery[queryType].forEach(category => {
+                            condition.push('all_jobs.category = ?')
+                            binding.push(category)
+                        })
+                        break
+                    }
+                    case 'position': {
+                        jobQuery[queryType].forEach(position => {
+                            condition.push('all_jobs.position = ?')
+                            binding.push(position)
+                        })
+                        break
+                    }
+                    case 'jobType': {
+                        jobQuery[queryType].forEach(job_type => {
+                            condition.push('all_jobs.job_type = ?')
+                            binding.push(job_type)
+                        })
+                        break
+                    }
+                    case 'tag': {
+                        jobQuery[queryType].forEach(tag => {
+                            condition.push("all_jobs.tags like ?")
+                            binding.push(`%${tag}%`)
+                        })
+                        break
+                    }
+                }
+            })
+            sql += 'WHERE ' + condition.join(' AND ')
+        }
 
         const result = await queryDB(sql, binding)
         return result
@@ -212,6 +218,17 @@ class Job {
             LIMIT 15) AS tags_arr
         `
         const [result] = await queryDB(sql)
+        return result
+    }
+
+    static async getJobSimpleInfo(jobId) {
+        const sql = `
+        SELECT jobs.id AS job_id, job_title, companies.id AS company_id, companies.brand FROM mayones.jobs
+        INNER JOIN mayones.companies
+        ON jobs.companies_id = companies.id
+        WHERE jobs.id = ?; 
+        `
+        const [result] = await queryDB(sql, jobId)
         return result
     }
 }

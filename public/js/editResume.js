@@ -286,10 +286,13 @@ $('.image-upload-wrap').bind('dragleave', function () {
 $('#update-resume-btn').on('click', (event) => {
     event.preventDefault();
     event.stopPropagation()
+    if (!$('#resume-name').val() || !$('#name').val() || !$('#contactEmail').val()) {
+        return alert('請填寫標示 * 符號之必填項目')
+    }
     const resumeForm = document.getElementById('resume-form')
     const formData = new FormData(resumeForm)
 
-    fetch("/api/1.0/resume", {
+    fetch("/resume", {
         method: "POST",
         body: formData,
     })
@@ -298,5 +301,3 @@ $('#update-resume-btn').on('click', (event) => {
             console.log(err);
         });
 });
-
-

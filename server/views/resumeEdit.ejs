@@ -17,7 +17,7 @@
         <div class="left-side-bar resume-list">
             <div class="resume-items title">我的履歷</div>
             <% for (let resume of allResumes) { %>
-                <a href="/api/1.0/resume/<%= resume.resume_id%>">
+                <a href="/resume/<%= resume.resume_id%>">
                     <div class="resume-items item">
                         <%= resume.resume_name %>
                     </div>
@@ -25,6 +25,9 @@
                 <% } %>
         </div>
         <div class="container">
+            <div class="resume-title">
+                <%=resumeDetail.resume_name%>
+            </div>
             <div class="resume-item fixed">
                 <h3 class="resume-item-title"><strong>基本資料</strong></h3>
                 <div class="icon-edit"><i class="edit outline icon" modal-id="info-modal"></i></div>
@@ -57,7 +60,8 @@
                 <div class="icon-edit"><i class="edit outline icon" modal-id="education-modal"></i></div>
             </div>
             <div class="update-btn">
-                <button class="ui medium inverted secondary button confirm-btn" id="update-resume-btn">上傳履歷</button>
+                <button class="ui big negative button delete-btn" id="delete-resume-btn">刪除履歷</button>
+                <button class="ui big inverted secondary button confirm-btn" id="update-resume-btn">上傳履歷</button>
             </div>
         </div>
         <form id="resume-form">
@@ -236,8 +240,8 @@
                                                 </div>
                                             </div>
                                             <div class="file-upload-content" id="file-upload-content-<%=i%>">
-                                                <img id="file-upload-image-<%=i%>" class="file-upload-image" project-index="<%=i%>"
-                                                    src="<%=resumeDetail.project_image[i]%>" alt="your image" />
+                                                <img id="file-upload-image-<%=i%>" class="file-upload-image" project-index="<%=i%>" src="<%=
+                                                    resumeDetail.project_image[i] ? resumeDetail.project_image[i] : '' %>" alt="your image" />
                                                 <div class="image-title-wrap">
                                                     <button type="button" id="remove-image-btn-<%=i%>" class="remove-image"
                                                         project-index="<%=i%>">Remove <span id="image-title-<%=i%>" class="image-title">Uploaded
