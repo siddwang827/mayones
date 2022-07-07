@@ -292,7 +292,7 @@ $('#update-resume-btn').on('click', (event) => {
     const resumeForm = document.getElementById('resume-form')
     const formData = new FormData(resumeForm)
 
-    fetch("/resume", {
+    fetch("/api/1.0/resume", {
         method: "POST",
         body: formData,
     })

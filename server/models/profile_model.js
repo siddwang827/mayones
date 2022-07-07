@@ -23,7 +23,7 @@ const createResume = async (userId, resume) => {
         }
         await conn.query('START TRANSACTION');
         const [result] = await conn.query("INSERT INTO mayones.resume SET ?", [profile])
-        console.log(resume.skillName, resume.proficiency, resume.skillInfo)
+
         if (resume.skillName) {
             for (let i = 0; i < resume.skillName.length; i++) {
                 skills.push([result.insertId, resume.skillName[i], resume.proficiency[i], resume.skillInfo[i]])

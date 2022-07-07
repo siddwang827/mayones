@@ -49,7 +49,7 @@ const deleteResume = async (req, res) => {
 const uploadResume = async (req, res) => {
     const userId = req.user.id
     const resume = req.body
-
+    console.log(resume)
     for (let item in resume) {
         resume[item] = typeof (resume[item]) === 'string' ? [resume[item]] : resume[item]
     }
@@ -57,6 +57,7 @@ const uploadResume = async (req, res) => {
     try {
 
         const result = await createResume(userId, resume)
+        console.log(result)
 
     } catch (error) {
         console.log(error)
