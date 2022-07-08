@@ -24,5 +24,6 @@ async function queryDB(sql, params) {
 }
 
 module.exports = {
+    pool,
     queryDB
 };

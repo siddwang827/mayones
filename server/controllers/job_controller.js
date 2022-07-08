@@ -1,14 +1,26 @@
-const Job = require('../models/job_model')
+const { Job, jobTypes, jobLocations } = require('../models/job_model')
 const { thoundsAddComma } = require('../../utils/utils')
+const { promisify } = require('util');
+const { TOKEN_SECRET } = process.env;
+const jwt = require('jsonwebtoken');
+const { s3Upload, s3UploadMulti } = require('../models/s3Server')
 const pageSize = 20
-const header = "job"
 
-const getAllJobs = async (req, res) => {
+
+const getJobs = async (req, res) => {
+    const jobQuery = req.query
+    const header = req.header
     const paging = parseInt(req.query.paging) || 0
-    const category = req.query.category || null
+
+    // render tempale parameter
+    const categoryPositions = await Job.getCategory()
+    let jobTags = await Job.getJobTags()
+    jobTags = jobTags.tags
+
     try {
-        const result = await Job.getAllJobs(pageSize, paging, category)
-        res.status(200).send({ data: result })
+        const jobs = await Job.findJobs(pageSize, paging, jobQuery);
+        res.render('jobs', { jobs, header, jobLocations, categoryPositions, jobTypes, jobTags })
+
     }
     catch (err) {
         console.log(err)
@@ -17,10 +29,12 @@ const getAllJobs = async (req, res) => {
 }
 
 const createJob = async (req, res) => {
+    const uploadImage = await s3UploadMulti(req.files, "company")
 
 }
 
 const getJobDetail = async (req, res) => {
+    const header = req.header
     const jobId = req.params.id
     try {
         const [jobDetail] = await Job.getJobDetailById(jobId)
@@ -37,7 +51,7 @@ const deleteJob = async (req, res) => {
 }
 
 module.exports = {
-    getAllJobs,
+    getJobs,
     getJobDetail,
     createJob,
     deleteJob

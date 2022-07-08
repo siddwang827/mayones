@@ -46,9 +46,16 @@
     margin-left: auto
 }
 
+.basic-info-company-title h1 {
+    margin: 0px;
+    align-self: center;
+}
+
+
 .basic-info-company-title i {
     font-size: 2rem !important;
-    color: rgb(152, 152, 152)
+    color: rgb(152, 152, 152);
+    line-height: 1.3;
 }
 
 .basic-info-company-title i:hover {

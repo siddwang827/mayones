@@ -21,7 +21,7 @@
                             <h1>
                                 <%= companyDetail.brand %>
                             </h1>
-                            <a class="external-link" href=<%=companyDetail.website %>><i class="globe icon"></i></a>
+                            <a class="external-link" target="_blank" href=<%=companyDetail.website %>><i class="globe icon"></i></a>
                         </div>
 
                     </div>
@@ -42,7 +42,7 @@
                                                 style="fill:#222222; fill-opacity:1; stroke:none; stroke-width:0px;" />
                                         </g>
                                     </svg>
-                                    <a href="/companys?location[]=<%= companyDetail.company_location %>">
+                                    <a href="/companies?location[]=<%= companyDetail.company_location %>">
                                         <%= companyDetail.company_location %>
                                     </a>
                                 </div>
@@ -76,7 +76,7 @@
                                             d="M27.3,15.055a7.4,7.4,0,1,1,7.455-7.4A7.437,7.437,0,0,1,27.3,15.055Zm0-12.3a4.9,4.9,0,1,0,4.955,4.9A4.935,4.935,0,0,0,27.3,2.75Z">
                                         </path>
                                     </svg>
-                                    <a class="company-card-category-item" href="/companys?category[]=<%= companyDetail.category %>">
+                                    <a class="company-card-category-item" href="/companies?category[]=<%= companyDetail.category %>">
                                         <%= companyDetail.category %>
                                     </a>
                                 </div>
@@ -87,7 +87,7 @@
                                         <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
                                     </svg>
                                     <% for (let tag of companyDetail.tags) { %>
-                                        <a class="company-tag">
+                                        <a href="/companies?tag[]=<%= tag %>" class="company-tag">
                                             <%=tag %>
                                         </a>
                                         <% } %>
@@ -153,15 +153,8 @@
         </div>
         </div>
     </main>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="./js/companyDetail.js"></script>
     <footer>
-        <p>© 2022. All rights reserved.</p>
+        <%- include layout/footer %>
     </footer>
 </body>
 

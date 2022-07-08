@@ -1,16 +1,29 @@
 require('dotenv').config();
-
-const multer = require('multer');
-const port = process.env.PORT;
 const { TOKEN_SECRET, PORT } = process.env; // 30 days by seconds
+const { User } = require('../server/models/user_model')
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
+const multer = require('multer')
 
+
+const storage = multer.memoryStorage()
+
+const fileFilter = (req, res, next) => {
+    if (file.mimetype.split('/')[0] === image) {
+        cb(null, true)
+    } else {
+        cb(new (multer.MulterError("LIMIT_UNEXPECTED_FILE"), false))
+    }
+}
+
+const upload = multer({
+    storage,
+    // fileFilter,
+    // limits: { fileSize: 3000000 }
+})
 
 const asyncHandlerWrapper = (fn) => {
     return function (req, res, next) {
-        // Make sure to `.catch()` any errors and pass them along to the `next()`
-        // middleware in the chain, in this case the error handler.
         fn(req, res, next).catch(next);
     };
 };
@@ -26,7 +39,7 @@ const rateLimiterRoute = async (req, res, next) => {
         if (result.status == 200) {
             return next();
         } else {
-            res.status(result.status).send(result.message);
+            res.status(result.status).json(result.message);
             return;
         }
     } catch (e) {
@@ -44,8 +57,85 @@ const thoundsAddComma = (value) => {
     }
     else { return '' }
 }
+
+const authentication = (required) => {
+    return async function (req, res, next) {
+
+        // use cookie for ejs authorization
+        let accessToken = req.cookies.Authorization
+
+        // user header jwt token
+        // let accessToken = req.get('Authorization');
+        // if (!accessToken) {
+        //     res.status(401).json({ error: 'Unauthorized' });
+        //     return;
+        // }
+
+        if (accessToken) {
+            accessToken = accessToken.replace('Bearer ', '');
+            if (accessToken == 'null') {
+                res.status(401).json({ error: 'Unauthorized' });
+                return;
+            }
+
+            try {
+                const user = await promisify(jwt.verify)(accessToken, TOKEN_SECRET);
+                req.user = user;
+
+                const userDetail = await User.getUserDetail(user.email);
+
+                if (!userDetail) {
+                    res.status(403).json({ error: 'Forbidden' });
+                } else {
+                    next()
+                }
+                return
+
+            } catch (err) {
+                console.log(err)
+                res.status(403).json({ error: 'Forbidden' });
+                return;
+            }
+        }
+        else {
+            if (required) {
+                res.status(401).json({ error: 'Unauthorized' });
+                return;
+            }
+            else {
+                next()
+                return
+            }
+        };
+    };
+}
+const setViewHeader = (view) => {
+    return async function (req, res, next) {
+        if (!req.user) {
+            let headerInfo = { view }
+
+            req.header = headerInfo
+            next();
+            return
+        }
+
+        let headerInfo = {
+            view,
+            auth: true,
+            username: req.user.username
+        }
+        req.header = headerInfo
+        next()
+        return
+    }
+}
+
+
 module.exports = {
+    upload,
     asyncHandlerWrapper,
     rateLimiterRoute,
-    thoundsAddComma
+    thoundsAddComma,
+    authentication,
+    setViewHeader
 }
