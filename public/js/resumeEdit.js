@@ -49,9 +49,9 @@ $('#add-skill-btn').on('click', (event) => {
                     <label for="skill-proficiency-${index}">熟練程度</label>
                     <div class="input-wrap">
                         <select class="ui dropdown select" name="skillProficiency" id="skill-proficiency-${index}">
-                            <option value="beginner">初階</option>
-                            <option value="intermediate">熟練</option>
-                            <option value="expert">精通</option>
+                            <option value="初階">初階</option>
+                            <option value="熟練">熟練</option>
+                            <option value="精通">精通</option>
                         </select>
                     </div>
                 </div>
@@ -123,10 +123,12 @@ $('#add-project-btn').on('click', (event) => {
     </div>
     `))
 
-    $(`#remove-project-btn-${index}`).on('click', function (event) {
+    $(`#remove-project-btn-${index}`).on('click', (event) => {
         removeDOM(event, property)
     })
-    $(`#remove-image-btn-${index}`).on('click', removeUpload)
+    $(`#remove-image-btn-${index}`).on('click', (event) => {
+        removeUpload(event)
+    })
 })
 
 $('#add-experience-btn').on('click', (event) => {
@@ -238,6 +240,10 @@ document.querySelectorAll('.ui.medium.negative.button').forEach(ele => {
         const property = event.target.getAttribute('id').split('-')[1]
         removeDOM(event, property)
     })
+})
+
+document.querySelectorAll('.remove-image').forEach(ele => {
+    ele.addEventListener('click', removeUpload)
 })
 
 function removeDOM(e, property) {

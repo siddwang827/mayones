@@ -17,25 +17,25 @@
             <h1>Following Jobs</h1>
             <div class="job-container">
                 <% for (let job of userFollows) { %>
-                    <a href="/job/<%=job.job_id%>">
-                        <div class="job-list">
-                            <div class="job-content">
-                                <img class="job-item logo" src=<%=job.logo_image %>>
-                                <div class="job-item info">
-                                    <div class="job-info job-title">
-                                        <%= job.job_title %>
-                                    </div>
-                                    <div class="job-info brand">
-                                        <%= job.brand %>
-                                    </div>
-
+                    <!-- <a href="/job/<%=job.job_id%>"> -->
+                    <div class="job-list" id="job-id-<%=job.follow_id%>">
+                        <div class="job-content">
+                            <img class="job-item logo" src=<%=job.logo_image %>>
+                            <div class="job-item info">
+                                <div class="job-info job-title">
+                                    <%= job.job_title %>
                                 </div>
-                            </div>
-                            <div class="job-content">
-                                <div class="job-item  follow-heart" follow-id=<%=job.follow_id%>></div>
+                                <div class="job-info brand">
+                                    <%= job.brand %>
+                                </div>
+
                             </div>
                         </div>
-                    </a>
+                        <div class="job-content">
+                            <div class="job-item  follow-heart" follow-id=<%=job.follow_id%>></div>
+                        </div>
+                    </div>
+                    <!-- </a> -->
                     <% } %>
             </div>
         </div>
@@ -43,7 +43,7 @@
     <footer>
         <%- include /layout/footer %>
             <script src="/js/auth.js"></script>
-            <script src="/js/application.js"></script>
+            <script src="/js/follow.js"></script>
     </footer>
 </body>
 

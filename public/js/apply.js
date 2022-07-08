@@ -48,9 +48,10 @@ function resumePreview(resumeDetail) {
     const birthdayDiv = $(`
         <div class="resume-preview-content-item">
             <i class="birthday cake icon"></i>
-            <div id="birthday" class="profile-content">${resumeDetail.birthday}</div>
+            <div id="birthday" class="profile-content">${moment(resumeDetail.birthday).format('YYYY-MM-DD')}</div>
         </div>
     `)
+
     const phoneDiv = $(`
         <div class="resume-preview-content-item">
             <i class="phone icon"></i>
@@ -130,7 +131,6 @@ function resumePreview(resumeDetail) {
         `)
 
         projectDivs = resumeDetail.project_title.map((project, index) => {
-            console.log(project, index)
             return $(`
                 <div class="profile-content  project">
                     <div class="project-col project-info">
@@ -160,7 +160,6 @@ function resumePreview(resumeDetail) {
 
 
     if (resumeDetail.experience_title) {
-        console.log('experience')
         experienceContainer = $(`
             <div class="resume-preview-row detail-info">
                 <div class="resume-preview-title experience">
@@ -221,10 +220,6 @@ function resumePreview(resumeDetail) {
         educationDivs.forEach((education) => {
             educationContainer.append(education)
         })
-
-        console.log(educationContainer)
-
-
     }
 
     const profileInfo = [genderDiv, birthdayDiv, phoneDiv, contacEmailDiv, websiteDiv]
@@ -239,7 +234,6 @@ function resumePreview(resumeDetail) {
 
             case birthdayDiv:
                 if (resumeDetail.show_birthday === 1 && resumeDetail.birthday) {
-                    console.log(resumeDetail.birthday)
                     profileDiv.append(info)
                 } break;
 
@@ -268,4 +262,12 @@ function resumePreview(resumeDetail) {
     resumeDiv.append(resumeContainer)
     container.append(resumeDiv)
 
-}   
+}
+
+$('#apply-btn').on('click', (event) => {
+    if ($('.selected.active').length === 0 || $('#resume-preview').length === 0) {
+        alert('請選擇欲投遞此職缺的履歷!')
+    } else {
+        confirm('確認是否投遞履歷?')
+    }
+})
