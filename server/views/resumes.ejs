@@ -14,50 +14,52 @@
         <%- include layout/header %>
     </header>
     <main>
-        <div class="left-side-bar resume-list">
-            <div class="resume-items title">我的履歷</div>
-            <% for (let resume of resumes) { %>
-                <a href="/resume/<%= resume.resume_id%>">
-                    <div class="resume-items item">
-                        <%= resume.resume_name %>
-                    </div>
-                </a>
-                <% } %>
-        </div>
         <div class="container">
-            <div class="resume-item fixed">
-                <h3 class="resume-item-title"><strong>基本資料</strong></h3>
-                <div class="icon-edit"><i class="edit outline icon" modal-id="info-modal"></i></div>
+            <div class="left-side-bar resume-list">
+                <div class="resume-items title">我的履歷</div>
+                <% for (let resume of resumes) { %>
+                    <a href="/resume/<%= resume.resume_id%>">
+                        <div class="resume-items item">
+                            <%= resume.resume_name %>
+                        </div>
+                    </a>
+                    <% } %>
             </div>
-            <div class="resume-item fixed">
-                <h3 class="resume-item-title"><strong>簡歷</strong></h3>
-                <div class="icon-edit"><i class="edit outline icon" modal-id="bio-modal"></i></div>
-            </div>
-            <div class="resume-item draggable">
-                <div class="icon"><i class="bars icon"></i></div>
-                <h3 class="resume-item-title"><strong>專業技能</strong></h3>
-                <div class="icon-edit"><i class="edit outline icon" modal-id="skill-modal"></i></div>
+            <div class="right-resume-container">
+                <div class="resume-item fixed">
+                    <h3 class="resume-item-title"><strong>基本資料</strong></h3>
+                    <div class="icon-edit"><i class="edit outline icon" modal-id="info-modal"></i></div>
+                </div>
+                <div class="resume-item fixed">
+                    <h3 class="resume-item-title"><strong>簡歷</strong></h3>
+                    <div class="icon-edit"><i class="edit outline icon" modal-id="bio-modal"></i></div>
+                </div>
+                <div class="resume-item draggable">
+                    <div class="icon"><i class="bars icon"></i></div>
+                    <h3 class="resume-item-title"><strong>專業技能</strong></h3>
+                    <div class="icon-edit"><i class="edit outline icon" modal-id="skill-modal"></i></div>
 
-            </div>
-            <div class="resume-item draggable">
-                <div class="icon"><i class="bars icon"></i></div>
-                <h3 class="resume-item-title"><strong>專案及作品集</strong></h3>
-                <div class="icon-edit"><i class="edit outline icon" modal-id="project-modal"></i></div>
+                </div>
+                <div class="resume-item draggable">
+                    <div class="icon"><i class="bars icon"></i></div>
+                    <h3 class="resume-item-title"><strong>專案及作品集</strong></h3>
+                    <div class="icon-edit"><i class="edit outline icon" modal-id="project-modal"></i></div>
 
-            </div>
-            <div class="resume-item draggable">
-                <div class="icon"><i class="bars icon"></i></div>
-                <h3 class="resume-item-title"><strong>工作經驗</strong></h3>
-                <div class="icon-edit"><i class="edit outline icon" modal-id="experience-modal"></i></div>
+                </div>
+                <div class="resume-item draggable">
+                    <div class="icon"><i class="bars icon"></i></div>
+                    <h3 class="resume-item-title"><strong>工作經驗</strong></h3>
+                    <div class="icon-edit"><i class="edit outline icon" modal-id="experience-modal"></i></div>
 
-            </div>
-            <div class="resume-item draggable">
-                <div class="icon"><i class="bars icon"></i></div>
-                <h3 class="resume-item-title"><strong>學歷</strong></h3>
-                <div class="icon-edit"><i class="edit outline icon" modal-id="education-modal"></i></div>
-            </div>
-            <div class="update-btn">
-                <button class="ui big inverted secondary button confirm-btn" id="update-resume-btn">新建履歷</button>
+                </div>
+                <div class="resume-item draggable">
+                    <div class="icon"><i class="bars icon"></i></div>
+                    <h3 class="resume-item-title"><strong>學歷</strong></h3>
+                    <div class="icon-edit"><i class="edit outline icon" modal-id="education-modal"></i></div>
+                </div>
+                <div class="update-btn">
+                    <button class="ui big inverted secondary button confirm-btn" id="update-resume-btn">新建履歷</button>
+                </div>
             </div>
         </div>
         <form id="resume-form">
@@ -201,7 +203,7 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"
                 integrity="sha512-zYXldzJsDrNKV+odAwFYiDXV2Cy37cwizT+NkuiPGsa9X1dOz04eHvUWVuxaJ299GvcJT31ug2zO4itXBjFx4w==" crossorigin="anonymous"
                 referrerpolicy="no-referrer"></script>
-            <script src="/js/editResume.js"></script>
+            <script src="/js/resumeEdit.js"></script>
     </footer>
 </body>
 

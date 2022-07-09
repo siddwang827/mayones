@@ -106,6 +106,17 @@ main {
     margin: 20px auto;
 }
 
+.container {
+    max-width: 1000px;
+    width: 100%;
+    margin-left: 29%;
+    margin-top: 50px;
+    min-height: calc(100vh - 160px);
+    display: flex;
+    flex-direction: column;
+    position: relative
+}
+
 label {
     font-weight: bold
 }
@@ -191,9 +202,6 @@ label {
     justify-content: space-between;
 }
 
-
-
-
 .content-container-col {
     display: flex;
     flex-direction: column;
@@ -268,8 +276,8 @@ label {
 
 .left-side-bar {
     position: absolute;
-    left: 8%;
-    top: 4rem;
+    left: -300px;
+    top: 5px;
     width: 250px;
     background-color: #5f5f5f;
     border-top-left-radius: 15px;

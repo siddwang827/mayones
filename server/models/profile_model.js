@@ -109,16 +109,41 @@ const getUserAllResumes = async (userId) => {
     const sql = `
     SELECT id as resume_id , resume_name, update_at FROM mayones.resume
     WHERE user_id = ? 
-    Limit 5
     `
     const result = await queryDB(sql, userId)
     return result
 }
 
+const deleteUserResume = async (userId, resumeId) => {
+    const conn = await pool.getConnection()
+    try {
+        await conn.query('START TRANSACTION');
+        await conn.query('DELETE FROM mayones.resume_experience WHERE resume_id =?', [resumeId])
+        await conn.query('DELETE FROM mayones.resume_projects WHERE resume_id =?', [resumeId])
+        await conn.query('DELETE FROM mayones.resume_skills WHERE resume_id =?', [resumeId])
+        await conn.query('DELETE FROM mayones.resume_education WHERE resume_id =?', [resumeId])
+        const [result] = await conn.query('DELETE FROM mayones.resume WHERE id =? AND user_id = ?', [resumeId, userId])
+        await conn.query('COMMIT');
+        return result.affectedRows;
+    } catch (error) {
+        await conn.query('ROLLBACK')
+        console.log(error)
+    } finally {
+        await conn.release()
+    }
+}
+
+const checkUserOwnResume = async (userId, resumeId) => {
+    const [result] = await queryDB('SELECT * FROM mayones.resume WHERE id = ? AND user_id = ?', [resumeId, userId])
+
+    return result
+}
 
 
 module.exports = {
     createResume,
     getResumeDetail,
-    getUserAllResumes
+    getUserAllResumes,
+    deleteUserResume,
+    checkUserOwnResume
 }

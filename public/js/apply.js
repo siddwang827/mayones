@@ -90,7 +90,7 @@ function resumePreview(resumeDetail) {
 
 
 
-    if (resumeDetail.skill_name) {
+    if (resumeDetail.skill_name[0]) {
         skillContainer = $(`
             <div class="resume-preview-row detail-info">
                 <div class="resume-preview-title skills">
@@ -110,7 +110,7 @@ function resumePreview(resumeDetail) {
                         ${resumeDetail.skill_proficiency[index] === '初階' ? 'Beginner' : resumeDetail.skill_proficiency[index] === '熟練' ? 'Advanced' : 'Expert'}</div>
                     </div>
                     <div class="resume-preview-content-item">
-                        <div class="skill-intro">${resumeDetail.skill_intro[index]}</div>
+                        <div class="skill-intro">${resumeDetail.skill_intro[index] ? resumeDetail.skill_intro[index] : ""}</div>
                     </div>
                 </div>
             `)
@@ -121,11 +121,11 @@ function resumePreview(resumeDetail) {
         })
     }
 
-    if (resumeDetail.project_title) {
+    if (resumeDetail.project_title[0]) {
         projectContainer = $(`
             <div class="resume-preview-row detail-info">
                 <div class="resume-preview-title skills">
-                    專案作品 <span class="title-en">Protfolios</span>
+                    專案作品 <span class="title-en">Portfolios</span>
                 </div>
             </div>
         `)
@@ -136,18 +136,18 @@ function resumePreview(resumeDetail) {
                     <div class="project-col project-info">
                         <div class="resume-preview-content-item">
                             <i class="linkify icon"></i>
-                            <a href="${resumeDetail.project_link[index]}">
+                            <a href="${resumeDetail.project_link[index] ? resumeDetail.project_link[index] : ""}">
                                 <div class="project-title">${project}</div>
                             </a>
                         </div>
                         <div class="resume-preview-content-item">
                             <div class="skill-intro">
-                                ${resumeDetail.project_intro[index].replaceAll('\\r\\n', '<br/>')}
+                                ${resumeDetail.project_intro[index] ? resumeDetail.project_intro[index].replaceAll('\\r\\n', '<br/>') : ""}
                             </div>
                         </div>
                     </div>
-                    <div class="project-col">
-                        <img class="project-img" src="/img/default.jpg">
+                    <div class="project-col" style="background: url(${resumeDetail.project_image[index] ? resumeDetail.project_image[index] : "/img/default.jpg"}); background-size: contain; height: 185px; width: 280px; background-position: center; background-repeat: no-repeat;">
+
                     </div>
                 </div>
             `)
@@ -159,7 +159,7 @@ function resumePreview(resumeDetail) {
     }
 
 
-    if (resumeDetail.experience_title) {
+    if (resumeDetail.experience_title[0]) {
         experienceContainer = $(`
             <div class="resume-preview-row detail-info">
                 <div class="resume-preview-title experience">
@@ -174,12 +174,12 @@ function resumePreview(resumeDetail) {
                 <div class="resume-preview-content-item title">
                     <i class="circle icon"></i>
                     <div class="experience-position">${experience}</div>
-                    <div class="experience-org">${resumeDetail.experience_org[index]}</div>
-                    <div class="experience-period"><span>${resumeDetail.experience_start[index]}</span> ~ <span></span>${resumeDetail.experience_end[index]}</div>
+                    <div class="experience-org">${resumeDetail.experience_org[index] ? resumeDetail.experience_org[index] : ""}</div>
+                    <div class="experience-period">${resumeDetail.experience_start[index]} ~ ${resumeDetail.experience_end[index]}</div>
                 </div>
                 <div class="resume-preview-content-item">
                     <div class="experience-intro">hsfdsshdh
-                        ${resumeDetail.experience_intro[index].replaceAll('\\r\\n', '<br/>')}
+                        ${resumeDetail.experience_intro[index] ? resumeDetail.experience_intro[index].replaceAll('\\r\\n', '<br/>') : ""}
                     </div>
                 </div>
             </div>
@@ -192,7 +192,7 @@ function resumePreview(resumeDetail) {
     }
 
 
-    if (resumeDetail.education_title) {
+    if (resumeDetail.education_title[0]) {
         educationContainer = $(`
             <div class="resume-preview-row detail-info">
                 <div class="resume-preview-title education">
@@ -207,11 +207,17 @@ function resumePreview(resumeDetail) {
                 <div class="resume-preview-content-item title">
                     <i class="book icon"></i>
                     <div class="education-title">${education}</div>
-                    <div class="education-period">${resumeDetail.education_start[index]}</span> ~ <span></span>${resumeDetail.education_end[index]}</div>
+                    <div class="education-period">
+                    ${resumeDetail.education_start[index] ? resumeDetail.education_start[index] : ""}
+                    ~ ${resumeDetail.education_end[index] ? resumeDetail.education_end[index] : ""}</div>
                 </div>
                 <div class="resume-preview-content-item">
-                    <div class="education-department">${resumeDetail.education_department[index]}</div>
-                    <div class="education-degree">${resumeDetail.education_degree[index]}</div>
+                    <div class="education-department">
+                        ${resumeDetail.education_department[index] ? resumeDetail.education_department[index] : ""}
+                    </div>
+                    <div class="education-degree">
+                        ${resumeDetail.education_degree[index] ? resumeDetail.education_degree[index] : ""}
+                    </div>
                 </div>
             </div>
         `)

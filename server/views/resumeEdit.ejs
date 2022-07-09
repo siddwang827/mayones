@@ -14,54 +14,56 @@
         <%- include layout/header %>
     </header>
     <main>
-        <div class="left-side-bar resume-list">
-            <div class="resume-items title">我的履歷</div>
-            <% for (let resume of allResumes) { %>
-                <a href="/resume/<%= resume.resume_id%>">
-                    <div class="resume-items item">
-                        <%= resume.resume_name %>
-                    </div>
-                </a>
-                <% } %>
-        </div>
         <div class="container">
+            <div class="left-side-bar resume-list">
+                <div class="resume-items title">我的履歷</div>
+                <% for (let resume of allResumes) { %>
+                    <a href="/resume/<%= resume.resume_id%>">
+                        <div class="resume-items item">
+                            <%= resume.resume_name %>
+                        </div>
+                    </a>
+                    <% } %>
+            </div>
             <div class="resume-title">
                 <%=resumeDetail.resume_name%>
             </div>
-            <div class="resume-item fixed">
-                <h3 class="resume-item-title"><strong>基本資料</strong></h3>
-                <div class="icon-edit"><i class="edit outline icon" modal-id="info-modal"></i></div>
-            </div>
-            <div class="resume-item fixed">
-                <h3 class="resume-item-title"><strong>簡歷</strong></h3>
-                <div class="icon-edit"><i class="edit outline icon" modal-id="bio-modal"></i></div>
-            </div>
-            <div class="resume-item draggable">
-                <div class="icon"><i class="bars icon"></i></div>
-                <h3 class="resume-item-title"><strong>專業技能</strong></h3>
-                <div class="icon-edit"><i class="edit outline icon" modal-id="skill-modal"></i></div>
+            <div class="right-resume-container">
+                <div class="resume-item fixed">
+                    <h3 class="resume-item-title"><strong>基本資料</strong></h3>
+                    <div class="icon-edit"><i class="edit outline icon" modal-id="info-modal"></i></div>
+                </div>
+                <div class="resume-item fixed">
+                    <h3 class="resume-item-title"><strong>簡歷</strong></h3>
+                    <div class="icon-edit"><i class="edit outline icon" modal-id="bio-modal"></i></div>
+                </div>
+                <div class="resume-item draggable">
+                    <div class="icon"><i class="bars icon"></i></div>
+                    <h3 class="resume-item-title"><strong>專業技能</strong></h3>
+                    <div class="icon-edit"><i class="edit outline icon" modal-id="skill-modal"></i></div>
 
-            </div>
-            <div class="resume-item draggable">
-                <div class="icon"><i class="bars icon"></i></div>
-                <h3 class="resume-item-title"><strong>專案及作品集</strong></h3>
-                <div class="icon-edit"><i class="edit outline icon" modal-id="project-modal"></i></div>
+                </div>
+                <div class="resume-item draggable">
+                    <div class="icon"><i class="bars icon"></i></div>
+                    <h3 class="resume-item-title"><strong>專案及作品集</strong></h3>
+                    <div class="icon-edit"><i class="edit outline icon" modal-id="project-modal"></i></div>
 
-            </div>
-            <div class="resume-item draggable">
-                <div class="icon"><i class="bars icon"></i></div>
-                <h3 class="resume-item-title"><strong>工作經驗</strong></h3>
-                <div class="icon-edit"><i class="edit outline icon" modal-id="experience-modal"></i></div>
+                </div>
+                <div class="resume-item draggable">
+                    <div class="icon"><i class="bars icon"></i></div>
+                    <h3 class="resume-item-title"><strong>工作經驗</strong></h3>
+                    <div class="icon-edit"><i class="edit outline icon" modal-id="experience-modal"></i></div>
 
-            </div>
-            <div class="resume-item draggable">
-                <div class="icon"><i class="bars icon"></i></div>
-                <h3 class="resume-item-title"><strong>學歷</strong></h3>
-                <div class="icon-edit"><i class="edit outline icon" modal-id="education-modal"></i></div>
-            </div>
-            <div class="update-btn">
-                <button class="ui big negative button delete-btn" id="delete-resume-btn">刪除履歷</button>
-                <button class="ui big inverted secondary button confirm-btn" id="update-resume-btn">上傳履歷</button>
+                </div>
+                <div class="resume-item draggable">
+                    <div class="icon"><i class="bars icon"></i></div>
+                    <h3 class="resume-item-title"><strong>學歷</strong></h3>
+                    <div class="icon-edit"><i class="edit outline icon" modal-id="education-modal"></i></div>
+                </div>
+                <div class="update-btn">
+                    <button class="ui big negative button delete-btn" id="delete-resume-btn">刪除履歷</button>
+                    <button class="ui big inverted secondary button confirm-btn" id="update-resume-btn">上傳履歷</button>
+                </div>
             </div>
         </div>
         <form id="resume-form">
@@ -174,9 +176,9 @@
                                                 <label for="skill-proficiency">熟練程度</label>
                                                 <div class="input-wrap">
                                                     <select class="ui dropdown select" name="proficiency" id="skill-proficiency-<%=i%>">
-                                                        <option value="beginner">初階</option>
-                                                        <option value="intermediate">熟練</option>
-                                                        <option value="expert">精通</option>
+                                                        <option value="初階">初階</option>
+                                                        <option value="熟練">熟練</option>
+                                                        <option value="精通">精通</option>
                                                     </select>
                                                 </div>
                                             </div>
