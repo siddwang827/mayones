@@ -3,9 +3,8 @@ const { thoundsAddComma } = require('../../utils/utils')
 const { promisify } = require('util');
 const { TOKEN_SECRET } = process.env;
 const jwt = require('jsonwebtoken');
+const { s3Upload, s3UploadMulti } = require('../models/s3Server')
 const pageSize = 20
-// let header = { view: "job", auth: false }
-
 
 
 const getJobs = async (req, res) => {
@@ -30,6 +29,7 @@ const getJobs = async (req, res) => {
 }
 
 const createJob = async (req, res) => {
+    const uploadImage = await s3UploadMulti(req.files, "company")
 
 }
 

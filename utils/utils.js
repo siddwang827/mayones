@@ -3,6 +3,24 @@ const { TOKEN_SECRET, PORT } = process.env; // 30 days by seconds
 const { User } = require('../server/models/user_model')
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
+const multer = require('multer')
+
+
+const storage = multer.memoryStorage()
+
+const fileFilter = (req, res, next) => {
+    if (file.mimetype.split('/')[0] === image) {
+        cb(null, true)
+    } else {
+        cb(new (multer.MulterError("LIMIT_UNEXPECTED_FILE"), false))
+    }
+}
+
+const upload = multer({
+    storage,
+    // fileFilter,
+    // limits: { fileSize: 3000000 }
+})
 
 const asyncHandlerWrapper = (fn) => {
     return function (req, res, next) {
@@ -114,6 +132,7 @@ const setViewHeader = (view) => {
 
 
 module.exports = {
+    upload,
     asyncHandlerWrapper,
     rateLimiterRoute,
     thoundsAddComma,

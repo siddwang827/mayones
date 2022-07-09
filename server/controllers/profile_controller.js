@@ -1,6 +1,7 @@
 // const { Resume } = require('../models/schemas')
 const { createResume, getResumeDetail, getUserAllResumes } = require('../models/profile_model.js')
 const headerINfo = { auth: false }
+const { s3Upload, s3UploadMulti } = require('../models/s3Server')
 
 const getResumePage = async (req, res) => {
     const header = req.header
@@ -18,6 +19,7 @@ const getResumeEditPage = async (req, res) => {
 
     const resumeDetail = await getResumeDetail(resumeId, userId)
     const allResumes = await getUserAllResumes(userId)
+    console.log(resumeDetail)
 
     return res.render('resumeEdit', { header, resumeDetail, allResumes })
 
@@ -29,6 +31,7 @@ const fetchResumeDetail = async (req, res) => {
     try {
 
         const resumeDetail = await getResumeDetail(resumeId, userId)
+        console.log(resumeDetail)
         if (!resumeDetail) {
             res.status(401).json({ error: 'Resume is not exisited!' })
         }
@@ -47,16 +50,24 @@ const deleteResume = async (req, res) => {
 }
 
 const uploadResume = async (req, res) => {
+    let uploadImage
     const userId = req.user.id
     const resume = req.body
+
 
     for (let item in resume) {
         resume[item] = typeof (resume[item]) === 'string' ? [resume[item]] : resume[item]
     }
 
-    try {
+    if (req.files) {
+        uploadImage = await s3UploadMulti(req.files, "resume")
+        resume['projectImage'] = uploadImage.map(image => image.url)
+    }
+    console.log(resume)
 
+    try {
         const result = await createResume(userId, resume)
+        console.log(result)
 
     } catch (error) {
         console.log(error)

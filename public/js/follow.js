@@ -12,6 +12,8 @@ async function clickHeart(event) {
         body: JSON.stringify({ followId })
     })
     const result = await fetchResult.json()
-    window.location.href = '/follows'
-    console.log(result)
+    if (result.result) {
+        const jobId = event.target.getAttribute('follow-id')
+        $(`#job-id-${jobId}`).remove()
+    }
 }

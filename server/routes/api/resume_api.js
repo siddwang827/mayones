@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { asyncHandlerWrapper, authentication } = require('../../../utils/utils.js')
+const { upload, asyncHandlerWrapper, authentication } = require('../../../utils/utils.js')
 const multer = require('multer')
 const {
     fetchResumeDetail,
@@ -7,8 +7,7 @@ const {
     deleteResume
 } = require('../../controllers/profile_controller')
 
-
-const upload = multer({ dest: 'uploads/' })
+const resumeUploadMulter = upload.array('projectImage', 3)
 
 
 router.route('/resume/:id')
@@ -16,7 +15,7 @@ router.route('/resume/:id')
 
 
 router.route('/resume')
-    .post(authentication(), upload.array('projectImage', 3), asyncHandlerWrapper(uploadResume));
+    .post(authentication(), resumeUploadMulter, asyncHandlerWrapper(uploadResume));
 
 
 router.route('/resume')

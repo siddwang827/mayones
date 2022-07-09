@@ -18,6 +18,6 @@ router.route('/resumes')
     .get(authentication(AUTH.required), setViewHeader(), asyncHandlerWrapper(getResumePage));
 
 router.route('/follows')
-    .get(authentication(AUTH.nonRequired), asyncHandlerWrapper(getAllFollows));
+    .get(authentication(AUTH.nonRequired), setViewHeader(), asyncHandlerWrapper(getAllFollows));
 
 module.exports = router
