@@ -1,4 +1,4 @@
-const column = document.querySelector('.container');
+const column = document.querySelector('.right-resume-container');
 
 new Sortable(column, {
     sort: true,
@@ -289,7 +289,7 @@ $('.image-upload-wrap').bind('dragleave', function () {
 });
 
 
-$('#update-resume-btn').on('click', (event) => {
+$('#update-resume-btn').on('click', async (event) => {
     event.preventDefault();
     event.stopPropagation()
     if (!$('#resume-name').val() || !$('#name').val() || !$('#contactEmail').val()) {
@@ -298,32 +298,37 @@ $('#update-resume-btn').on('click', (event) => {
     const resumeForm = document.getElementById('resume-form')
     const formData = new FormData(resumeForm)
 
-    fetch("/api/1.0/resume", {
+    const fetchResult = fetch("/api/1.0/resume", {
         method: "POST",
         body: formData,
     })
-        .then(console.log("send to server sucess!"))
-        .catch((err) => {
-            console.log(err);
-        });
+    if (fetchResult.status === 200) {
+        alert("已成功上傳履歷!")
+        window.location.href = "/resumes"
+
+    } else {
+        alert("上傳履歷失敗!")
+    }
 });
 
-$('#delete-resume-btn').on('click', (event) => {
+$('#delete-resume-btn').on('click', async (event) => {
     event.preventDefault();
     event.stopPropagation()
     let check = confirm("是否確認刪除此履歷?")
     if (!check) {
         return
     }
-    const resumeForm = document.getElementById('resume-form')
-    const formData = new FormData(resumeForm)
 
-    fetch("/resume", {
-        method: "POST",
-        body: formData,
+    const resumeId = window.location.pathname.split('/')[2]
+    const fetchResult = await fetch(`/api/1.0/resume/${resumeId}`, {
+        method: "DELETE"
     })
-        .then(console.log("send to server sucess!"))
-        .catch((err) => {
-            console.log(err);
-        });
+    if (fetchResult.status === 200) {
+        alert("已成功刪除履歷!")
+        window.location.href = "/resumes"
+    } else if (fetchResult.status === 403) {
+        alert("很抱歉，您沒有權限刪除該履歷!")
+    } else {
+        alert("刪除履歷失敗!")
+    }
 });
