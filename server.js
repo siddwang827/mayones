@@ -29,7 +29,8 @@ app.use([
     require('./server/routes/company_route'),
     require('./server/routes/user_route'),
     require('./server/routes/profile_route'),
-    require('./server/routes/application_route')
+    require('./server/routes/application_route'),
+    require('./server/routes/manage_route')
 ]);
 
 app.use('/api/' + API_VERSION, [

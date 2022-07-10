@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include /layout/head %>
+        <link rel="stylesheet" type="text/css" href="/css/main.css">
+        <link rel="stylesheet" type="text/css" href="/css/manage.css">
+</head>
+
+<body>
+    <main>
+        <div id="editor"></div>
+
+    </main>
+</body>
+<footer>
+    <%- include layout/footer %>
+        <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+        <script>
+            ClassicEditor
+                .create(document.querySelector('#editor'))
+                .catch(error => {
+                    console.error(error);
+                });
+        </script>
+        <script src="/js/moment.js"></script>
+        <script src="/js/manage.js"></script>
+</footer>
