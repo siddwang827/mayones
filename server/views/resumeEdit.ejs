@@ -275,131 +275,133 @@
                                         </div>
                                     </div>
                         </div>
-                        <div class="modal" id="experience-modal">
-                            <div class="resume-item-modal">
-                                <h3 class="resume-item-modal-title"><strong>工作經驗</strong></h3>
-                                <div id="resume-experience-list" class="resume-experience-list">
-                                    <% if (resumeDetail.experience_title[0]) { %>
-                                        <% for (let i=0; i < resumeDetail.experience_title.length; i++ ) { %>
-                                            <div id="experience-item-<%=i%>" class="resume-content experience" experience-index="<%=i%>">
-                                                <div class="content-container experience">
-                                                    <div class="form-group">
-                                                        <label for="experience-title-<%=i%>">職位</label>
-                                                        <div class="input-wrap">
-                                                            <input name="experienceName" class="form-control" id="experience-title-<%=i%>"
-                                                                value="<%=resumeDetail.experience_title[i]%>">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="experience-company-name-<%=i%>">組織名稱</label>
-                                                        <div class="input-wrap">
-                                                            <input name="experienceCompanyName" class="form-control"
-                                                                id="experience-company-name-<%=i%>" value="<%=resumeDetail.experience_org[i]%>">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="experience-time-start-<%=i%>">起始時間</label>
-                                                        <div class="input-wrap">
-                                                            <input name="experienceTimeStart" class="form-control" id="experience-time-start-<%=i%>"
-                                                                value="<%=resumeDetail.experience_start[i]%>" type="month">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="experience-time-end-<%=i%>">結束時間</label>
-                                                        <div class="input-wrap">
-                                                            <input name="experienceTimeEnd" class="form-control" id="experience-time-end-<%=i%>"
-                                                                value="<%=resumeDetail.experience_end[i]%>" type="month">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="experience-info-<%=i%>">內容描述</label>
-                                                    <div class="input-wrap">
-                                                        <textarea name="experienceInfo" class="form-control" id="experience-info-<%=i%>"
-                                                            rows=1><%=resumeDetail.experience_intro[i]%></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="remove-btn">
-                                                    <button class="ui medium negative button" id="remove-experience-btn-<%=i%>"
-                                                        experience-index="<%=i%>">刪除</button>
+                    </div>
+                </div>
+                <div class="modal" id="experience-modal">
+                    <div class="resume-item-modal">
+                        <h3 class="resume-item-modal-title"><strong>工作經驗</strong></h3>
+                        <div id="resume-experience-list" class="resume-experience-list">
+                            <% if (resumeDetail.experience_title[0]) { %>
+                                <% for (let i=0; i < resumeDetail.experience_title.length; i++ ) { %>
+                                    <div id="experience-item-<%=i%>" class="resume-content experience" experience-index="<%=i%>">
+                                        <div class="content-container experience">
+                                            <div class="form-group">
+                                                <label for="experience-title-<%=i%>">職位</label>
+                                                <div class="input-wrap">
+                                                    <input name="experienceName" class="form-control" id="experience-title-<%=i%>"
+                                                        value="<%=resumeDetail.experience_title[i]%>">
                                                 </div>
                                             </div>
-                                            <% } %>
-                                                <% } %>
-                                </div>
-                                <div class="action-bar">
-                                    <button class="ui medium inverted secondary button" id="add-experience-btn">新增經歷</button>
-                                    <button class="ui medium secondary button confirm-btn">確定</button>
-                                </div>
-                            </div>
+                                            <div class="form-group">
+                                                <label for="experience-company-name-<%=i%>">組織名稱</label>
+                                                <div class="input-wrap">
+                                                    <input name="experienceCompanyName" class="form-control" id="experience-company-name-<%=i%>"
+                                                        value="<%=resumeDetail.experience_org[i]%>">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="experience-time-start-<%=i%>">起始時間</label>
+                                                <div class="input-wrap">
+                                                    <input name="experienceTimeStart" class="form-control" id="experience-time-start-<%=i%>"
+                                                        value="<%=resumeDetail.experience_start[i]%>" type="month">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="experience-time-end-<%=i%>">結束時間</label>
+                                                <div class="input-wrap">
+                                                    <input name="experienceTimeEnd" class="form-control" id="experience-time-end-<%=i%>"
+                                                        value="<%=resumeDetail.experience_end[i]%>" type="month">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="experience-info-<%=i%>">內容描述</label>
+                                            <div class="input-wrap">
+                                                <textarea name="experienceInfo" class="form-control" id="experience-info-<%=i%>"
+                                                    rows=1><%=resumeDetail.experience_intro[i]%></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="remove-btn">
+                                            <button class="ui medium negative button" id="remove-experience-btn-<%=i%>"
+                                                experience-index="<%=i%>">刪除</button>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                        <% } %>
                         </div>
-                        <div class="modal" id="education-modal">
-                            <div class="resume-item-modal">
-                                <h3 class="resume-item-modal-title"><strong>學歷</strong></h3>
-                                <div id="resume-education-list" class="resume-education-list">
-                                    <% if (resumeDetail.education_title[0]) { %>
-                                        <% for (let i=0; i < resumeDetail.education_title.length; i++ ) { %>
-                                            <div id="education-item-<%=i%>" class="resume-content education" education-index="<%=i%>">
-                                                <div class="form-group">
-                                                    <label for="education-title-<%=i%>">學校名稱</label>
-                                                    <div class="input-wrap">
-                                                        <input name="educationName" class="form-control" id="education-title-<%=i%>"
-                                                            value="<%=resumeDetail.education_title[i]%>">
-                                                    </div>
-                                                </div>
-                                                <div class="content-container education">
-                                                    <div class="form-group">
-                                                        <label for="education-department-<%=i%>">系所</label>
-                                                        <div class="input-wrap">
-                                                            <input name="educationDepartment" class="form-control" id="education-department-<%=i%>"
-                                                                value="<%=resumeDetail.education_department[i]%>">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="education-degree-<%=i%>">學位</label>
-                                                        <div class="input-wrap">
-                                                            <input name="educationDegree" class="form-control" id="education-degree-<%=i%>"
-                                                                value="<%=resumeDetail.education_degree[i]%>">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="education-time-start-<%=i%>">起始時間</label>
-                                                        <div class="input-wrap">
-                                                            <input name="educationTimeStart" class="form-control" id="education-time-start-<%=i%>"
-                                                                value="<%=resumeDetail.education_start[i]%>" type="month">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="education-time-end-<%=i%>">結束時間</label>
-                                                        <div class="input-wrap">
-                                                            <input name="educationTimeEnd" class="form-control" id="education-time-end-<%=i%>"
-                                                                value="<%=resumeDetail.education_end[i]%>" type="month">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="remove-btn">
-                                                    <button class="ui medium negative button" id="remove-education-btn-<%=i%>"
-                                                        education-index="<%=i%>">刪除</button>
-                                                </div>
-                                            </div>
-                                            <% } %>
-                                                <% } %>
-                                </div>
-                                <div class="action-bar">
-                                    <button class="ui medium inverted secondary button" id="add-education-btn">新增學歷</button>
-                                    <button class="ui medium secondary button confirm-btn">確定</button>
-                                </div>
-                            </div>
+                        <div class="action-bar">
+                            <button class="ui medium inverted secondary button" id="add-experience-btn">新增經歷</button>
+                            <button class="ui medium secondary button confirm-btn">確定</button>
                         </div>
                     </div>
+                </div>
+                <div class="modal" id="education-modal">
+                    <div class="resume-item-modal">
+                        <h3 class="resume-item-modal-title"><strong>學歷</strong></h3>
+                        <div id="resume-education-list" class="resume-education-list">
+                            <% if (resumeDetail.education_title[0]) { %>
+                                <% for (let i=0; i < resumeDetail.education_title.length; i++ ) { %>
+                                    <div id="education-item-<%=i%>" class="resume-content education" education-index="<%=i%>">
+                                        <div class="form-group">
+                                            <label for="education-title-<%=i%>">學校名稱</label>
+                                            <div class="input-wrap">
+                                                <input name="educationName" class="form-control" id="education-title-<%=i%>"
+                                                    value="<%=resumeDetail.education_title[i]%>">
+                                            </div>
+                                        </div>
+                                        <div class="content-container education">
+                                            <div class="form-group">
+                                                <label for="education-department-<%=i%>">系所</label>
+                                                <div class="input-wrap">
+                                                    <input name="educationDepartment" class="form-control" id="education-department-<%=i%>"
+                                                        value="<%=resumeDetail.education_department[i]%>">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="education-degree-<%=i%>">學位</label>
+                                                <div class="input-wrap">
+                                                    <input name="educationDegree" class="form-control" id="education-degree-<%=i%>"
+                                                        value="<%=resumeDetail.education_degree[i]%>">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="education-time-start-<%=i%>">起始時間</label>
+                                                <div class="input-wrap">
+                                                    <input name="educationTimeStart" class="form-control" id="education-time-start-<%=i%>"
+                                                        value="<%=resumeDetail.education_start[i]%>" type="month">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="education-time-end-<%=i%>">結束時間</label>
+                                                <div class="input-wrap">
+                                                    <input name="educationTimeEnd" class="form-control" id="education-time-end-<%=i%>"
+                                                        value="<%=resumeDetail.education_end[i]%>" type="month">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="remove-btn">
+                                            <button class="ui medium negative button" id="remove-education-btn-<%=i%>"
+                                                education-index="<%=i%>">刪除</button>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                        <% } %>
+                        </div>
+                        <div class="action-bar">
+                            <button class="ui medium inverted secondary button" id="add-education-btn">新增學歷</button>
+                            <button class="ui medium secondary button confirm-btn">確定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
     </main>
 
     <footer>
         <%- include /layout/footer %>
             <!-- for bootstrap modal -->
-            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+            <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
                 integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"

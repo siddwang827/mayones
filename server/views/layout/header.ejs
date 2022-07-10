@@ -42,22 +42,43 @@
                                 <% } %>
 
     </div>
-    <div id="profile-dropdown" class="profile-dropdown">
-        <a class="profile-dropdown-items" href="/resumes">
-            <i class="file alternate icon profile-icon"></i>
-            管理履歷
-        </a>
-        <a class="profile-dropdown-items" href="/follows">
-            <i class="heart icon profile-icon"></i>
-            收藏職缺
-        </a>
-        <a class="profile-dropdown-items" href="/applications">
-            <i class="paper plane icon profile-icon"></i>
-            投遞紀錄
-        </a>
-        <a class="profile-dropdown-items" href="/logout">
-            <i class="user outline icon profile-icon"></i>
-            登出
-        </a>
-    </div>
+    <% if (header.role==="employee" ) { %>
+        <div id="profile-dropdown" class="profile-dropdown">
+            <a class="profile-dropdown-items" href="/resumes">
+                <i class="file alternate icon profile-icon"></i>
+                管理履歷
+            </a>
+            <a class="profile-dropdown-items" href="/follows">
+                <i class="heart icon profile-icon"></i>
+                收藏職缺
+            </a>
+            <a class="profile-dropdown-items" href="/applications">
+                <i class="paper plane icon profile-icon"></i>
+                投遞紀錄
+            </a>
+            <a class="profile-dropdown-items" href="/logout">
+                <i class="user outline icon profile-icon"></i>
+                登出
+            </a>
+        </div>
+        <%} else { %>
+            <div id="profile-dropdown" class="profile-dropdown">
+                <a class="profile-dropdown-items" href="/resumes">
+                    <i class="file alternate icon profile-icon"></i>
+                    管理公司
+                </a>
+                <a class="profile-dropdown-items" href="/follows">
+                    <i class="heart icon profile-icon"></i>
+                    管理職缺
+                </a>
+                <a class="profile-dropdown-items" href="/applications">
+                    <i class="paper plane icon profile-icon"></i>
+                    投遞紀錄
+                </a>
+                <a class="profile-dropdown-items" href="/logout">
+                    <i class="user outline icon profile-icon"></i>
+                    登出
+                </a>
+            </div>
+            <%}%>
 </div>

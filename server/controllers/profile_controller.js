@@ -1,5 +1,5 @@
 // const { Resume } = require('../models/schemas')
-const { createResume, getResumeDetail, getUserAllResumes, deleteUserResume, checkUserOwnResume } = require('../models/profile_model.js')
+const { createResume, getResumeDetail, getUserAllResumes, deleteUserResume, checkUserOwnResume, checkResumeApplication } = require('../models/profile_model.js')
 const { s3Upload, s3UploadMulti } = require('../models/s3Server')
 
 const getResumePage = async (req, res) => {
@@ -18,7 +18,6 @@ const getResumeEditPage = async (req, res) => {
 
     const resumeDetail = await getResumeDetail(resumeId, userId)
     const allResumes = await getUserAllResumes(userId)
-    console.log(resumeDetail)
 
     return res.render('resumeEdit', { header, resumeDetail, allResumes })
 
@@ -47,8 +46,12 @@ const deleteResume = async (req, res) => {
     const userId = req.user.id
     try {
         const isOwner = await checkUserOwnResume(userId, resumeId)
+        const isapplied = await checkResumeApplication(resumeId)
         if (!isOwner) {
             return res.status(403).json({ error: "Forbidden to remove resume" })
+        }
+        if (isapplied) {
+            return res.status(403).json({ error: "Reference by another application" })
         }
         await deleteUserResume(userId, resumeId)
         return res.status(200).json({ result: "Resume delete success" })

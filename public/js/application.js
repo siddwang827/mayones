@@ -1,4 +1,3 @@
-
 const followJob = document.querySelectorAll('.follow-heart')
 followJob.forEach(job => job.addEventListener('click', clickHeart))
 
@@ -28,17 +27,41 @@ $('.job-content.action').on('click', (event) => {
 $('.calendar.icon').on('click', (event) => {
     event.preventDefault();
     event.stopPropagation()
-    if ($('.hide').length !== 0) {
+    if ($('.interview-date.hide').length !== 0) {
         $('.interview-date').removeClass('hide')
     } else {
         $('.interview-date').addClass('hide')
     }
+})
+
+$('.calendar.icon').hover(
+    (event) => {
+        event.preventDefault();
+        event.stopPropagation()
+        event.target.nextElementSibling.classList.remove('hide')
+    },
+    (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        if ($('.interview-date.hide').length > 0) {
+            event.target.nextElementSibling.classList.add('hide')
+        }
+    }
+)
 
 
+$('.thumbtack.icon').on('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation()
+    if ($('.job-container.archived.hide').length !== 0) {
+        $('.job-container.archived').removeClass('hide')
+    } else {
+        $('.job-container.archived').addClass('hide')
+    }
 })
 
 
-$('.action-item.archive').on('click', async (event) => {
+$('.action-icon.archive').on('click', async (event) => {
     event.preventDefault();
     event.stopPropagation();
     const applicationId = event.target.getAttribute('application-id')
@@ -68,7 +91,7 @@ $('.action-item.archive').on('click', async (event) => {
 
 })
 
-$('.action-item.trash').on('click', async (event) => {
+$('.action-icon.trash').on('click', async (event) => {
     event.preventDefault();
     event.stopPropagation();
     const applicationId = event.target.getAttribute('application-id')
@@ -88,4 +111,20 @@ $('.action-item.trash').on('click', async (event) => {
         }
     }
 
+})
+
+$('.file.icon.action-icon').on('click', async (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const resumeId = event.target.getAttribute('application-id')
+    const fetchResult = await fetch(`/api/1.0/resume/${resumeId}`)
+    const resumeDetail = await fetchResult.json()
+    console.log(resumeDetail)
+    resumePreview(resumeDetail)
+    $(`#resume-modal`)
+        .modal({
+            blurring: true
+        })
+        .modal('show')
+        ;
 })

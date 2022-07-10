@@ -63,10 +63,11 @@
     background-position: center
 }
 
-.job-content.action {
+.job-content.action,
+.job-content.calendar {
     display: grid;
     grid-auto-flow: column;
-    gap: 60px;
+    gap: 40px;
     cursor: default
 }
 
@@ -82,23 +83,68 @@
 }
 
 .job-content.calendar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center
+    position: relative;
+}
+
+
+.action-icon:hover {
+    transform: translate(-1px, -1px);
+    cursor: pointer
+}
+
+
+.action-icon:active {
+    transform: translate(0px, 0px);
 }
 
 .interview-date {
     background-color: rgb(36, 36, 36);
     color: white;
     padding: 10px;
-    margin-right: 10px;
     border-radius: 5px;
+    position: absolute;
+    left: 155px;
+    top: 8px
 }
 
 .hide {
-    display: none;
+    /* display: none; */
+    visibility: hidden;
+    opacity: 0;
 }
 
-.job-content.calendar:hover .hide {
+.action-item.calendar:hover + .hide {
+    display: block;
+}
+
+.application-title:hover + .hide,
+.application-title:hover .hide {
+    display: grid;
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s, opacity 0.1s linear;
+}
+
+.application-title {
+    margin: calc(2rem - .14285714em) 0 1rem;
     display: flex;
+    justify-content: left;
+    font-size: 2rem;
+    font-weight: bold;
+    position: relative;
+    width: 300px
+}
+
+.thumbtack.icon {
+    position: absolute;
+    left: 120px;
+    cursor: pointer
+}
+
+.resume-item {
+    width: 1000px
+}
+
+.ui.dimmer {
+    text-align: left !important
 }
