@@ -327,6 +327,10 @@ $('#delete-resume-btn').on('click', async (event) => {
         alert("已成功刪除履歷!")
         window.location.href = "/resumes"
     } else if (fetchResult.status === 403) {
+        const result = await fetchResult.json()
+        if (result.error === "Reference by another application") {
+            return alert("已使用此履歷應徵過職缺，請先取消應徵紀錄再刪除履歷！")
+        }
         alert("很抱歉，您沒有權限刪除該履歷!")
     } else {
         alert("刪除履歷失敗!")

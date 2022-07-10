@@ -128,6 +128,7 @@ const deleteUserResume = async (userId, resumeId) => {
     } catch (error) {
         await conn.query('ROLLBACK')
         console.log(error)
+        throw error
     } finally {
         await conn.release()
     }
@@ -139,11 +140,17 @@ const checkUserOwnResume = async (userId, resumeId) => {
     return result
 }
 
+const checkResumeApplication = async (resumeId) => {
+    const [result] = await queryDB('SELECT * FROM mayones.job_application WHERE apply_resume_id = ? ', [resumeId])
+
+    return result
+}
 
 module.exports = {
     createResume,
     getResumeDetail,
     getUserAllResumes,
     deleteUserResume,
-    checkUserOwnResume
+    checkUserOwnResume,
+    checkResumeApplication
 }

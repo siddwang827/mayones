@@ -1,7 +1,8 @@
 .job-container {
     width: 100%;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    gap: 20px;
+    padding: 20px 20px;
     background-color: #fff;
     border: .5px solid rgba(0, 0, 0, .1);
     border-radius: 5px;
@@ -14,7 +15,6 @@
 .job-list {
     display: flex;
     justify-content: space-between;
-    margin: 0 20px 20px;
     background-color: rgb(236, 236, 236);
     border: .5px solid rgba(0, 0, 0, .1);
     border-radius: 5px;
@@ -61,4 +61,90 @@
     background-image: url('/img/heart-full.png');
     background-size: 40px 40px;
     background-position: center
+}
+
+.job-content.action,
+.job-content.calendar {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 40px;
+    cursor: default
+}
+
+.job-content .action-item {
+    display: flex;
+    justify-content: center;
+    cursor: pointer
+}
+
+.job-content.calendar,
+.job-content .action-item .eye {
+    cursor: default
+}
+
+.job-content.calendar {
+    position: relative;
+}
+
+
+.action-icon:hover {
+    transform: translate(-1px, -1px);
+    cursor: pointer
+}
+
+
+.action-icon:active {
+    transform: translate(0px, 0px);
+}
+
+.interview-date {
+    background-color: rgb(36, 36, 36);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    position: absolute;
+    left: 155px;
+    top: 8px
+}
+
+.hide {
+    /* display: none; */
+    visibility: hidden;
+    opacity: 0;
+}
+
+.action-item.calendar:hover + .hide {
+    display: block;
+}
+
+.application-title:hover + .hide,
+.application-title:hover .hide {
+    display: grid;
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s, opacity 0.1s linear;
+}
+
+.application-title {
+    margin: calc(2rem - .14285714em) 0 1rem;
+    display: flex;
+    justify-content: left;
+    font-size: 2rem;
+    font-weight: bold;
+    position: relative;
+    width: 300px
+}
+
+.thumbtack.icon {
+    position: absolute;
+    left: 120px;
+    cursor: pointer
+}
+
+.resume-item {
+    width: 1000px
+}
+
+.ui.dimmer {
+    text-align: left !important
 }
