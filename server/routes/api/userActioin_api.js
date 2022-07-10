@@ -6,17 +6,19 @@ const {
     unFollow
 } = require('../../controllers/follow_controller.js')
 
-const { sendApplication } = require('../../controllers/application_controller')
+const { sendApplication, updateApplication, cancelApplication } = require('../../controllers/application_controller')
 
 
 router.route('/follow')
     .post(authentication(AUTH.required), asyncHandlerWrapper(addFollow));
 
-router.route('/unfollow')
-    .post(authentication(AUTH.required), asyncHandlerWrapper(unFollow));
+router.route('/follow/:id')
+    .delete(authentication(AUTH.required), asyncHandlerWrapper(unFollow));
 
-router.route('/application/')
-    .post(authentication(AUTH.required), asyncHandlerWrapper(sendApplication));
+router.route('/application')
+    .post(authentication(AUTH.required), asyncHandlerWrapper(sendApplication))
+    .patch(authentication(AUTH.required), asyncHandlerWrapper(updateApplication))
 
-
+router.route('/application/:id')
+    .delete(authentication(AUTH.required), asyncHandlerWrapper(cancelApplication))
 module.exports = router;

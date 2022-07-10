@@ -1,7 +1,8 @@
 .job-container {
     width: 100%;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    gap: 20px;
+    padding: 20px 20px;
     background-color: #fff;
     border: .5px solid rgba(0, 0, 0, .1);
     border-radius: 5px;
@@ -14,7 +15,6 @@
 .job-list {
     display: flex;
     justify-content: space-between;
-    margin: 0 20px 20px;
     background-color: rgb(236, 236, 236);
     border: .5px solid rgba(0, 0, 0, .1);
     border-radius: 5px;
@@ -61,4 +61,44 @@
     background-image: url('/img/heart-full.png');
     background-size: 40px 40px;
     background-position: center
+}
+
+.job-content.action {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 60px;
+    cursor: default
+}
+
+.job-content .action-item {
+    display: flex;
+    justify-content: center;
+    cursor: pointer
+}
+
+.job-content.calendar,
+.job-content .action-item .eye {
+    cursor: default
+}
+
+.job-content.calendar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+
+.interview-date {
+    background-color: rgb(36, 36, 36);
+    color: white;
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.hide {
+    display: none;
+}
+
+.job-content.calendar:hover .hide {
+    display: flex;
 }

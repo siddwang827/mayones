@@ -26,7 +26,7 @@ const addFollow = async (req, res) => {
 
 }
 const unFollow = async (req, res) => {
-    const followId = req.body.followId
+    const followId = req.params.id
 
     await Follow.userUnfollowJob(followId)
     res.status(200).json({ result: 'unfollow job success!' })
