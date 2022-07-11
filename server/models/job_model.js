@@ -176,6 +176,22 @@ class Job {
         return result
     }
 
+    static async createJob(userId, jobTtile, jobDescription, jobRequired, jobPrefer, salaryBottom, salaryTop, salaryType, jobType, location, address, remote_work, positionId, JobTags) {
+        let sql = `
+        SELECT id FROM mayones.companies WHERE owner_id = ?
+        `
+        const [company] = await queryDB(sql, [userId])
+        sql = `
+        INSERT INTO mayones.jobs (owner_id, companies_id, job_title, job_description, skill_required, prefered_qualification, salary_bottom, salary_top, salary_type, job_type, location, address, remote_work, category_position_id)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+        `
+        const result = await queryDB(sql, [userId, company.id, jobTtile, jobDescription, jobRequired, jobPrefer, salaryBottom, salaryTop, salaryType, jobType, location, address, remote_work, positionId])
+        const jobId = result.insertId
+        const tagArray = JobTags.map(tag => { return [jobId, tag] })
+        const insertTag = await queryDB(`INSERT INTO mayones.jobs_tags(jobs_id, tags_id) VALUES ?`, [tagArray])
+        console.log(insertTag)
+    }
+
     static async deleteJob(id) {
         const sql = `
         DELETE FROM jobs WHERE id = ?
@@ -231,6 +247,14 @@ class Job {
     }
 }
 
+const getCompanyId = async (userId) => {
+    const sql = `
+    SELECT id FROM mayones.companies AS company_id WHERE owner_id = ?
+    `
+    const result = await queryDB(sql, [userId])
+}
+
+
 const getJobsCategory = async () => {
     const sql = `
     SELECT json_arrayagg(t.category) AS categories 
@@ -262,4 +286,6 @@ const getJobPositionByCategory = async (category) => {
 
 }
 
-module.exports = { Job, jobTypes, jobLocations, getJobTags, getJobsCategory, getJobPositionByCategory }
+
+
+module.exports = { Job, jobTypes, jobLocations, getJobTags, getJobsCategory, getJobPositionByCategory, getCompanyId }

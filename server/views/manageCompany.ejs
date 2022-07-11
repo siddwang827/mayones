@@ -74,8 +74,8 @@
                         <select id="company-tags" class="ui fluid search dropdown" multiple="">
                             <option value="">Tags</option>
                             <% for (let tag of tags) { %>
-                                <option value="<%=tag%>">
-                                    <%=tag%>
+                                <option value="<%=tag[1]%>">
+                                    <%=tag[0]%>
                                 </option>
                                 <%}%>
                         </select>

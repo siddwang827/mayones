@@ -1,6 +1,7 @@
 $('#job-location').dropdown()
 $('#job-type').dropdown()
 $('#job-remote').dropdown()
+$('#salary-type').dropdown();
 $('#job-tags').dropdown({
     maxSelections: 4,
 })
@@ -45,6 +46,7 @@ $('#update-job-btn').on('click', async (event) => {
     const joblocation = $('#job-location').dropdown('get value')
     const jobCategory = $('#job-category').dropdown('get value')
     const jobPosition = $('#job-position').dropdown('get value')
+    const jobRemote = $('#job-remote').dropdown('get value')
     const jobIntro = editorIntro.getData()
     const jobRequired = editorRequired.getData()
     const jobPrefer = editorPrefer.getData()
@@ -53,6 +55,7 @@ $('#update-job-btn').on('click', async (event) => {
     formData.set('jobTags', JSON.stringify(jobTags))
     formData.set('joblocation', joblocation)
     formData.set('jobCategory', jobCategory)
+    formData.set('jobRemote', jobRemote)
     formData.set('jobIntro', jobIntro)
     formData.set('jobRequired', jobRequired)
     formData.set('jobPrefer', jobPrefer)
@@ -64,7 +67,7 @@ $('#update-job-btn').on('click', async (event) => {
     })
     if (fetchResult.status === 200) {
         alert("已成功上傳公司!")
-        window.location.href = "/companies"
+        window.location.href = "/jobs"
     } else {
         alert("上傳履歷失敗!")
     }
