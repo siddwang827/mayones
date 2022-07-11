@@ -156,13 +156,13 @@
 }
 
 .tag-label.jobType {
-    background-color: #dd8d8d
+    background-color: #da9898;
 }
 
 .tag-label.tag {
-    background-color: rgba(136, 236, 158, 0.815)
+    background-color: rgba(128, 214, 147, 0.815)
 }
 
 .tag-label.position {
-    background-color: rgb(255, 221, 176)
+    background-color: rgb(238, 215, 186)
 }

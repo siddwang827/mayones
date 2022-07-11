@@ -172,4 +172,26 @@ class Company {
     }
 }
 
-module.exports = { Company, companyLocations }
+const getALLCategory = async () => {
+    const sql = `
+    SELECT JSON_ARRAYAGG(category) AS categories FROM mayones.categories;
+    `
+    const [result] = await queryDB(sql)
+    return result.categories
+
+}
+
+const getALLCompanyTag = async () => {
+    const sql = `
+    SELECT JSON_ARRAYAGG(tag_name) AS tags FROM mayones.tags where classification != 'job' ;
+    `
+    const [result] = await queryDB(sql)
+    return result.tags
+
+}
+
+
+
+
+
+module.exports = { Company, companyLocations, getALLCategory, getALLCompanyTag }

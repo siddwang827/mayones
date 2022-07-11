@@ -39,8 +39,6 @@ app.use('/api/' + API_VERSION, [
     require('./server/routes/api/auth_api')
 ])
 
-// app.use([require('.server/routes/profile_route')])
-
 app.use('/', (req, res) => {
     res.redirect('/jobs')
 })

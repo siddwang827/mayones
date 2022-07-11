@@ -5,30 +5,33 @@ const { getCompanyManagePage,
     createCompanyDetail,
     getJobManagePage,
     createJobDetail,
-    getApplicationsePage } = require('../controllers/manage_controller.js')
+    getApplicationsePage,
+    getPosition } = require('../controllers/manage_controller.js')
 
-
+const companyMulter = upload.fields([{ name: "logoImage" }, { name: "bannerImage" }, { name: "otherImages", maxCount: 5 }])
+const jobMulter = upload.none()
 
 
 router.route('/manage/company')
     .get(authentication(AUTH.required), setViewHeader(), asyncHandlerWrapper(getCompanyManagePage))
 
 router.route('/manage/company')
-    .post(authentication(AUTH.required), setViewHeader(), asyncHandlerWrapper(createCompanyDetail))
+    .post(authentication(AUTH.required), companyMulter, asyncHandlerWrapper(createCompanyDetail))
 
 
 router.route('/manage/job')
     .get(authentication(AUTH.required), setViewHeader(), asyncHandlerWrapper(getJobManagePage))
 
 router.route('/manage/job')
-    .post(authentication(AUTH.required), setViewHeader(), asyncHandlerWrapper(createJobDetail))
+    .post(authentication(AUTH.required), jobMulter, asyncHandlerWrapper(createJobDetail))
 
 
 router.route('/manage/applications')
     .get(authentication(AUTH.required), setViewHeader(), asyncHandlerWrapper(getApplicationsePage))
 
 
-
+router.route('/api/1.0/positions')
+    .get(asyncHandlerWrapper(getPosition))
 
 
 module.exports = router;

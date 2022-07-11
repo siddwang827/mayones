@@ -231,4 +231,35 @@ class Job {
     }
 }
 
-module.exports = { Job, jobTypes, jobLocations }
+const getJobsCategory = async () => {
+    const sql = `
+    SELECT json_arrayagg(t.category) AS categories 
+    FROM (SELECT distinct category AS category
+        FROM mayones.category_position 
+        ORDER BY mayones.category_position.order) t
+    `
+    const [result] = await queryDB(sql)
+
+    return result.categories
+
+}
+
+const getJobTags = async () => {
+    const sql = `
+    SELECT JSON_arrayagg(json_array(tag_name, id)) AS tags FROM mayones.tags ORDER BY id  ;
+    `
+    const [result] = await queryDB(sql)
+    return result.tags
+}
+
+const getJobPositionByCategory = async (category) => {
+    const sql = `
+    SELECT JSON_arrayagg(json_array(position, id)) AS positions FROM mayones.category_position WHERE category = ?;
+    `
+    const [result] = await queryDB(sql, [category])
+    console.log(result)
+    return result.positions
+
+}
+
+module.exports = { Job, jobTypes, jobLocations, getJobTags, getJobsCategory, getJobPositionByCategory }

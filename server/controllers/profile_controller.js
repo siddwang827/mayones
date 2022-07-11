@@ -69,7 +69,7 @@ const uploadResume = async (req, res) => {
     let uploadImage
     const userId = req.user.id
     const resume = req.body
-
+    console.log(resume)
 
     for (let item in resume) {
         resume[item] = typeof (resume[item]) === 'string' ? [resume[item]] : resume[item]
@@ -84,13 +84,14 @@ const uploadResume = async (req, res) => {
     try {
         const result = await createResume(userId, resume)
         console.log(result)
+        return res.status(200).json({ result: 'create resume success!' })
 
     } catch (error) {
         console.log(error)
-        res.status(500).json({ error: "Upload resume Failed" })
+        return res.status(500).json({ error: "Upload resume Failed" })
     }
 
-    res.status(200).json({ result: 'create resume success!' })
+
 }
 
 module.exports = {

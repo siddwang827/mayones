@@ -122,6 +122,7 @@ const setViewHeader = (view) => {
         let headerInfo = {
             view,
             auth: true,
+            role: req.user.role,
             username: req.user.username
         }
         req.header = headerInfo

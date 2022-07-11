@@ -1,10 +1,6 @@
 $('#profile-btn').on('click', (event) => {
     $('#profile-dropdown').fadeToggle(200)
-    // if (!$('#profile-dropdown').hasClass('active')) {
-    //     $('#profile-dropdown').addClass('active')
-    // } else {
-    //     $('#profile-dropdown').removeClass('active')
-    // }
+
 
 })
 

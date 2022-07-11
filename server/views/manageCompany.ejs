@@ -3,26 +3,242 @@
 
 <head>
     <%- include /layout/head %>
+        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
         <link rel="stylesheet" type="text/css" href="/css/main.css">
         <link rel="stylesheet" type="text/css" href="/css/manage.css">
+        <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/decoupled-document/ckeditor.js"></script>
+
 </head>
 
 <body>
+    <header>
+        <%- include layout/header %>
+    </header>
     <main>
-        <div id="editor"></div>
+        <div class="container">
+            <form class="ui form" id="company-form">
+                <div class="form-group">
+                    <div for="name" class="form-label required">公司名稱</div>
+                    <div class="input-wrap">
+                        <input name="companyTitle" type="text" class="form-control" id="company-title" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div for="phone" class="form-label">官方網站</div>
+                    <div class="input-wrap">
+                        <input name="companyUrl" type="url" class="form-control" id="company-url" value="" placeholder="https://">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label required">公司標語</div>
+                    <div class="input-wrap">
+                        <input name="companyShort" class="form-control" type="text" id="company-short" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label required">公司位置</div>
+                    <div class="input-wrap">
+                        <select id="company-location" class="ui fluid search dropdown">
+                            <option value="">地區</option>
+                            <%for (let location of companyLocations) {%>
+                                <option value="<%= location%>">
+                                    <%= location%>
+                                </option>
+                                <%}%>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">公司地址</div>
+                    <div class="input-wrap">
+                        <input name="companyAddress" class="form-control" type="text" id="company-address" value="">
+                    </div>
+                </div>
+                <div class="form-group" id="email-form-group">
+                    <div for="email" class="form-label required">產業分類</div>
+                    <div class="input-wrap">
+                        <select id="company-category" class="ui fluid search dropdown">
+                            <option value="">Category</option>
+                            <% for (let category of categories) { %>
+                                <option value="<%=category%>">
+                                    <%=category%>
+                                </option>
+                                <%}%>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">添加標籤</div>
+                    <div class="input-wrap">
+                        <select id="company-tags" class="ui fluid search dropdown" multiple="">
+                            <option value="">Tags</option>
+                            <% for (let tag of tags) { %>
+                                <option value="<%=tag%>">
+                                    <%=tag%>
+                                </option>
+                                <%}%>
+                        </select>
+                    </div>
+                </div>
 
+                <div class="form-group">
+                    <div class="form-label">公司介紹</div>
+                    <div class="input-wrap">
+                        <div id="company-intro-toolbar-container"></div>
+                        <div id="company-intro" editor-name="Intro" class="editor"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">公司理念</div>
+                    <div class="input-wrap">
+                        <div id="company-philosophy-toolbar-container"></div>
+                        <div id="company-philosophy" editor-name="Philosophy" class="editor"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">員工福利</div>
+                    <div class="input-wrap">
+                        <div id="company-benifit-toolbar-container"></div>
+                        <div id="company-benifit" editor-name="Benifit" class="editor"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">LOGO照片</div>
+                    <div class="image-upload-wrap" id="image-upload-wrap-logo">
+                        <input class="file-upload-input" name="logoImage" id="image-logo" image-class="logo" type='file' onchange="readURL(this);"
+                            accept="image/*" />
+                        <div class="drag-text">
+                            <p>Drag and drop a file or select add Image</p>
+                        </div>
+                    </div>
+                    <div class="input-wrap">
+                        <div class="file-upload-content" id="file-upload-content-logo">
+                            <img id="file-upload-image-logo" class="file-upload-image" src="" alt="your image" />
+                            <div class="image-title-wrap">
+                                <button type="button" id="remove-image-btn-logo" class="remove-image" image-class="logo">Remove
+                                    <span id="image-title-logo" class="image-title">Uploaded Image</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">封面照片</div>
+                    <div class="image-upload-wrap" id="image-upload-wrap-banner">
+                        <input class="file-upload-input" name="bannerImage" id="image-banner" image-class="banner" type='file'
+                            onchange="readURL(this);" accept="image/*" />
+                        <div class="drag-text">
+                            <p>Drag and drop a file or select add Image</p>
+                        </div>
+                    </div>
+                    <div class="input-wrap">
+                        <div class="file-upload-content" id="file-upload-content-banner">
+                            <img id="file-upload-image-banner" class="file-upload-image" src="" alt="your image" />
+                            <div class="image-title-wrap">
+                                <button type="button" id="remove-image-btn-banner" class="remove-image" image-class="banner">Remove
+                                    <span id="image-title-banner" class="image-title">Uploaded Image</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">其他照片</div>
+                    <div class="other-images-container">
+                        <div class="image-upload-wrap" id="image-upload-wrap-others-0">
+                            <input class="file-upload-input" name="otherImages" id="image-others-0" image-class="others" index="0" type='file'
+                                onchange="readURL(this);" accept="image/*" />
+                            <div class="drag-text others">
+                                <p>Select Image</p>
+                            </div>
+                        </div>
+                        <div class="input-wrap">
+                            <div class="file-upload-content" id="file-upload-content-others-0">
+                                <img id="file-upload-image-others-0" class="file-upload-image others" src="" alt="your image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" id="remove-image-btn-others" class="remove-image" image-class="others" index="0">Remove
+                                        <span id="image-title-others-0" class="image-title">Uploaded Image</span></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="image-upload-wrap" id="image-upload-wrap-others-1">
+                            <input class="file-upload-input" name="otherImages" id="image-others-1" image-class="others" index="1" type='file'
+                                onchange="readURL(this);" accept="image/*" />
+                            <div class="drag-text others">
+                                <p>Select Image</p>
+                            </div>
+                        </div>
+                        <div class="input-wrap">
+                            <div class="file-upload-content" id="file-upload-content-others-1">
+                                <img id="file-upload-image-others-1" class="file-upload-image others" src="" alt="your image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" id="remove-image-btn-others-1" class="remove-image" image-class="others" index="1">Remove
+                                        <span id="image-title-others-1" class="image-title">Uploaded Image</span></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="image-upload-wrap" id="image-upload-wrap-others-2">
+                            <input class="file-upload-input" name="otherImages" id="image-others-2" image-class="others" index="2" type='file'
+                                onchange="readURL(this);" accept="image/*" />
+                            <div class="drag-text others">
+                                <p>Select Image</p>
+                            </div>
+                        </div>
+                        <div class="input-wrap">
+                            <div class="file-upload-content" id="file-upload-content-others-2">
+                                <img id="file-upload-image-others-2" class="file-upload-image others" src="" alt="your image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" id="remove-image-btn-others-2" class="remove-image" image-class="others" index="2">Remove
+                                        <span id="image-title-others-2" class="image-title">Uploaded Image</span></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="image-upload-wrap" id="image-upload-wrap-others-3">
+                            <input class="file-upload-input" name="otherImages" id="image-others-3" image-class="others" index="3" type='file'
+                                onchange="readURL(this);" accept="image/*" />
+                            <div class="drag-text others">
+                                <p>Select Image</p>
+                            </div>
+                        </div>
+                        <div class="input-wrap">
+                            <div class="file-upload-content" id="file-upload-content-others-3">
+                                <img id="file-upload-image-others-3" class="file-upload-image others" src="" alt="your image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" id="remove-image-btn-others-3" class="remove-image" image-class="others" index="3">Remove
+                                        <span id="image-title-others-3" class="image-title">Uploaded Image</span></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="image-upload-wrap" id="image-upload-wrap-others-4">
+                            <input class="file-upload-input" name="otherImages" id="image-others-4" image-class="others" index="4" type='file'
+                                onchange="readURL(this);" accept="image/*" />
+                            <div class="drag-text others">
+                                <p>Select Image</p>
+                            </div>
+                        </div>
+                        <div class="input-wrap">
+                            <div class="file-upload-content" id="file-upload-content-others-4">
+                                <img id="file-upload-image-others-4" class="file-upload-image others" src="" alt="your image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" id="remove-image-btn-others-4" class="remove-image" image-class="others" index="4">Remove
+                                        <span id="image-title-others-4" class="image-title">Uploaded Image</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="update-btn">
+                <button class="ui big inverted secondary button confirm-btn" id="update-company-btn">上傳公司</button>
+            </div>
+        </div>
     </main>
+    <footer>
+        <%- include layout/footer %>
+            <script src="/js/manageCompany.js"></script>
+            <script src="/js/ckeditor.js"></script>
+
+
+    </footer>
 </body>
-<footer>
-    <%- include layout/footer %>
-        <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
-        <script>
-            ClassicEditor
-                .create(document.querySelector('#editor'))
-                .catch(error => {
-                    console.error(error);
-                });
-        </script>
-        <script src="/js/moment.js"></script>
-        <script src="/js/manage.js"></script>
-</footer>
+
+</html>

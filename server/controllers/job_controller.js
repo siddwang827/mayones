@@ -16,6 +16,7 @@ const getJobs = async (req, res) => {
     const categoryPositions = await Job.getCategory()
     let jobTags = await Job.getJobTags()
     jobTags = jobTags.tags
+    console.log(header)
 
     try {
         const jobs = await Job.findJobs(pageSize, paging, jobQuery);

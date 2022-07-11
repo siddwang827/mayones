@@ -39,11 +39,6 @@ async function userUnfollowJob(followId) {
 }
 
 
-
-
-
-
-
 module.exports = {
     getAllFollowsByUser,
     userFollowJob,
