@@ -1,0 +1,153 @@
+.form-group {
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column
+}
+
+.form-label {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px
+}
+
+ul,
+ol {
+    margin: 16px 40px;
+}
+
+.required::before {
+    display: inline-block;
+    margin: 0 5px 0 -8px;
+    content: '*';
+    font-size: 1rem;
+    color: #f44336;
+    vertical-align: middle;
+}
+
+/* ===== image upload ===== */
+
+.file-upload {
+    background-color: #ffffff;
+    width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.file-upload-content {
+    display: none;
+    text-align: center;
+}
+
+.file-upload-input {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.image-upload-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    border: 4px dashed #666666;
+    position: relative;
+    border-radius: 10px;
+}
+
+.image-dropping,
+.image-upload-wrap:hover {
+    background-color: #bebebe;
+    border: 4px dashed #ffffff;
+}
+
+.image-title-wrap {
+
+    padding: 0 15px 15px 15px;
+    color: #222;
+}
+
+.drag-text {
+    text-align: center;
+}
+
+.drag-text p {
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #666666;
+    padding: 60px 0;
+}
+
+.drag-text.others p {
+    padding: 60px 10px;
+}
+
+.file-upload-image {
+    max-height: 400px;
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+}
+
+.file-upload-image.others {
+    max-height: 200px;
+    max-width: 200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.remove-image {
+    width: 200px;
+    height: 60px;
+    margin: 0;
+    color: #fff;
+    background: #cd4535;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    border-bottom: 4px solid #b02818;
+    transition: all .2s ease;
+    outline: none;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.remove-image:hover {
+    background: #c13b2a;
+    color: #ffffff;
+    transition: all .2s ease;
+    cursor: pointer;
+}
+
+.remove-image:active {
+    border: 0;
+    transition: all .2s ease;
+}
+
+.other-images-container {
+    display: flex;
+    justify-content: center
+}
+
+.salary-container {
+    display: flex;
+    align-items: center
+}
+
+.salary-label {
+    margin: 0 30px 0 40px;
+    font-size: 16px;
+}
+
+.salary-type {
+    width: 100px !important
+}
+
+.salary-label.type {
+    margin-left: 0;
+}

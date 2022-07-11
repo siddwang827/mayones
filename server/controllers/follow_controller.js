@@ -20,11 +20,16 @@ const getAllFollows = async (req, res) => {
 const addFollow = async (req, res) => {
     const jobId = req.body.jobId
     const userId = req.user.id
+    const userRole = req.user.role
+    if (userRole === 'employer') {
+        return res.status(403).json({ error: "Frobidden" })
+    }
 
     await Follow.userFollowJob(userId, jobId)
     res.status(200).json({ result: 'follow job success!' })
 
 }
+
 const unFollow = async (req, res) => {
     const followId = req.params.id
 

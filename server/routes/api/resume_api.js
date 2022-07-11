@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const { upload, asyncHandlerWrapper, authentication } = require('../../../utils/utils.js')
-const multer = require('multer')
 const {
     fetchResumeDetail,
     uploadResume,

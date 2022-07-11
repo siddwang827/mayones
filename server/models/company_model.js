@@ -1,4 +1,4 @@
-const { queryDB } = require('./mysql_conn.js')
+const { queryDB, pool } = require('./mysql_conn.js')
 
 const companyLocations = [
     "台北市",
@@ -32,7 +32,23 @@ class Company {
             this.bannerImage
     }
 
-    async createCompany() {
+    static async createCompany(userId, brand, website, category, shrotDescription, companyLocation, companyAddress, introduction, philosophy, benifit, companyTags, logoImage, bannerImage, otherImages) {
+        let sql = `
+        INSERT INTO mayones.companies (owner_id, brand, website, category, short_description, company_location, company_address, introduction, philosophy, benifit, logo_image, banner_image)
+        VALUES(?,?,?,?,?,?,?,?,?,?,?,?)
+        `
+        const result = await queryDB(sql, [userId, brand, website, category, shrotDescription, companyLocation, companyAddress, introduction, philosophy, benifit, logoImage.url, bannerImage.url])
+        const companyId = result.insertId
+        let sqlTag = `INSERT INTO mayones.companies_tags (companies_id, tags_id) VALUES ?`
+        let sqlOtherImage = `INSERT INTO mayones.other_images (companies_id, other_image) VALUES ?`
+
+        // 再改寫成transaction
+        const otherImagesArray = otherImages.map(image => { return [companyId, image.url] })
+        const tagArray = companyTags.map(tag => { return [companyId, tag] })
+        await Promise.all([pool.query(sqlTag, [tagArray]), pool.query(sqlOtherImage, [otherImagesArray])])
+
+        return
+
 
     }
 
@@ -172,4 +188,23 @@ class Company {
     }
 }
 
-module.exports = { Company, companyLocations }
+const getALLCategory = async () => {
+    const sql = `
+    SELECT JSON_ARRAYAGG(category) AS categories FROM mayones.categories;
+    `
+    const [result] = await queryDB(sql)
+    return result.categories
+
+}
+
+const getALLCompanyTag = async () => {
+    const sql = `
+    SELECT JSON_arrayagg(json_array(tag_name, id)) AS tags FROM mayones.tags WHERE classification != 'job' ORDER BY id;
+    `
+    const [result] = await queryDB(sql)
+    return result.tags
+
+}
+
+
+module.exports = { Company, companyLocations, getALLCategory, getALLCompanyTag }

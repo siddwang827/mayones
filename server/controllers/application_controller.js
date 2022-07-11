@@ -13,7 +13,12 @@ const moment = require('moment')
 const getApplicationPage = async (req, res) => {
     const jobId = req.params.jobId
     const userId = req.user.id
+    const userRole = req.user.role
     const header = req.header
+
+    if (userRole === "employer") {
+        return res.status(403).json({ error: 'Forbidden' })
+    }
     try {
         const opening = await Job.getJobSimpleInfo(jobId)
 

@@ -36,7 +36,6 @@ async function getUserApplicationHistory(userId) {
                 break
         }
     })
-    console.log(mergeStatus)
     return mergeStatus
 }
 

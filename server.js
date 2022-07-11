@@ -29,7 +29,8 @@ app.use([
     require('./server/routes/company_route'),
     require('./server/routes/user_route'),
     require('./server/routes/profile_route'),
-    require('./server/routes/application_route')
+    require('./server/routes/application_route'),
+    require('./server/routes/manage_route')
 ]);
 
 app.use('/api/' + API_VERSION, [
@@ -37,8 +38,6 @@ app.use('/api/' + API_VERSION, [
     require('./server/routes/api/resume_api'),
     require('./server/routes/api/auth_api')
 ])
-
-// app.use([require('.server/routes/profile_route')])
 
 app.use('/', (req, res) => {
     res.redirect('/jobs')

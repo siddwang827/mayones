@@ -8,9 +8,11 @@
 
 body {
     --nav-header-height: 50px;
-    --footer-height: 100px;
-    display: flex;
-    flex-direction: column;
+    --footer-height: 70px;
+    height: calc(100vh - 170px) !important;
+    min-height: calc(100vh - 170px);
+    /* display: flex;
+    flex-direction: column; */
     font-size: 16px;
     margin: 0;
     height: 100%;
@@ -36,14 +38,6 @@ a {
 a:hover {
     color: black;
     text-decoration: none
-}
-
-ul {
-    margin: 0
-}
-
-li {
-    list-style: none;
 }
 
 button {
@@ -127,7 +121,7 @@ button {
 /* ========== main ========== */
 
 main {
-    margin-top: var(--nav-header-height);
+    margin-top: calc(var(--nav-header-height) + 50px);
     padding-bottom: 60px;
 }
 
@@ -136,7 +130,7 @@ main {
     width: 100%;
     margin: 0 auto;
     margin-top: 50px;
-    min-height: calc(100vh - 160px);
+    min-height: calc(100vh - 230px);
     display: flex;
     flex-direction: column;
     position: relative
@@ -194,11 +188,15 @@ select.price {
 footer {
     color: rgb(224, 224, 224);
     width: 100%;
-    height: var(--footer-height);
+    height: var(--footer-height) !important;
     background-color: rgb(39, 39, 39);
     display: flex;
     justify-content: center;
     align-items: center
+}
+
+footer p {
+    margin: 0
 }
 
 /* ========= profile dropdown ========= */

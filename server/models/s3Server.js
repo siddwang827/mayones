@@ -2,16 +2,21 @@ const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3')
 const uuid = require('uuid').v4;
 const cloudforntDomain = process.env.CLOUDFRONT_DOMAIN
 
-const s3Upload = async (file) => {
+const s3Upload = async (file, directory) => {
     const s3client = new S3Client();
 
     const param = {
         Bucket: process.env.AWS_BUCKET_NAME,
-        Key: `assert/${uuid()}-${file.originalname}`,
+        Key: `upload/${directory}/${uuid()}-${file.originalname}`,
         Body: file.buffer
     };
 
-    return s3client.send(new PutObjectCommand(param))
+    const result = await s3client.send(new PutObjectCommand(param))
+
+    return {
+        result,
+        url: `${cloudforntDomain}${param.Key}`
+    }
 }
 
 const s3UploadMulti = async (files, directory) => {

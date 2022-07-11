@@ -1,5 +1,11 @@
+body {
+    height: calc(100vh - 170px) !important;
+    min-height: calc(100vh - 170px);
+}
+
 main {
-    /* min-height: calc(100vh - 150px) !important; */
+    height: calc(100vh - 170px) !important;
+    min-height: calc(100vh - 170px) !important;
 }
 
 .profile-container {
@@ -34,7 +40,7 @@ main {
 }
 
 .greeting {
-    font-family: fantasy, Papyrus;
+    font-family: 'Permanent Marker', cursive;
     font-size: 18px;
     margin: 100px 0 50px;
     text-align: right;
