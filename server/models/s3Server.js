@@ -25,7 +25,7 @@ const s3UploadMulti = async (files, directory) => {
     const params = files.map((file) => {
         return {
             Bucket: process.env.AWS_BUCKET_NAME,
-            Key: `upload/${directory}/${uuid()}-${file.originalname}`,
+            Key: `upload/${directory}/${uuid()}-${Date.now()}`,
             Body: file.buffer
         }
     });

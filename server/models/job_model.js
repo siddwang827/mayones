@@ -102,6 +102,12 @@ class Job {
                         })
                         break
                     }
+                    case 'company': {
+                        jobQuery[queryType].forEach(tag => {
+                            condition.push('all_jobs.brand = ?')
+                            binding.push(tag)
+                        })
+                    }
                 }
             })
             sql += 'WHERE ' + condition.join(' AND ')
@@ -228,8 +234,7 @@ class Job {
         FROM (
             SELECT tag_name AS tags
             FROM mayones.tags
-            ORDER BY tags.counts DESC
-            LIMIT 15) AS tags_arr
+            ORDER BY tags.counts DESC) AS tags_arr
         `
         const [result] = await queryDB(sql)
         return result

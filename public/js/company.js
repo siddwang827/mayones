@@ -7,7 +7,10 @@ async function viewCompanyDetail(event) {
     // event.preventDefault();
     event.stopPropagation();
     const companyId = event.target.getAttribute('company-id')
-    window.location.href = `company/${companyId}`
+    if (companyId) {
+        window.location.href = `company/${companyId}`
+    }
+    return
 }
 
 
@@ -40,7 +43,6 @@ async function createTagsDOMFromSearch() {
             createDOM(queryType, tag)
         })
     }
-    // tag = decodeURIComponent(tag)
 }
 
 // async function getAllCompanies() {

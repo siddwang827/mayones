@@ -98,6 +98,7 @@ class Company {
         }
 
         const result = await queryDB(sql, binding)
+        console.log(result)
         return result
     }
 

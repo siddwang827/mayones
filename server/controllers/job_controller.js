@@ -1,9 +1,5 @@
 const { Job, jobTypes, jobLocations } = require('../models/job_model')
 const { thoundsAddComma } = require('../../utils/utils')
-const { promisify } = require('util');
-const { TOKEN_SECRET } = process.env;
-const jwt = require('jsonwebtoken');
-const { s3Upload, s3UploadMulti } = require('../models/s3Server')
 const pageSize = 20
 
 
@@ -16,8 +12,7 @@ const getJobs = async (req, res) => {
     const categoryPositions = await Job.getCategory()
     let jobTags = await Job.getJobTags()
     jobTags = jobTags.tags
-    console.log(header)
-
+    console.log(jobQuery)
     try {
         const jobs = await Job.findJobs(pageSize, paging, jobQuery);
         res.render('jobs', { jobs, header, jobLocations, categoryPositions, jobTypes, jobTags })
@@ -27,11 +22,6 @@ const getJobs = async (req, res) => {
         console.log(err)
         res.status(500).send(err)
     }
-}
-
-const createJob = async (req, res) => {
-    const uploadImage = await s3UploadMulti(req.files, "company")
-
 }
 
 const getJobDetail = async (req, res) => {
@@ -47,13 +37,7 @@ const getJobDetail = async (req, res) => {
     }
 }
 
-const deleteJob = async (req, res) => {
-
-}
-
 module.exports = {
     getJobs,
     getJobDetail,
-    createJob,
-    deleteJob
 }
