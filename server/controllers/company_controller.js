@@ -36,9 +36,14 @@ const createCompany = async (req, res) => {
 const getCompanyDetail = async (req, res) => {
     const header = req.header
     const companyId = req.params.id
+    let userInfo = { role: null }
+    if (req.user) {
+        const { role, id } = req.user
+        userInfo = { role, id }
+    }
 
     try {
-        const [companyDetail] = await Company.getCompanyDetailById(companyId)
+        const companyDetail = await Company.getCompanyDetailById(companyId, userInfo)
         res.render('companyDetail', { companyDetail, thoundsAddComma, header })
     }
     catch (err) {

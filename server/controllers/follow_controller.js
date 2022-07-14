@@ -1,5 +1,4 @@
 const Follow = require('../models/follow_model')
-let header = { auth: false };
 
 const getAllFollows = async (req, res) => {
     const userId = req.user.id
@@ -18,28 +17,47 @@ const getAllFollows = async (req, res) => {
 }
 
 const addFollow = async (req, res) => {
-    const jobId = req.body.jobId
+    const { type, id } = req.body
     const userId = req.user.id
     const userRole = req.user.role
     if (userRole === 'employer') {
         return res.status(403).json({ error: "Frobidden" })
     }
-
-    await Follow.userFollowJob(userId, jobId)
-    res.status(200).json({ result: 'follow job success!' })
-
+    let followId
+    try {
+        switch (type) {
+            case 'job':
+                followId = await Follow.userFollowJob(userId, id)
+                break
+            case 'company':
+                followId = await Follow.userFollowCompany(userId, id)
+                break
+        }
+        return res.status(200).json(followId)
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json(error)
+    }
 }
 
-const unFollow = async (req, res) => {
+const unFollowJob = async (req, res) => {
     const followId = req.params.id
 
     await Follow.userUnfollowJob(followId)
     res.status(200).json({ result: 'unfollow job success!' })
 }
 
+const unFollowCompany = async (req, res) => {
+    const followId = req.params.id
+
+    await Follow.userUnfollowCompany(followId)
+    res.status(200).json({ result: 'unfollow company success!' })
+}
+
 
 module.exports = {
     getAllFollows,
     addFollow,
-    unFollow
+    unFollowJob,
+    unFollowCompany
 }

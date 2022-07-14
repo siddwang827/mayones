@@ -94,14 +94,20 @@
                                 </div>
                             </div>
                             <div class="basic-button-container">
-                                <button class="big ui inverted red button">
-                                    <i class="heart outline icon"></i>
-                                    加入收藏
-                                </button>
-                                <button class="big ui black button all-jobs-btn">
-                                    <i class="search icon"></i></i>
-                                    所有職缺
-                                </button>
+                                <% if(!companyDetail.follow) {%>
+                                    <button class="big ui inverted red button follow" company-id="<%=companyDetail.id%>">
+                                        <i class="heart outline icon"></i>
+                                        加入收藏
+                                    </button>
+                                    <%} else {%>
+                                        <button class="huge ui red button followed" follow-id=<%=companyDetail.follow_id%>>
+                                            已收藏
+                                        </button>
+                                        <%}%>
+                                            <button class="big ui black button all-jobs-btn" company-id="<%=companyDetail.id%>">
+                                                <i class="search icon"></i></i>
+                                                所有職缺
+                                            </button>
                             </div>
                         </div>
                     </div>
@@ -139,17 +145,24 @@
                 </div>
                 <div class="sidebar">
                     <div class="sidebar-button-container">
-                        <button class="huge ui black button all-jobs-btn">
+                        <button class="big ui black button all-jobs-btn" company-id="<%=companyDetail.id%>">
                             <i class="search icon"></i></i>
                             所有職缺
                         </button>
-                        <button class="huge ui inverted red button">
-                            <i class="heart outline icon"></i>
-                            加入收藏
-                        </button>
+                        <% if(!companyDetail.follow) {%>
+                            <button class="big ui inverted red button follow" company-id="<%=companyDetail.id%>">
+                                <i class="heart outline icon"></i>
+                                加入收藏
+                                <%} else {%>
+                                    <button class="huge ui red button followed" follow-id=<%=companyDetail.follow_id%>>
+                                        已收藏
+                                        <%}%>
+                                    </button>
                     </div>
+
                 </div>
             </div>
+        </div>
         </div>
         </div>
     </main>

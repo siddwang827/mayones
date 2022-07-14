@@ -5,18 +5,20 @@ async function clickHeart(event) {
     event.preventDefault();
     event.stopPropagation();
     const followId = event.target.getAttribute('follow-id')
-    const fetchResult = await fetch(`/api/1.0/follow/${followId}`, {
+    const type = event.target.getAttribute('follow-type')
+    $(`#${type}-id-${followId}`).remove()
+    const fetchResult = await fetch(`/api/1.0/follow/${type}/${followId}`, {
         method: 'DELETE'
     })
-    const result = await fetchResult.json()
-    if (result.result) {
-        const jobId = event.target.getAttribute('follow-id')
-        $(`#job-id-${jobId}`).remove()
-    }
-    if ($('.job-container').children().length === 0) {
-        $('.job-container').append($('<h1 style="text-align: center;">您目前未收藏任何職缺!</h1>'))
+    // const result = await fetchResult.json()
+
+    if ($('.follow-container.job').children().length === 0) {
+        $('.follow-container.job').append($('<h2 style="text-align: center;">目前未收藏任何職缺!</h2>'))
+    } else if ($('.follow-container.company').children().length === 0) {
+        $('.follow-container.company').append($('<h2 style="text-align: center;">目前未收藏任何公司!</h2>'))
     }
 }
+
 
 $('.job-content.action').on('click', (event) => {
     event.preventDefault();

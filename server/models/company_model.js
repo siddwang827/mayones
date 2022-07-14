@@ -118,7 +118,7 @@ class Company {
         return result
     }
 
-    static async getCompanyDetailById(id) {
+    static async getCompanyDetailById(id, userInfo) {
         const sql = `
         SELECT join_table.id, brand, website, category, short_description, company_location, company_address, introduction, philosophy, story, benifit, logo_image, banner_image,  tags, JSON_ARRAYAGG(other_images.other_image) AS other_images
         FROM ( 
@@ -149,7 +149,15 @@ class Company {
         WHERE join_table.id = ?
         GROUP BY join_table.id
         `
-        const result = await queryDB(sql, [id])
+        let [result] = await queryDB(sql, [id])
+        if (userInfo.role === 'employee') {
+            result.follow = 0
+            const [follow] = await queryDB('SELECT id, follow FROM mayones.seekers_companies WHERE companies_id = ? AND user_id = ?', [id, userInfo.id])
+            if (follow) {
+                result.follow = follow.follow;
+                result.follow_id = follow.id
+            }
+        }
         return result
     }
 
