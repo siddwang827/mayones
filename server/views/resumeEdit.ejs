@@ -31,34 +31,34 @@
             <div class="right-resume-container">
                 <div class="resume-item fixed">
                     <h3 class="resume-item-title"><strong>基本資料</strong></h3>
-                    <div class="icon-edit"><i class="edit outline icon" modal-id="info-modal"></i></div>
+                    <div class="icon-edit"><i class="edit large outline icon" modal-id="info-modal"></i></div>
                 </div>
                 <div class="resume-item fixed">
                     <h3 class="resume-item-title"><strong>簡歷</strong></h3>
-                    <div class="icon-edit"><i class="edit outline icon" modal-id="bio-modal"></i></div>
+                    <div class="icon-edit"><i class="edit large outline icon" modal-id="bio-modal"></i></div>
                 </div>
                 <div class="resume-item draggable">
                     <div class="icon"><i class="bars icon"></i></div>
                     <h3 class="resume-item-title"><strong>專業技能</strong></h3>
-                    <div class="icon-edit"><i class="edit outline icon" modal-id="skill-modal"></i></div>
+                    <div class="icon-edit"><i class="edit large outline icon" modal-id="skill-modal"></i></div>
 
                 </div>
                 <div class="resume-item draggable">
                     <div class="icon"><i class="bars icon"></i></div>
                     <h3 class="resume-item-title"><strong>專案及作品集</strong></h3>
-                    <div class="icon-edit"><i class="edit outline icon" modal-id="project-modal"></i></div>
+                    <div class="icon-edit"><i class="edit large outline icon" modal-id="project-modal"></i></div>
 
                 </div>
                 <div class="resume-item draggable">
                     <div class="icon"><i class="bars icon"></i></div>
                     <h3 class="resume-item-title"><strong>工作經驗</strong></h3>
-                    <div class="icon-edit"><i class="edit outline icon" modal-id="experience-modal"></i></div>
+                    <div class="icon-edit"><i class="edit large outline icon" modal-id="experience-modal"></i></div>
 
                 </div>
                 <div class="resume-item draggable">
                     <div class="icon"><i class="bars icon"></i></div>
                     <h3 class="resume-item-title"><strong>學歷</strong></h3>
-                    <div class="icon-edit"><i class="edit outline icon" modal-id="education-modal"></i></div>
+                    <div class="icon-edit"><i class="edit large outline icon" modal-id="education-modal"></i></div>
                 </div>
                 <div class="update-btn">
                     <button class="ui big negative button delete-btn" id="delete-resume-btn">刪除履歷</button>
@@ -91,13 +91,17 @@
                             <div class="form-group">
                                 <label for="user-gender-male">性別</label>
                                 <div class="input-wrap" value="男">
-                                    <input type="radio" name="gender" id="user-gender-male" value="男">
+                                    <input type="radio" name="gender" id="user-gender-male" value="男" <%=resumeDetail.gender==="男" ? "checked" : ""
+                                        %>>
                                     <label for="user-gender-male">男</label>
-                                    <input type="radio" name="gender" id="user-gender-female" value="女">
+                                    <input type="radio" name="gender" id="user-gender-female" value="女" <%=resumeDetail.gender==="女" ? "checked" : ""
+                                        %>>
                                     <label for="user-gender-female">女</label>
-                                    <input type="radio" name="gender" id="user-gender-others" value="其他">
+                                    <input type="radio" name="gender" id="user-gender-others" value="其他" <%=resumeDetail.gender==="其他" ? "checked"
+                                        : "" %>>
                                     <label for="user-gender-others">其他</label>
-                                    <input type="radio" name="gender" id="user-gender-hidden" value="hidden">
+                                    <input type="radio" name="gender" id="user-gender-hidden" value="hidden" <%=resumeDetail.gender==="hidden"
+                                        ? "checked" : "" %>>
                                     <label for="user-gender-hidden">不透露</label>
                                 </div>
                             </div>
@@ -107,7 +111,8 @@
                                 <div class="ui calendar">
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
-                                        <input name="birthday" class="form-control" id="birthday" type="date" value="<%=resumeDetail.birthday%>">
+                                        <input name="birthday" class="form-control" id="birthday" type="date"
+                                            value="<%=moment(resumeDetail.birthday).format('YYYY-MM-DD')%>">
                                     </div>
                                     <% if (resumeDetail.show_birthday===1) { %>
                                         <input id="show-birthday-input" type="checkbox" name="showBirthday" value="1" checked>
@@ -407,6 +412,7 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"
                 integrity="sha512-zYXldzJsDrNKV+odAwFYiDXV2Cy37cwizT+NkuiPGsa9X1dOz04eHvUWVuxaJ299GvcJT31ug2zO4itXBjFx4w==" crossorigin="anonymous"
                 referrerpolicy="no-referrer"></script>
+
             <script src="/js/resumeEdit.js"></script>
     </footer>
 </body>
