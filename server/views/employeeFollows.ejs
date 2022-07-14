@@ -13,28 +13,53 @@
     </header>
     <main>
         <div class="container">
-            <h1>Following Jobs</h1>
-            <div class="job-container">
-                <% if (Object.keys(userFollows).length===0) { %>
-                    <h1 style="text-align: center;">您目前未收藏任何職缺!</h1>
+            <div class="follow-type">公司收藏</div>
+            <div class="follow-container company">
+                <% if (Object.keys(userFollows.companies).length===0) { %>
+                    <h2 style="text-align: center;">您目前未收藏任何公司!</h2>
                     <%} else {%>
-                        <% for (let job of userFollows) { %>
+                        <% for (let company of userFollows.companies) { %>
+                            <a href="/company/<%=company.company_id%>" id="company-id-<%=company.follow_id%>">
+                                <div class="follow-list">
+                                    <div class="follow-content">
+                                        <img class="follow-item logo" src=<%=company.logo_image %>>
+                                        <div class="follow-item info">
+                                            <div class="follow-info company-title">
+                                                <%= company.brand %>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="follow-content">
+                                        <div class="follow-item  follow-heart" follow-type="company" follow-id=<%=company.follow_id%>></div>
+                                    </div>
+                                </div>
+                            </a>
+                            <% } %>
+                                <% } %>
+            </div>
+            <div class="follow-type job">職缺收藏</div>
+            <div class="follow-container job">
+                <% if (Object.keys(userFollows.jobs).length===0) { %>
+                    <h2 style="text-align: center;">您目前未收藏任何職缺!</h2>
+                    <%} else {%>
+                        <% for (let job of userFollows.jobs) { %>
                             <a href="/job/<%=job.job_id%>" id="job-id-<%=job.follow_id%>">
-                                <div class="job-list">
-                                    <div class="job-content">
-                                        <img class="job-item logo" src=<%=job.logo_image %>>
-                                        <div class="job-item info">
-                                            <div class="job-info job-title">
+                                <div class="follow-list">
+                                    <div class="follow-content">
+                                        <img class="follow-item logo" src=<%=job.logo_image %>>
+                                        <div class="follow-item info">
+                                            <div class="follow-info follow-title">
                                                 <%= job.job_title %>
                                             </div>
-                                            <div class="job-info brand">
+                                            <div class="follow-info brand">
                                                 <%= job.brand %>
                                             </div>
 
                                         </div>
                                     </div>
-                                    <div class="job-content">
-                                        <div class="job-item  follow-heart" follow-id=<%=job.follow_id%>></div>
+                                    <div class="follow-content">
+                                        <div class="follow-item  follow-heart" follow-type="job" follow-id=<%=job.follow_id%>></div>
                                     </div>
                                 </div>
                             </a>

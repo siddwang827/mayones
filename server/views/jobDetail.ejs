@@ -113,10 +113,15 @@
 									</div>
 								</a>
 								<a>
-									<div class="huge ui inverted red button follow" job-id=<%=jobDetail.id%>>
-										<i class="heart outline icon"></i>
-										加入收藏
-									</div>
+									<% if(!jobDetail.follow) {%>
+										<div class="huge ui inverted red button follow" job-id=<%=jobDetail.id%>>
+											<i class="heart outline icon"></i>
+											加入收藏
+											<%} else {%>
+												<div class="huge ui red button followed" job-id=<%=jobDetail.id%> follow-id=<%=jobDetail.follow_id%>>
+														已收藏
+														<%}%>
+												</div>
 								</a>
 							</div>
 						</div>
@@ -167,10 +172,15 @@
 							</div>
 						</a>
 						<a>
-							<div class="huge ui inverted red button follow" job-id=<%=jobDetail.id%>
-								<i class="heart outline icon"></i>
-								加入收藏
-							</div>
+							<% if(!jobDetail.follow) {%>
+								<div class="huge ui inverted red button follow" job-id=<%=jobDetail.id%>>
+									<i class="heart outline icon"></i>
+									加入收藏
+									<%} else {%>
+										<div class="huge ui red button followed " follow-id=<%=jobDetail.follow_id%>>
+											已收藏
+											<%}%>
+										</div>
 						</a>
 					</div>
 				</div>

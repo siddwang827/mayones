@@ -137,9 +137,9 @@ class Job {
         return result
     }
 
-    static async getJobDetailById(id) {
-        const sql = `
-        SELECT join_table.id, company_id, brand, title, category, position, job_type,  job_description, skill_required, prefered_qualification,salary_top, salary_type, benifit, salary_bottom, location, address, remote_work, logo_image, banner_image, tags, update_at, JSON_ARRAYAGG(other_images.other_image) AS other_images
+    static async getJobDetailById(id, userInfo) {
+        let sql = `SELECT 
+        join_table.*, update_at, JSON_ARRAYAGG(other_images.other_image) AS other_images
         FROM (
             SELECT jobs.id AS id, 
                 companies.id AS company_id,
@@ -174,11 +174,19 @@ class Job {
         ) 
         AS join_table
         LEFT JOIN mayones.other_images
-        ON join_table.company_id = other_images.companies_id
-        WHERE join_table.id = ?
-        GROUP BY join_table.id
-        `
-        const result = await queryDB(sql, [id])
+        ON join_table.company_id = other_images.companies_id 
+        WHERE join_table.id = ? 
+        GROUP BY join_table.id `
+
+        let [result] = await queryDB(sql, id)
+        if (userInfo.role === 'employee') {
+            result.follow = 0
+            const [follow] = await queryDB('SELECT id, follow FROM mayones.seekers_jobs WHERE jobs_id = ? AND user_id = ?', [id, userInfo.id])
+            if (follow) {
+                result.follow = follow.follow;
+                result.follow_id = follow.id
+            }
+        }
         return result
     }
 

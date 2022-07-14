@@ -64,10 +64,10 @@ $('.query').on('click', (e) => {
 })
 
 async function removeTag(event) {
-    const label = event.target.getAttribute('tag-label')
-    const queryType = event.target.getAttribute('data-type')
-    const query = document.getElementById(`${label}`).innerText
-    $(`#${label}`).remove()
+    const label = event.target.parentElement
+    const queryType = label.getAttribute('id').split('-')[0]
+    const query = label.innerText
+    label.remove()
     const search = window.location.search.slice(1).replaceAll('/', '%2F')
     const thisTag = `${queryType}[]=${encodeURIComponent(query)}`
     console.log(thisTag)
@@ -78,6 +78,7 @@ async function removeTag(event) {
         window.location = `?${searchArr.join('&')}`
     }
 }
+
 
 
 $('#search-input').on('keypress', event => {

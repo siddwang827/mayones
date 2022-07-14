@@ -17,7 +17,7 @@
     </header>
     <main>
         <div class="container">
-            <h1>Waiting Reply</h1>
+            <h1>待回覆紀錄</h1>
             <div class="job-container">
                 <% if (!applications.pending) { %>
                     <h1 style="text-align: center;">目前無待回應的應徵紀錄!</h1>
@@ -47,14 +47,17 @@
                                                 <div class="action-item">
                                                     <i class="file large alternate icon action-icon"
                                                         application-id="<%=applications.pending.resume_id[i]%>"></i>
+                                                    <span>應徵履歷</span>
                                                 </div>
                                                 <div class="action-item">
                                                     <i class="archive large alternate icon action-icon"
                                                         application-id="<%=applications.pending.application_id[i]%>"></i>
+                                                    <span>封存紀錄</span>
                                                 </div>
                                                 <div class="action-item">
                                                     <i class="trash large alternate icon action-icon"
                                                         application-id="<%=applications.pending.application_id[i]%>"></i>
+                                                    <span>取消應徵</span>
                                                 </div>
                                     </div>
 
@@ -63,7 +66,7 @@
                             <% } %>
                                 <% } %>
             </div>
-            <h1>Already Replied</h1>
+            <h1>已回覆紀錄</h1>
             <div class="job-container">
                 <% if (!applications.arrange) { %>
                     <h1 style="text-align: center;">尚未收到任何面試安排!</h1>
@@ -87,6 +90,7 @@
                                         <div class="action-item">
                                             <i class="file large alternate icon action-icon"
                                                 application-id="<%=applications.arrange.resume_id[i]%>"></i>
+                                            <span>應徵履歷</span>
                                         </div>
                                         <div class="action-item calendar">
                                             <i class="calendar large check icon action-icon"></i>
@@ -101,7 +105,7 @@
                                 <% } %>
             </div>
             <div class="application-title">
-                Archive
+                封存紀錄
                 <div class="hide"><i class="thumbtack small icon action-icon"></i></div>
             </div>
 
@@ -133,10 +137,12 @@
                                                 <div class="action-item">
                                                     <i class="file large alternate icon action-icon"
                                                         application-id="<%=applications.archived.resume_id[i]%>"></i>
+                                                    <span>應徵履歷</span>
                                                 </div>
                                                 <div class="action-item">
                                                     <i class="trash large alternate icon action-icon"
                                                         application-id="<%=applications.archived.application_id[i]%>"></i>
+                                                    <span>取消應徵</span>
                                                 </div>
                                     </div>
                                 </div>

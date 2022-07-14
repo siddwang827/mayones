@@ -27,8 +27,14 @@ const getJobs = async (req, res) => {
 const getJobDetail = async (req, res) => {
     const header = req.header
     const jobId = req.params.id
+    let userInfo = { role: null }
+    if (req.user) {
+        const { role, id } = req.user
+        userInfo = { role, id }
+    }
+
     try {
-        const [jobDetail] = await Job.getJobDetailById(jobId)
+        const jobDetail = await Job.getJobDetailById(jobId, userInfo)
         res.render('jobDetail', { jobDetail, thoundsAddComma, header })
     }
     catch (err) {
