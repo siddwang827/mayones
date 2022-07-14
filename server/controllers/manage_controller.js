@@ -1,5 +1,5 @@
 const { Company, companyLocations, getALLCategory, getALLCompanyTag } = require('../models/company_model')
-const { Job, jobTypes, jobLocations, getJobsCategory, getJobPositionByCategory, getJobTags, getCompanyId } = require('../models/job_model')
+const { Job, jobTypes, jobLocations, getJobsCategory, getJobPositionByCategory, getJobTags } = require('../models/job_model')
 const { s3Upload, s3UploadMulti } = require('../models/s3Server')
 
 const getCompanyManagePage = async (req, res) => {
@@ -91,7 +91,6 @@ const getApplicationsePage = async (req, res) => {
 }
 
 const getPosition = async (req, res) => {
-
     const category = req.query.category
     const positions = await getJobPositionByCategory(category)
     return res.status(200).json(positions)

@@ -125,7 +125,8 @@ $('.file.icon.action-icon').on('click', async (event) => {
     resumePreview(resumeDetail)
     $(`#resume-modal`)
         .modal({
-            blurring: true
+            blurring: true,
+            duration: 200
         })
         .modal('show')
         ;

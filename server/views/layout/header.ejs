@@ -23,7 +23,7 @@
     <div class="navigation-role profile">
         <% if (header.auth) { %>
             <div id="profile-btn" class="navigation-item profile-btn">
-                <i class="user icon"></i>
+                <i class="user large icon"></i>
                 <p>
                     <%= header.username%>
                 </p>
@@ -46,11 +46,11 @@
         <div id="profile-dropdown" class="profile-dropdown">
             <a class="profile-dropdown-items" href="/resumes">
                 <i class="file alternate icon profile-icon"></i>
-                管理履歷
+                履歷管理
             </a>
             <a class="profile-dropdown-items" href="/follows">
                 <i class="heart icon profile-icon"></i>
-                收藏職缺
+                收藏管理
             </a>
             <a class="profile-dropdown-items" href="/applications">
                 <i class="paper plane icon profile-icon"></i>
@@ -64,15 +64,15 @@
         <%} else if (header.role==="employer" ){ %>
             <div id="profile-dropdown" class="profile-dropdown">
                 <a class="profile-dropdown-items" href="/manage/company">
-                    <i class="file alternate icon profile-icon"></i>
-                    管理公司
+                    <i class="building icon profile-icon"></i>
+                    公司管理
                 </a>
                 <a class="profile-dropdown-items" href="/manage/job">
-                    <i class="heart icon profile-icon"></i>
-                    管理職缺
+                    <i class="list ul icon profile-icon"></i>
+                    職缺管理
                 </a>
                 <a class="profile-dropdown-items" href="/">
-                    <i class="paper plane icon profile-icon"></i>
+                    <i class="history icon profile-icon"></i>
                     應徵紀錄
                 </a>
                 <a class="profile-dropdown-items" href="/logout">

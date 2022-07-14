@@ -3,7 +3,8 @@ const { upload, asyncHandlerWrapper, authentication } = require('../../../utils/
 const {
     fetchResumeDetail,
     uploadResume,
-    deleteResume
+    deleteResume,
+    updateResume
 } = require('../../controllers/profile_controller')
 
 const resumeUploadMulter = upload.array('projectImage', 3)
@@ -11,7 +12,8 @@ const resumeUploadMulter = upload.array('projectImage', 3)
 
 router.route('/resume/:id')
     .get(authentication(), asyncHandlerWrapper(fetchResumeDetail))
-    .delete(authentication(), asyncHandlerWrapper(deleteResume));
+    .delete(authentication(), asyncHandlerWrapper(deleteResume))
+    .patch(authentication(), resumeUploadMulter, asyncHandlerWrapper(updateResume));
 
 router.route('/resume')
     .post(authentication(), resumeUploadMulter, asyncHandlerWrapper(uploadResume))

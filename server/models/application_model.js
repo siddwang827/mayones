@@ -55,7 +55,7 @@ async function userCancelJobAllication(userId, applicationId) {
     WHERE seeker_id = ? AND id = ?
     `
     const result = await queryDB(sql, [userId, applicationId])
-    console.log(result)
+
     return result
 }
 
@@ -65,7 +65,7 @@ async function userUpdateJobAllication(userId, applicationId) {
     WHERE seeker_id = ? AND id = ? 
     `
     const result = await queryDB(sql, [userId, applicationId])
-    console.log(result)
+
     return result
 }
 
@@ -100,7 +100,7 @@ async function confirmJobApplication(jobId, resumeId, confirm,) {
     }
 
     const result = await queryDB(sql, binding)
-    console.log(result)
+
     return result
 }
 

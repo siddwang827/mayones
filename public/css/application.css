@@ -54,10 +54,22 @@
     width: 60px
 }
 
+
 .follow-content > .info,
 .job-content > .info {
     margin-left: 15px
 }
+
+.follow-content.follow-heart {
+    margin-right: 10px
+}
+
+
+.follow-heart:hover {
+    color: rgb(136, 136, 136);
+    transition: color 150ms;
+}
+
 
 .follow-info,
 .job-info {
@@ -82,21 +94,6 @@
     flex-direction: column
 }
 
-.follow-heart:hover {
-    width: 40px;
-    height: 40px;
-    background-image: url('/img/heart-empty.png');
-    background-size: 40px 40px;
-    background-position: center;
-}
-
-.follow-heart {
-    width: 40px;
-    height: 40px;
-    background-image: url('/img/heart-full.png');
-    background-size: 40px 40px;
-    background-position: center
-}
 
 .follow-content.action,
 .follow-content.calendar,
@@ -171,7 +168,9 @@
     border-radius: 5px;
     position: absolute;
     left: 80px;
-    top: -10px
+    top: -10px;
+    width: 120px;
+    text-align: center
 }
 
 .hide {

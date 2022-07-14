@@ -276,7 +276,6 @@ const getJobsCategory = async () => {
         ORDER BY mayones.category_position.order) t
     `
     const [result] = await queryDB(sql)
-
     return result.categories
 
 }
@@ -294,7 +293,6 @@ const getJobPositionByCategory = async (category) => {
     SELECT JSON_arrayagg(json_array(position, id)) AS positions FROM mayones.category_position WHERE category = ?;
     `
     const [result] = await queryDB(sql, [category])
-    console.log(result)
     return result.positions
 
 }
