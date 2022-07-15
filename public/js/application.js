@@ -26,7 +26,7 @@ $('.job-content.action').on('click', (event) => {
 })
 
 
-$('.calendar.icon').on('click', (event) => {
+$('.check-interview.icon').on('click', (event) => {
     event.preventDefault();
     event.stopPropagation()
     if ($('.interview-date.hide').length !== 0) {
@@ -36,7 +36,8 @@ $('.calendar.icon').on('click', (event) => {
     }
 })
 
-$('.calendar.icon').hover(
+
+$('.check-interview.icon').hover(
     (event) => {
         event.preventDefault();
         event.stopPropagation()
@@ -89,9 +90,8 @@ $('.action-icon.archive').on('click', async (event) => {
             alert('封存此筆記錄失敗，請稍後嘗試！')
         }
     }
-
-
 })
+
 
 $('.action-icon.trash').on('click', async (event) => {
     event.preventDefault();
@@ -112,14 +112,38 @@ $('.action-icon.trash').on('click', async (event) => {
             alert('刪除應徵紀錄失敗，請稍後嘗試！')
         }
     }
-
 })
 
-$('.file.icon.action-icon').on('click', async (event) => {
+$('.file.icon.action-icon.read-resume').on('click', async (event) => {
     event.preventDefault();
     event.stopPropagation();
-    const resumeId = event.target.getAttribute('application-id')
+    const resumeId = event.target.getAttribute('resume-id')
     const fetchResult = await fetch(`/api/1.0/resume/${resumeId}`)
+    const resumeDetail = await fetchResult.json()
+    resumePreview(resumeDetail)
+    $(`#resume-modal`)
+        .modal({
+            blurring: true,
+            duration: 200
+        })
+        .modal('show')
+        ;
+})
+
+$('.file.icon.action-icon.check-resume').on('click', async (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const resumeId = event.target.getAttribute('resume-id')
+    const applicationId = event.target.getAttribute('application-id')
+    const fetchResult = await fetch(`/manage/check-resume`,
+        {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                resumeId,
+                applicationId
+            })
+        })
     const resumeDetail = await fetchResult.json()
     console.log(resumeDetail)
     resumePreview(resumeDetail)
@@ -131,3 +155,4 @@ $('.file.icon.action-icon').on('click', async (event) => {
         .modal('show')
         ;
 })
+

@@ -3,11 +3,11 @@ const { getUserApplicationHistory,
     userApplyJobWithResume,
     userCancelJobAllication,
     userUpdateJobAllication,
-    confirmJobApplication,
     checkUserOwnApplication,
 } = require('../models/application_model.js')
 const { Job } = require('../models/job_model.js');
-const moment = require('moment')
+const moment = require('moment');
+const { render } = require('ejs');
 
 
 const getApplicationPage = async (req, res) => {
@@ -103,8 +103,6 @@ const cancelApplication = async (req, res) => {
         console.log(error)
         return res.status(500).json({ error })
     }
-
-
 }
 
 
@@ -113,5 +111,5 @@ module.exports = {
     sendApplication,
     getApplicationListPage,
     updateApplication,
-    cancelApplication
+    cancelApplication,
 }

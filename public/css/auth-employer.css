@@ -6,10 +6,7 @@ body {
 main {
     height: calc(100vh - 170px) !important;
     min-height: calc(100vh - 170px) !important;
-
 }
-
-
 
 .profile-container {
     display: flex;
@@ -19,23 +16,20 @@ main {
     height: auto;
     margin: 50px auto 0;
     padding: 30px 80px;
-    background-color: #fff;
+    background-color: #424242;
     border: .5px solid rgba(0, 0, 0, .1);
     border-radius: 8px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
+    box-shadow: 0 1px 4px rgba(59, 59, 59, 0.04);
 }
 
 .auth-header {
-    font-family: Arial,
-        "Helvetica Neue",
-        Helvetica,
-        sans-serif;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     font-weight: bold;
     letter-spacing: 2px;
     font-size: 40px;
     margin-left: auto;
-    color: #3f3a3a;
-    margin-top: 10px
+    color: #fbfbfb;
+    margin-top: 10px;
 }
 
 .profile-container > img {
@@ -49,7 +43,7 @@ main {
     margin: 100px 0 50px;
     text-align: right;
     line-height: 26px;
-    color: #939393
+    color: #f9f9f9;
 }
 
 .ask-sign {
@@ -66,9 +60,8 @@ main {
 }
 
 .ask-sign > a:hover {
-    color: #424242;
+    color: #f2f2f2;
     text-decoration: underline !important;
-
 
 }
 
@@ -77,14 +70,12 @@ input {
     border-bottom: 1px solid #858585;
     height: 40px;
     margin-top: 5px;
-    padding-left: 5px;
+    padding-left: 15px;
     font-size: 16px;
     color: #3f3a3a;
     letter-spacing: 1px;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
+    border-radius: 5px;
 }
-
 
 .password-input {
     font-size: 14px;
@@ -98,7 +89,7 @@ input:focus {
 
 .title {
     font-size: 18px;
-    color: #939393;
+    color: #e3e3e3;
     line-height: 20px;
     letter-spacing: 1px;
     margin-top: 20px;
@@ -112,21 +103,22 @@ input:focus {
     border-radius: 30px;
     height: 48px;
     margin: 50px auto 0;
-    color: rgb(226, 226, 226);
-    background-color: black;
+    color: rgb(255, 255, 255);
+    background-color: #141414;
     box-shadow: none
 }
 
 .btn-submit:hover {
-    background-color: #2d2d2d;
-    transition: background-color 100ms;
-
+    background-color: #bebebe;
+    transition: background-color 150ms;
+    color: #141414
 }
 
 
 .btn-submit:active {
     box-shadow: none;
     transform: translate(1px, 1px);
-    background-color: black;
+    background-color: #bebebe;
+    color: black;
     box-shadow: 0.5px 1px 1px 0.5px rgb(79, 79, 79, 0.4);
 }

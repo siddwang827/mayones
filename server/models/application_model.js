@@ -105,11 +105,35 @@ async function confirmJobApplication(jobId, resumeId, confirm,) {
 }
 
 
+async function getApplicationListbyJobOwner(userId) {
+    const sql = `
+    SELECT job_id,seeker_checked,employer_checked, job_title, 
+    json_arrayagg(apply_resume_id) AS resume_id ,
+    json_arrayagg(user_name) AS seeker_name, 
+    json_arrayagg(seeker_id) AS seeker_id ,
+    json_arrayagg(job_application.id) AS application_id
+    FROM mayones.job_application
+    right JOIN mayones.jobs
+    ON job_id = mayones.jobs.id
+    LEFT JOIN mayones.resume
+    ON apply_resume_id = mayones.resume.id
+    WHERE owner_id = ?
+    GROUP BY job_id
+    `
+    const result = await queryDB(sql, [userId])
+
+    return result
+}
+
+
+
+
 module.exports = {
     getUserApplicationHistory,
     userApplyJobWithResume,
     userCancelJobAllication,
     confirmJobApplication,
     userUpdateJobAllication,
-    checkUserOwnApplication
+    checkUserOwnApplication,
+    getApplicationListbyJobOwner
 }

@@ -77,15 +77,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div>
-                    <div class="ui input price"><input type="text" placeholder="下限"></div>
-                    ~
-                    <div class="ui input price"><input type="text" placeholder="上限"></div>
-                    <select class="ui dropdown">
-                        <option value="年薪">年薪</option>
-                        <option value="月薪">月薪</option>
-                    </select>
-                </div> -->
             </div>
             <div class="tag-list">
             </div>
@@ -139,18 +130,21 @@
                                     <%= job.position%>
                                 </a>
                             </div>
-                            <div class="job-card-content-tags">
-                                <svg width="16px" height="16px" viewBox="0 0 32 32" id="i-tag" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                    <circle cx="24" cy="8" r="2" />
-                                    <path d="M2 18 L18 2 30 2 30 14 14 30 Z" />
-                                </svg>
-                                <% for (let tag of job.tags) { %>
-                                    <a class="job-tag" href="/jobs?tag[]=<%= tag%>">
-                                        <%= tag%>
-                                    </a>
-                                    <% } %>
-                            </div>
+                            <% if(job.tags[0]) {%>
+                                <div class="job-card-content-tags">
+                                    <svg width="16px" height="16px" viewBox="0 0 32 32" id="i-tag" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                        <circle cx="24" cy="8" r="2" />
+                                        <path d="M2 18 L18 2 30 2 30 14 14 30 Z" />
+                                    </svg>
+
+                                    <% for (let tag of job.tags) { %>
+                                        <a class="job-tag" href="/jobs?tag[]=<%= tag%>">
+                                            <%= tag%>
+                                        </a>
+                                        <% } %>
+                                </div>
+                                <%}%>
                         </div>
                     </div>
                     <%} %>

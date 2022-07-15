@@ -111,7 +111,7 @@ main {
     width: 100%;
     margin-left: 29%;
     margin-top: 50px;
-    min-height: calc(100vh - 160px);
+    /* min-height: calc(100vh - 160px); */
     display: flex;
     flex-direction: column;
     position: relative

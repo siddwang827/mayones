@@ -61,7 +61,6 @@ const createResume = async (userId, resume) => {
     } finally {
         await conn.release()
     }
-
 }
 
 const userUpdateResume = async (userId, resume,) => {
@@ -86,6 +85,7 @@ const userUpdateResume = async (userId, resume,) => {
             bio: resume.bio,
 
         }
+        console.log(resume)
         await conn.query('START TRANSACTION');
         await conn.query(`UPDATE mayones.resume SET ? WHERE id = ?`, [profile, resume.resumeId])
 
@@ -102,7 +102,11 @@ const userUpdateResume = async (userId, resume,) => {
             for (let i = 0; i < resume.projectTitle.length; i++) {
                 projects.push([resume.projectTitle[i], resume.projectLink[i], resume.projectInfo[i], resume.projectImage[i], resume.resumeId])
             }
-            await conn.query('DELETE FROM mayones.resume_projects WHERE resume_id =?', [resume.resumeId])
+            const deleteSql = 'DELETE FROM mayones.resume_projects WHERE resume_id = ? '
+            if (!resume.projectImage[0]) {
+                deleteSql += 'AND project_image IS NOT NULL '
+            }
+            await conn.query(deleteSql, [resume.resumeId])
             await conn.query("INSERT INTO mayones.resume_projects (project_title,  project_link, project_intro, project_image, resume_id ) VALUES ? ", [projects])
         }
 
@@ -131,13 +135,11 @@ const userUpdateResume = async (userId, resume,) => {
     } finally {
         await conn.release()
     }
-
-
 }
 
-const getResumeDetail = async (resumeId, userId) => {
-
-    const [resume] = await queryDB(`
+const getResumeDetail = async (resumeId, user) => {
+    let binding = [resumeId]
+    let sqlSelect = `
     SELECT resume_profile_projects_skills_experience.*,
     json_arrayagg(education_title) AS education_title, 
     json_arrayagg(education_department) AS education_department, 
@@ -160,18 +162,25 @@ const getResumeDetail = async (resumeId, userId) => {
                         json_arrayagg(project_intro) AS project_intro, 
                         json_arrayagg(project_image) AS project_image 
                         FROM (SELECT id , user_id, resume_name, show_resume, user_name , gender, birthday, show_birthday, phone, contact_email, personal_url, bio, update_at
-                            FROM mayones.resume
-                            WHERE resume.id = ? AND user_id = ?
-                            GROUP BY resume.id) AS resume_profile
-                            LEFT JOIN mayones.resume_projects
-                            ON resume_profile.id = resume_projects.resume_id ) AS resume_profile_projects
-                            LEFT JOIN mayones.resume_skills
-                            ON resume_profile_projects.id = resume_skills.resume_id) AS resume_profile_projects_skills
-                            LEFT JOIN mayones.resume_experience
-                            ON resume_profile_projects_skills.id = resume_experience.resume_id) AS resume_profile_projects_skills_experience
-                            LEFT JOIN mayones.resume_education
-                            ON resume_profile_projects_skills_experience.id = resume_education.resume_id
-                            `, [resumeId, userId])
+                        FROM mayones.resume `
+    let sqlCondition = `WHERE resume.id = ? `
+    let sqlJoinTable = `GROUP BY resume.id) AS resume_profile
+    LEFT JOIN mayones.resume_projects
+    ON resume_profile.id = resume_projects.resume_id ) AS resume_profile_projects
+    LEFT JOIN mayones.resume_skills
+    ON resume_profile_projects.id = resume_skills.resume_id) AS resume_profile_projects_skills
+    LEFT JOIN mayones.resume_experience
+    ON resume_profile_projects_skills.id = resume_experience.resume_id) AS resume_profile_projects_skills_experience
+    LEFT JOIN mayones.resume_education
+    ON resume_profile_projects_skills_experience.id = resume_education.resume_id`
+
+    if (user.role === "employee") {
+        sqlCondition += `AND user_id = ? `
+        binding.push(user.id)
+    }
+
+    const sql = sqlSelect + sqlCondition + sqlJoinTable
+    const [resume] = await queryDB(sql, binding)
 
     return resume
 }
@@ -181,8 +190,12 @@ const getUserAllResumes = async (userId) => {
     SELECT id as resume_id , resume_name, update_at FROM mayones.resume
     WHERE user_id = ? 
     `
-    const result = await queryDB(sql, userId)
-    return result
+    try {
+        const result = await queryDB(sql, userId)
+        return result
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 const deleteUserResume = async (userId, resumeId) => {
@@ -217,6 +230,12 @@ const checkResumeApplication = async (resumeId) => {
     return result
 }
 
+const updateResumeEmployerCheck = async (applicationId) => {
+    queryDB('UPDATE mayones.job_application SET employer_checked = 1 WHERE id = ?', [applicationId])
+
+    return
+}
+
 module.exports = {
     createResume,
     userUpdateResume,
@@ -224,5 +243,6 @@ module.exports = {
     getUserAllResumes,
     deleteUserResume,
     checkUserOwnResume,
-    checkResumeApplication
+    checkResumeApplication,
+    updateResumeEmployerCheck
 }

@@ -175,7 +175,6 @@
 
 .hide {
     display: none;
-    /* visibility: hidden; */
     opacity: 0;
 }
 
@@ -213,4 +212,62 @@
 
 .ui.dimmer {
     text-align: left !important
+}
+
+
+.col-container {
+    display: flex;
+    flex-direction: column;
+    cursor: default;
+
+}
+
+.interview-date-picker.hide {
+    display: none
+}
+
+.interview-date-picker {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    top: -18px;
+    left: 80px;
+    width: 250px;
+    height: 60px;
+    border-radius: 8px;
+    background-color: rgb(0, 0, 0);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
+}
+
+interview-date-picker:hover + span {
+    display: none;
+}
+
+.interview-date-input {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif !important;
+    text-align: center;
+    margin: 0 5px !important;
+    border-radius: 3px;
+}
+
+.interview-date-input:focus {
+    outline: none;
+    border: none;
+}
+
+.col-container {
+    margin: 0 10px 0 0;
+    width: 150px
+}
+
+.col-container > p {
+    margin-bottom: 5px !important;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
+.invite-btn {
+    height: 40px;
 }

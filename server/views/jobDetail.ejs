@@ -84,26 +84,28 @@
 										<%= jobDetail.position %>
 									</a>
 								</div>
-								<div class="job-basic-info-tags">
-									<svg width="16px" height="16px" viewBox="0 0 32 32" id="i-tag" xmlns="http://www.w3.org/2000/svg" fill="none"
-										stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-										<circle cx="24" cy="8" r="2"></circle>
-										<path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
-									</svg>
-									<% for(let tag of jobDetail.tags) { %>
-										<a href="/jobs?tag[]=<%= tag %>" class="job-tag">
-											<%= tag%>
-										</a>
-										<% } %>
+								<% if (jobDetail.tags[0]) {%>
+									<div class="job-basic-info-tags">
+										<svg width="16px" height="16px" viewBox="0 0 32 32" id="i-tag" xmlns="http://www.w3.org/2000/svg" fill="none"
+											stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+											<circle cx="24" cy="8" r="2"></circle>
+											<path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+										</svg>
+										<% for(let tag of jobDetail.tags) { %>
+											<a href="/jobs?tag[]=<%= tag %>" class="job-tag">
+												<%= tag%>
+											</a>
+											<% } %>
 
-								</div>
-								<div class="job-basic-update-time">
-									<p class="job-basic-update-time-text">
-										<% let updateTime=new Date(jobDetail.update_at)%>
-											最後更新於 <%= updateTime.getFullYear() %>-<%= (updateTime.getMonth()+1).toString().padStart(2, '0' ) %>-<%=
-														updateTime.getDate() %>
-									</p>
-								</div>
+									</div>
+									<% } %>
+										<div class="job-basic-update-time">
+											<p class="job-basic-update-time-text">
+												<% let updateTime=new Date(jobDetail.update_at)%>
+													最後更新於 <%= updateTime.getFullYear() %>-<%= (updateTime.getMonth()+1).toString().padStart(2, '0' )
+															%>-<%= updateTime.getDate() %>
+											</p>
+										</div>
 							</div>
 							<div class="basic-button-container">
 								<a href="/application/<%=jobDetail.id%>" target="_blank">
