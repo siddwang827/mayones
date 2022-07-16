@@ -37,7 +37,7 @@
                                     </div>
 
                                     <div class="job-content action">
-                                        <% if (applications.pending.employer_checked[i]===1) { %>
+                                        <% if (applications.pending.employer_checked[i]===1 ) { %>
                                             <div class="action-item">
                                                 <i class=" eye large icon "></i>
                                                 <span>已閱讀</span>
@@ -72,33 +72,37 @@
                     <%} else {%>
                         <% for (let i=0; i < applications.arrange.job_title.length; i++) { %>
                             <a href="/job/<%=applications.arrange.job_id[i]%>" id="application-id-<%=applications.arrange.application_id[i]%>">
-                                <div class="job-list">
-                                    <div class="job-content">
-                                        <img class="job-item logo" src=<%=applications.arrange.logo_image[i] %>>
-                                        <div class="job-item info">
-                                            <div class="job-info job-title">
-                                                <%= applications.arrange.job_title[i] %>
-                                            </div>
-                                            <div class="job-info brand">
-                                                <%= applications.arrange.brand[i] %>
-                                            </div>
+                                <% if (applications.arrange.seeker_checked[i]===1) { %>
+                                    <div class="job-list">
+                                        <% } else { %>
+                                            <div class="job-list unchecked">
+                                                <% } %>
+                                                    <div class="job-content">
+                                                        <img class="job-item logo" src=<%=applications.arrange.logo_image[i] %>>
+                                                        <div class="job-item info">
+                                                            <div class="job-info job-title">
+                                                                <%= applications.arrange.job_title[i] %>
+                                                            </div>
+                                                            <div class="job-info brand">
+                                                                <%= applications.arrange.brand[i] %>
+                                                            </div>
 
-                                        </div>
-                                    </div>
-                                    <div class="job-content calendar">
-                                        <div class="action-item">
-                                            <i class="file large alternate icon action-icon read-resume"
-                                                resume-id="<%=applications.arrange.resume_id[i]%>"></i>
-                                            <span>應徵履歷</span>
-                                        </div>
-                                        <div class="action-item calendar">
-                                            <i class="calendar large check icon action-icon check-interview"></i>
-                                            <div class="interview-date hide">
-                                                <%= moment(applications.arrange.interview_date[i]).format('YYYY-MM-DD')%>
+                                                        </div>
+                                                    </div>
+                                                    <div class="job-content calendar">
+                                                        <div class="action-item">
+                                                            <i class="file large alternate icon action-icon read-resume"
+                                                                resume-id="<%=applications.arrange.resume_id[i]%>"></i>
+                                                            <span>應徵履歷</span>
+                                                        </div>
+                                                        <div class="action-item calendar">
+                                                            <i class="calendar large check icon action-icon check-interview"></i>
+                                                            <div class="interview-date hide">
+                                                                <%= moment(applications.arrange.interview_date[i]).format('YYYY-MM-DD')%>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </a>
                             <% } %>
                                 <% } %>

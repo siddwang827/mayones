@@ -8,6 +8,7 @@ async function getUserApplicationHistory(userId) {
         'job_id' , JSON_ARRAYAGG(job_id),
         'job_title', JSON_ARRAYAGG(job_title),
         'employer_checked', JSON_ARRAYAGG(employer_checked),
+        'seeker_checked', JSON_ARRAYAGG(seeker_checked),
         'brand', JSON_ARRAYAGG(brand), 
         'logo_image', JSON_ARRAYAGG(logo_image),
         'resume_id', JSON_ARRAYAGG(apply_resume_id),
@@ -36,6 +37,7 @@ async function getUserApplicationHistory(userId) {
                 break
         }
     })
+
     return mergeStatus
 }
 
@@ -83,20 +85,17 @@ async function checkUserOwnApplication(userId, applicationId) {
 }
 
 
-async function confirmJobApplication(jobId, resumeId, confirm,) {
-    let sql = ' UPDATE mayones.job_application '
+async function inviteInterviewToSeeker(applicationId, action) {
+    let sql = ` UPDATE mayones.job_application `
     let binding = []
-    switch (confirm.status) {
-        case 'accept':
-            sql += `SET 'status' = 'accept',  SET 'interview_date' = ? `
-            binding = [confirm.intervewDate]
+    switch (action.status) {
+        case 'arrange':
+            sql += `SET status = ?, interview_date = ? , seeker_checked = 0 WHERE id = ?`
+            binding.push(action.status, action.interviewDate, applicationId)
             break
         case 'reject':
-            sql += `SET 'status' = 'reject' `
-            break
-        default:
-            sql += `WHERE job_id = ? AND  apply_resume_id = ?`
-            binding.push(jobId, resumeId)
+            sql += `SET status = 'reject' WHERE id = ?`
+            binding.push(applicationId)
     }
 
     const result = await queryDB(sql, binding)
@@ -125,15 +124,18 @@ async function getApplicationListbyJobOwner(userId) {
     return result
 }
 
-
+async function seekerChecked(userId) {
+    queryDB('UPDATE mayones.job_application SET seeker_checked = 1 WHERE seeker_id = ?', userId)
+}
 
 
 module.exports = {
     getUserApplicationHistory,
     userApplyJobWithResume,
     userCancelJobAllication,
-    confirmJobApplication,
+    inviteInterviewToSeeker,
     userUpdateJobAllication,
     checkUserOwnApplication,
-    getApplicationListbyJobOwner
+    getApplicationListbyJobOwner,
+    seekerChecked
 }

@@ -1,5 +1,6 @@
 // const { Resume } = require('../models/schemas')
-const { createResume, getResumeDetail, getUserAllResumes, deleteUserResume, checkUserOwnResume, checkResumeApplication, userUpdateResume, updateResumeEmployerCheck } = require('../models/profile_model.js')
+const { createResume, getResumeDetail, getUserAllResumes, deleteUserResume, checkUserOwnResume,
+    checkResumeApplication, userUpdateResume, deleteSingleSkill, deleteSingleExperience, deleteSingleProject, deleteSingleEducation } = require('../models/profile_model.js')
 const { s3Upload, s3UploadMulti } = require('../models/s3Server')
 const moment = require('moment')
 
@@ -18,6 +19,7 @@ const getResumeEditPage = async (req, res) => {
     const resumeId = req.params.id
 
     const resumeDetail = await getResumeDetail(resumeId, userId)
+    console.log(resumeDetail)
     const allResumes = await getUserAllResumes(userId)
 
     return res.render('resumeEdit', { header, resumeDetail, allResumes, moment, resumeId })
@@ -88,6 +90,11 @@ const uploadResume = async (req, res) => {
 const updateResume = async (req, res) => {
     const userId = req.user.id
     const resume = req.body
+    resume.projectImageSrc = JSON.parse(resume.projectImageSrc)
+    resume.projectId = JSON.parse(resume.projectId)
+    resume.skillId = JSON.parse(resume.skillId)
+    resume.experienceId = JSON.parse(resume.experienceId)
+    resume.educationId = JSON.parse(resume.educationId)
     for (let item in resume) {
         resume[item] = typeof (resume[item]) === 'string' ? [resume[item]] : resume[item]
     }
@@ -103,8 +110,48 @@ const updateResume = async (req, res) => {
         console.log(error)
         return res.status(500).json({ error: "Upload resume Failed" })
     }
+}
 
+const deleteSkill = async (req, res) => {
+    const skillId = req.params.id
+    try {
+        await deleteSingleSkill(skillId)
+        return res.status(200).json({ result: 'Delete skill sucess' })
+    } catch (error) {
+        res.status(500).json(error)
+    }
 
+}
+
+const deleteExperience = async (req, res) => {
+    const experienceId = req.params.id
+    try {
+        await deleteSingleExperience(experienceId)
+        return res.status(200).json({ result: 'Delete experience sucess' })
+    } catch (error) {
+        res.status(500).json(error)
+    }
+
+}
+
+const deleteProject = async (req, res) => {
+    const projectId = req.params.id
+    try {
+        await deleteSingleProject(projectId)
+        return res.status(200).json({ result: 'Delete project sucess' })
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
+
+const deleteEducation = async (req, res) => {
+    const educationId = req.params.id
+    try {
+        await deleteSingleEducation(educationId)
+        return res.status(200).json({ result: 'Delete education sucess' })
+    } catch (error) {
+        res.status(500).json(error)
+    }
 }
 
 module.exports = {
@@ -113,5 +160,9 @@ module.exports = {
     fetchResumeDetail,
     updateResume,
     uploadResume,
-    deleteResume
+    deleteResume,
+    deleteSkill,
+    deleteExperience,
+    deleteProject,
+    deleteEducation,
 }

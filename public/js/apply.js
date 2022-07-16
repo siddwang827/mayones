@@ -40,38 +40,38 @@ function resumePreview(resumeDetail) {
     `)
 
     const genderDiv = $(`
-        <div class="resume-preview-content-item">
+        <div class="resume-preview-content-item basic-info">
             <i class="user icon"></i>
-            <div id="gender" class="profile-content">${resumeDetail.gender}</div>
+            <div id="gender" class="profile-content basic-info">${resumeDetail.gender}</div>
         </div>
     `)
 
     const birthdayDiv = $(`
-        <div class="resume-preview-content-item">
+        <div class="resume-preview-content-item basic-info">
             <i class="birthday cake icon"></i>
-            <div id="birthday" class="profile-content">${moment(resumeDetail.birthday).format('YYYY-MM-DD')}</div>
+            <div id="birthday" class="profile-content basic-info">${moment(resumeDetail.birthday).format('YYYY-MM-DD')}</div>
         </div>
     `)
 
     const phoneDiv = $(`
-        <div class="resume-preview-content-item">
+        <div class="resume-preview-content-item basic-info">
             <i class="phone icon"></i>
-            <div id="phone" class="profile-content">${resumeDetail.phone}</div>
+            <div id="phone" class="profile-content basic-info">${resumeDetail.phone}</div>
         </div>
     `)
 
     const contacEmailDiv = $(` 
-        <div class="resume-preview-content-item">
+        <div class="resume-preview-content-item basic-info">
         <i class="envelope icon"></i>
-        <div id="contact-email" class="profile-content">${resumeDetail.contact_email}</div>
+        <div id="contact-email" class="profile-content basic-info">${resumeDetail.contact_email}</div>
         </div>
     `)
 
     const websiteDiv = $(`
-        <div class="resume-preview-content-item">
+        <div class="resume-preview-content-item basic-info">
             <i class="globe icon"></i>
             <a href="${resumeDetail.personal_url}">
-                <div id="website" class="profile-content">${resumeDetail.personal_url}</div>
+                <div id="website" class="profile-content basic-info">${resumeDetail.personal_url}</div>
             </a>
         </div>
     `)
