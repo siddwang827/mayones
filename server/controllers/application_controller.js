@@ -4,6 +4,7 @@ const { getUserApplicationHistory,
     userCancelJobAllication,
     userUpdateJobAllication,
     checkUserOwnApplication,
+    seekerChecked
 } = require('../models/application_model.js')
 const { Job } = require('../models/job_model.js');
 const moment = require('moment');
@@ -57,7 +58,7 @@ const getApplicationListPage = async (req, res) => {
     const header = req.header
     try {
         const applications = await getUserApplicationHistory(userId)
-
+        seekerChecked(userId)
         return res.render('applicationHistory', { header, applications, moment })
     } catch (error) {
         console.log(error)

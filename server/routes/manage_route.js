@@ -7,7 +7,8 @@ const { getCompanyManagePage,
     createJobDetail,
     getApplicationsManagePage,
     checkUserResume,
-    getPosition } = require('../controllers/manage_controller.js')
+    getPosition,
+    inviteInterview } = require('../controllers/manage_controller.js')
 
 const companyMulter = upload.fields([{ name: "logoImage" }, { name: "bannerImage" }, { name: "otherImages", maxCount: 5 }])
 const jobMulter = upload.none()
@@ -32,6 +33,9 @@ router.route('/manage/applications')
 
 router.route('/manage/check-resume')
     .post(authentication(AUTH.required), setViewHeader(), asyncHandlerWrapper(checkUserResume))
+
+router.route('/manage/invite')
+    .post(authentication(AUTH.required), setViewHeader(), asyncHandlerWrapper(inviteInterview))
 
 router.route('/api/1.0/positions')
     .get(asyncHandlerWrapper(getPosition))

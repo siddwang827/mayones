@@ -104,12 +104,20 @@ main {
     margin-bottom: 10px
 }
 
+.profile-content.basic-info {
+    margin: 0
+}
+
 .resume-preview-content-item {
     display: flex;
     margin-bottom: 10px;
     color: #3f3f3f;
     margin-left: 30px;
     align-items: center;
+}
+
+.resume-preview-content-item.basic-info {
+    margin-bottom: 20px;
 }
 
 .resume-preview-content-item i {

@@ -1,9 +1,10 @@
 const { Company, companyLocations, getALLCategory, getALLCompanyTag } = require('../models/company_model')
 const { Job, jobTypes, jobLocations, getJobsCategory, getJobPositionByCategory, getJobTags } = require('../models/job_model')
 const { getResumeDetail, updateResumeEmployerCheck } = require('../models/profile_model')
-const { getApplicationListbyJobOwner, confirmJobApplication, } = require('../models/application_model')
+const { getApplicationListbyJobOwner, inviteInterviewToSeeker, } = require('../models/application_model')
 const { s3Upload, s3UploadMulti } = require('../models/s3Server')
-const { application } = require('express')
+const moment = require('moment')
+
 
 const getCompanyManagePage = async (req, res) => {
     const header = req.header
@@ -125,6 +126,22 @@ const checkUserResume = async (req, res) => {
     }
 }
 
+const inviteInterview = async (req, res) => {
+    let { applicationId, action } = req.body
+    console.log(action.interviewDate)
+    try {
+        const result = await inviteInterviewToSeeker(applicationId, action)
+        console.log(result)
+        res.status(200).json({ result: 'Invite interview sucess' })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json(error)
+    }
+
+
+
+}
+
 module.exports = {
     getCompanyManagePage,
     getJobManagePage,
@@ -132,5 +149,6 @@ module.exports = {
     getPosition,
     createCompanyDetail,
     createJobDetail,
-    checkUserResume
+    checkUserResume,
+    inviteInterview
 }

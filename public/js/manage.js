@@ -23,6 +23,28 @@ $('.calendar.icon').on('click', (event) => {
 
 })
 
-$('.invite-btn').on('click', () => {
+$('.invite-btn').on('click', async (event) => {
+    event.preventDefault();
+    event.stopPropagation()
+    const applicationId = event.target.getAttribute('application-id')
+    const interviewDate = $(`#interview-date-input-${applicationId}`).val()
+    console.log(moment(interviewDate).format('YYYY-MM-DD hh:mm:ss'))
+    const fetchResult = await fetch('/manage/invite', {
+        method: "POST",
+        headers:
+            { 'content-type': 'application/json' },
+        body: JSON.stringify({
+            applicationId,
+            action: {
+                status: 'arrange',
+                interviewDate: moment(interviewDate).format('YYYY-MM-DD hh:mm:ss')
+            }
+        })
+    })
 
+    if (fetchResult.status === 200) {
+        alert('成功送出面試邀請！')
+    } else {
+        alert('送出面試邀請失敗！')
+    }
 })
