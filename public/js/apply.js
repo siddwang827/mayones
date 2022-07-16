@@ -179,7 +179,7 @@ function resumePreview(resumeDetail) {
                     <div class="experience-period">${resumeDetail.experience_start[index]} ~ ${resumeDetail.experience_end[index]}</div>
                 </div>
                 <div class="resume-preview-content-item">
-                    <div class="experience-intro">hsfdsshdh
+                    <div class="experience-intro">
                         ${resumeDetail.experience_intro[index] ? resumeDetail.experience_intro[index].replaceAll('\\r\\n', '<br/>') : ""}
                     </div>
                 </div>

@@ -1,6 +1,9 @@
 const { Company, companyLocations, getALLCategory, getALLCompanyTag } = require('../models/company_model')
-const { Job, jobTypes, jobLocations, getJobsCategory, getJobPositionByCategory, getJobTags, getCompanyId } = require('../models/job_model')
+const { Job, jobTypes, jobLocations, getJobsCategory, getJobPositionByCategory, getJobTags } = require('../models/job_model')
+const { getResumeDetail, updateResumeEmployerCheck } = require('../models/profile_model')
+const { getApplicationListbyJobOwner, confirmJobApplication, } = require('../models/application_model')
 const { s3Upload, s3UploadMulti } = require('../models/s3Server')
+const { application } = require('express')
 
 const getCompanyManagePage = async (req, res) => {
     const header = req.header
@@ -46,8 +49,6 @@ const createCompanyDetail = async (req, res) => {
         console.log(error)
         res.status(500).json(error)
     }
-
-
 }
 
 const getJobManagePage = async (req, res) => {
@@ -86,21 +87,50 @@ const createJobDetail = async (req, res) => {
     }
 }
 
-const getApplicationsePage = async (req, res) => {
+const getApplicationsManagePage = async (req, res) => {
+    const userId = req.user.id
+    const header = req.header
 
+    try {
+        const applications = await getApplicationListbyJobOwner(userId)
+        return res.render('employerApplication', { header, applications })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ error })
+    }
 }
 
 const getPosition = async (req, res) => {
-
     const category = req.query.category
     const positions = await getJobPositionByCategory(category)
     return res.status(200).json(positions)
 }
+
+const checkUserResume = async (req, res) => {
+    const applicationId = req.body.applicationId
+    const resumeId = req.body.resumeId
+    const user = req.user
+    try {
+
+        const resumeDetail = await getResumeDetail(resumeId, user)
+        if (!resumeDetail) {
+            res.status(403).json({ error: 'Forbidden check to this resume' })
+        }
+        updateResumeEmployerCheck(applicationId)
+        res.status(200).json(resumeDetail)
+    }
+    catch (error) {
+        console.log(error)
+        res.status(500).json({ error })
+    }
+}
+
 module.exports = {
     getCompanyManagePage,
-    createCompanyDetail,
     getJobManagePage,
+    getApplicationsManagePage,
+    getPosition,
+    createCompanyDetail,
     createJobDetail,
-    getApplicationsePage,
-    getPosition
+    checkUserResume
 }

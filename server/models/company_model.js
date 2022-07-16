@@ -33,20 +33,32 @@ class Company {
     }
 
     static async createCompany(userId, brand, website, category, shrotDescription, companyLocation, companyAddress, introduction, philosophy, benifit, companyTags, logoImage, bannerImage, otherImages) {
-        let sql = `
-        INSERT INTO mayones.companies (owner_id, brand, website, category, short_description, company_location, company_address, introduction, philosophy, benifit, logo_image, banner_image)
-        VALUES(?,?,?,?,?,?,?,?,?,?,?,?)
-        `
-        const result = await queryDB(sql, [userId, brand, website, category, shrotDescription, companyLocation, companyAddress, introduction, philosophy, benifit, logoImage.url, bannerImage.url])
-        const companyId = result.insertId
-        let sqlTag = `INSERT INTO mayones.companies_tags (companies_id, tags_id) VALUES ?`
-        let sqlOtherImage = `INSERT INTO mayones.other_images (companies_id, other_image) VALUES ?`
 
-        // 再改寫成transaction
-        const otherImagesArray = otherImages.map(image => { return [companyId, image.url] })
-        const tagArray = companyTags.map(tag => { return [companyId, tag] })
-        await Promise.all([pool.query(sqlTag, [tagArray]), pool.query(sqlOtherImage, [otherImagesArray])])
+        try {
+            let sql = `
+            INSERT INTO mayones.companies (
+                owner_id, brand, website, category, short_description, company_location, 
+                company_address, introduction, philosophy, benifit, logo_image, banner_image
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            `
+            let sqlTag = `INSERT INTO mayones.companies_tags (companies_id, tags_id) VALUES ?`
+            let sqlOtherImage = `INSERT INTO mayones.other_images (companies_id, other_image) VALUES ?`
+            let binding = [userId, brand, website, category, shrotDescription, companyLocation, companyAddress, introduction, philosophy, benifit, logoImage.url, bannerImage.url]
 
+            const conn = await pool.getConnection()
+            await conn.query('START TRANSACTION');
+            const result = await conn.query(sql, binding)
+            const companyId = result.insertId
+            const otherImagesArray = otherImages.map(image => { return [companyId, image.url] })
+            const tagArray = companyTags.map(tag => { return [companyId, tag] })
+            await Promise.all([conn.query(sqlTag, [tagArray]), conn.query(sqlOtherImage, [otherImagesArray])])
+            await conn.query('COMMIT');
+
+        } catch (error) {
+            await conn.query('ROLLBACK')
+            console.log(error)
+            return 'create resume failed'
+        }
         return
 
 
@@ -57,7 +69,9 @@ class Company {
         let binding = []
         let queryKeys = Object.keys(companyQuery)
         let sql = `
-            SELECT companies.id, brand, short_description, category, company_location , logo_image, banner_image, JSON_ARRAYAGG(tags.tag_name) AS tags
+            SELECT companies.id, brand, short_description, 
+            category, company_location , logo_image, banner_image, 
+            JSON_ARRAYAGG(tags.tag_name) AS tags
             FROM mayones.companies
             LEFT JOIN mayones.companies_tags
             ON companies.id = companies_tags.companies_id
@@ -98,14 +112,16 @@ class Company {
         }
 
         const result = await queryDB(sql, binding)
-        console.log(result)
+
         return result
     }
 
 
     static async getAllCompanies(pageSize, paging) {
         const sql = `
-        SELECT companies.id, brand, short_description, category, JSON_ARRAYAGG(tags.tag_name) AS tags, company_location, logo_image, banner_image
+        SELECT companies.id, brand, short_description, category, 
+        JSON_ARRAYAGG(tags.tag_name) AS tags, company_location, 
+        logo_image, banner_image
         FROM mayones.companies
         LEFT JOIN mayones.companies_tags
         ON companies.id = companies_tags.companies_id
@@ -120,7 +136,9 @@ class Company {
 
     static async getCompanyDetailById(id, userInfo) {
         const sql = `
-        SELECT join_table.id, brand, website, category, short_description, company_location, company_address, introduction, philosophy, story, benifit, logo_image, banner_image,  tags, JSON_ARRAYAGG(other_images.other_image) AS other_images
+        SELECT join_table.id, brand, website, category, short_description, 
+        company_location, company_address, introduction, philosophy, story, benifit, 
+        logo_image, banner_image,  tags, JSON_ARRAYAGG(other_images.other_image) AS other_images
         FROM ( 
             SELECT companies.id AS id,
                 brand, 
@@ -152,7 +170,11 @@ class Company {
         let [result] = await queryDB(sql, [id])
         if (userInfo.role === 'employee') {
             result.follow = 0
-            const [follow] = await queryDB('SELECT id, follow FROM mayones.seekers_companies WHERE companies_id = ? AND user_id = ?', [id, userInfo.id])
+            const [follow] = await queryDB(`
+            SELECT id, follow 
+            FROM mayones.seekers_companies 
+            WHERE companies_id = ? AND user_id = ?`, [id, userInfo.id])
+
             if (follow) {
                 result.follow = follow.follow;
                 result.follow_id = follow.id
@@ -199,7 +221,8 @@ class Company {
 
 const getALLCategory = async () => {
     const sql = `
-    SELECT JSON_ARRAYAGG(category) AS categories FROM mayones.categories;
+    SELECT JSON_ARRAYAGG(category) AS categories 
+    FROM mayones.categories;
     `
     const [result] = await queryDB(sql)
     return result.categories
@@ -208,7 +231,9 @@ const getALLCategory = async () => {
 
 const getALLCompanyTag = async () => {
     const sql = `
-    SELECT JSON_arrayagg(json_array(tag_name, id)) AS tags FROM mayones.tags WHERE classification != 'job' ORDER BY id;
+    SELECT JSON_arrayagg(json_array(tag_name, id)) AS tags 
+    FROM mayones.tags WHERE classification != 'job' 
+    ORDER BY id;
     `
     const [result] = await queryDB(sql)
     return result.tags

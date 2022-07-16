@@ -5,7 +5,8 @@ const { getCompanyManagePage,
     createCompanyDetail,
     getJobManagePage,
     createJobDetail,
-    getApplicationsePage,
+    getApplicationsManagePage,
+    checkUserResume,
     getPosition } = require('../controllers/manage_controller.js')
 
 const companyMulter = upload.fields([{ name: "logoImage" }, { name: "bannerImage" }, { name: "otherImages", maxCount: 5 }])
@@ -27,8 +28,10 @@ router.route('/manage/job')
 
 
 router.route('/manage/applications')
-    .get(authentication(AUTH.required), setViewHeader(), asyncHandlerWrapper(getApplicationsePage))
+    .get(authentication(AUTH.required), setViewHeader(), asyncHandlerWrapper(getApplicationsManagePage))
 
+router.route('/manage/check-resume')
+    .post(authentication(AUTH.required), setViewHeader(), asyncHandlerWrapper(checkUserResume))
 
 router.route('/api/1.0/positions')
     .get(asyncHandlerWrapper(getPosition))

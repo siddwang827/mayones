@@ -1,10 +1,6 @@
 const { Company, companyLocations } = require('../models/company_model')
 const { thoundsAddComma } = require('../../utils/utils')
-const { promisify } = require('util');
-const { TOKEN_SECRET } = process.env;
-const jwt = require('jsonwebtoken');
 const pageSize = 20
-// let header = { view: "company", auth: false }
 
 
 const getCompanies = async (req, res) => {
@@ -28,10 +24,6 @@ const getCompanies = async (req, res) => {
     }
 }
 
-const createCompany = async (req, res) => {
-    const companyInfo = req.body.data
-    const company = new Company(companyInfo)
-}
 
 const getCompanyDetail = async (req, res) => {
     const header = req.header
@@ -53,16 +45,9 @@ const getCompanyDetail = async (req, res) => {
 
 }
 
-const deleteCompany = async (req, res) => {
 
-    // check if user own the company!!
-    const companyId = req.params.id
-    const result = Company.deleteCompany(companyId)
-}
 
 module.exports = {
     getCompanies,
     getCompanyDetail,
-    createCompany,
-    deleteCompany
 }

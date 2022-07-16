@@ -5,6 +5,7 @@ new Sortable(column, {
     animation: 150,
     ghostClass: 'on-dragging',
     draggable: ".draggable",
+    filter: ".fixed",
     forceFallback: true,
 });
 
@@ -289,7 +290,7 @@ $('.image-upload-wrap').bind('dragleave', function () {
 });
 
 
-$('#update-resume-btn').on('click', async (event) => {
+$('#create-resume-btn').on('click', async (event) => {
     event.preventDefault();
     event.stopPropagation()
     if (!$('#resume-name').val() || !$('#name').val() || !$('#contactEmail').val()) {
@@ -314,7 +315,8 @@ $('#update-resume-btn').on('click', async (event) => {
 $('#delete-resume-btn').on('click', async (event) => {
     event.preventDefault();
     event.stopPropagation()
-    let check = confirm("是否確認刪除此履歷?")
+    const resumeTitle = event.target.getAttribute('resume-name')
+    let check = confirm(`確認是否刪除 ${resumeTitle} ?`)
     if (!check) {
         return
     }
@@ -334,5 +336,29 @@ $('#delete-resume-btn').on('click', async (event) => {
         alert("很抱歉，您沒有權限刪除該履歷!")
     } else {
         alert("刪除履歷失敗!")
+    }
+});
+
+$('#update-resume-btn').on('click', async (event) => {
+    event.preventDefault();
+    event.stopPropagation()
+    if (!$('#resume-name').val() || !$('#name').val() || !$('#contactEmail').val()) {
+        return alert('請填寫標示 * 符號之必填項目')
+    }
+    const resumeForm = document.getElementById('resume-form')
+    const formData = new FormData(resumeForm)
+    const resumeId = event.target.getAttribute('resume-id')
+    formData.set('resumeId', resumeId)
+
+    const fetchResult = await fetch(`/api/1.0/resume/${resumeId}`, {
+        method: "PATCH",
+        body: formData,
+    })
+    if (fetchResult.status === 200) {
+        alert("已成功更新履歷!")
+        window.location.href = "/resumes"
+
+    } else {
+        alert("更新履歷失敗!")
     }
 });

@@ -111,7 +111,7 @@ main {
     width: 100%;
     margin-left: 29%;
     margin-top: 50px;
-    min-height: calc(100vh - 160px);
+    /* min-height: calc(100vh - 160px); */
     display: flex;
     flex-direction: column;
     position: relative
@@ -135,11 +135,11 @@ label {
 .resume-item {
     display: flex;
     align-items: center;
-    margin: 10px 5px;
+    margin: 10px 0;
     background: #fff;
     border: 1px solid #f2f2f2;
     border-radius: 8px;
-    box-shadow: 2px 3px 0 #f2f2f2;
+    box-shadow: 2px 3px 6px rgb(180, 180, 180, .4);
     padding: 20px 15px
 }
 
@@ -243,9 +243,12 @@ label {
 
 
 .update-btn {
-    padding: 0 10px;
     display: flex;
     justify-content: space-between
+}
+
+.update-btn.fixed {
+    padding: 0
 }
 
 .button {
@@ -280,8 +283,7 @@ label {
     top: 5px;
     width: 250px;
     background-color: #5f5f5f;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+    border-radius: 15px;
     box-shadow: 2px 3px 3px #727272;
 }
 
@@ -316,18 +318,32 @@ label {
     font-size: 1.3rem;
     padding: 14px 2em;
     cursor: default;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .resume-title {
     margin-bottom: 20px;
     font-size: 30px;
     font-weight: bold;
-    padding: 8px 20px;
+    padding: 8px 5px;
     border-bottom: 2px solid #414141;
+}
+
+.resume-name {
+    display: inline;
+    margin-left: -7px
+}
+
+.resume-anchor:last-child > .resume-items {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 #update-resume-btn {
     margin-left: auto !important;
+}
+
+.confirm-btn.right-side {
+    margin-left: auto !important
 }

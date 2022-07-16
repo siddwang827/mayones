@@ -3,8 +3,10 @@
 
 <head>
     <%- include layout/head %>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
         <link rel="stylesheet" type="text/css" href="/css/main.css">
         <link rel="stylesheet" type="text/css" href="/css/apply.css">
+        <link rel="stylesheet" type="text/css" href="/css/application.css">
 </head>
 
 <body>
@@ -12,11 +14,79 @@
         <%- include layout/header %>
     </header>
     <main>
+        <div class="container">
+            <% for (let application of applications) { %>
+                <h1>
+                    <a href="">
+                        <%=application.job_title%>
+                    </a>
+                </h1>
+                <div class="job-container">
+                    <% if (!application.resume_id[0]) { %>
+                        <h1 style="text-align: center;">目前無應徵紀錄!</h1>
+                        <%} else { %>
+                            <% for (let i=0; i < application.resume_id.length; i++) { %>
+                                <div id="resume-id-<%=application.resume_id[i]%>">
+                                    <div class="job-list">
+                                        <div class="job-content">
+                                            <div class="job-item info">
+                                                <div class="job-info job-title">
+                                                    <%= application.seeker_name[i] %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="job-content action">
+                                            <div class="action-item">
+                                                <i class="check-resume file large alternate icon action-icon "
+                                                    resume-id="<%=application.resume_id[i]%>" application-id="<%=application.application_id[i]%>"></i>
+                                                <span>檢視履歷</span>
+                                            </div>
+                                            <div class="action-item ">
+                                                <i class="calendar check outline large alternate icon action-icon"
+                                                    application-id="<%=application.application_id[i]%>"></i>
 
+                                                <div class="interview-date-picker" id="interview-date-<%=application.application_id[i]%>">
+                                                    <div class="col-container">
+                                                        <p>面試日期</p>
+                                                        <input type="text" class="interview-date-input"
+                                                            id="interview-date-input-<%=application.application_id[i]%>" value="" />
+                                                    </div>
+                                                    <div class="ui inverted basic button invite-btn"
+                                                        application-id="<%=application.application_id[i]%>">送出</div>
+                                                </div>
+                                                <span>面試邀約</span>
+                                            </div>
+
+
+                                            <!-- <div class="action-item">
+                                                <i class="archive large alternate icon action-icon"
+                                                    application-id="<%=application.resume_id[i]%>"></i>
+                                                <span>封存紀錄</span>
+                                            </div> -->
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <% } %>
+                                    <% } %>
+                </div>
+                <% } %>
+        </div>
     </main>
+    <div class="modal" id="resume-modal">
+        <div id="container"></div>
+    </div>
+    <!-- <div class="modal" id="interview-modal">
+        <div id="interview-container">
+        </div>
+    </div> -->
     <footer>
         <%- include /layout/footer %>
-            <script src="/js/auth.js"></script>
+            <script src="/js/utils/moment.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+            <script src="/js/apply.js"></script>
+            <script src="/js/application.js"></script>
+            <script src="/js/manage.js"></script>
     </footer>
 </body>
 

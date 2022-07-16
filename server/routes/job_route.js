@@ -6,10 +6,7 @@ const { AUTH } = require('../models/user_model')
 const {
     getJobs,
     getJobDetail,
-    createJob,
-    deleteJob } = require('../controllers/job_controller.js')
-
-
+} = require('../controllers/job_controller.js')
 
 
 router.route('/jobs')
@@ -18,12 +15,6 @@ router.route('/jobs')
 
 router.route('/job/:id')
     .get(authentication(AUTH.nonRequired), setViewHeader(view), asyncHandlerWrapper(getJobDetail));
-
-router.route('/job')
-    .post(authentication(AUTH.required), asyncHandlerWrapper(createJob));
-
-router.route('/job')
-    .delete(authentication(AUTH.required), asyncHandlerWrapper(deleteJob));
 
 module.exports = router;
 
