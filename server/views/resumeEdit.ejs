@@ -6,8 +6,9 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
             integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="/css/main.css">
-        <link rel="stylesheet" type="text/css" href="/css/resume.css">
         <link rel="stylesheet" type="text/css" href="/css/apply.css">
+        <link rel="stylesheet" type="text/css" href="/css/resume.css">
+
 
 </head>
 
@@ -36,6 +37,7 @@
                     <%=resumeDetail.resume_name%>
                 </div>
                 <div class="ui secondary button preview-resume-btn">預覽</div>
+                <div class="ui secondary button download-resume-btn" id="download-resume-btn">下載</div>
             </div>
             <div class="right-resume-container">
                 <div class="resume-item fixed">
@@ -462,6 +464,7 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"
                 integrity="sha512-zYXldzJsDrNKV+odAwFYiDXV2Cy37cwizT+NkuiPGsa9X1dOz04eHvUWVuxaJ299GvcJT31ug2zO4itXBjFx4w==" crossorigin="anonymous"
                 referrerpolicy="no-referrer"></script>
+            <script src="/js/utils/html2pdf.js"></script>
             <script src="/js/resumeEdit.js"></script>
             <script src="/js/preview.js"></script>
     </footer>

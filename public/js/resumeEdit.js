@@ -312,11 +312,11 @@ $('.image-upload-wrap').bind('dragleave', function () {
 $('#create-resume-btn').on('click', async (event) => {
     event.preventDefault();
     event.stopPropagation()
-    $('#cover-spin').fadeToggle(200)
+
     if (!$('#resume-name').val() || !$('#name').val() || !$('#contactEmail').val()) {
         return alert('請填寫標示 * 符號之必填項目')
     }
-    $('#cover-spin').fadeToggle(100)
+    $('#cover-spin').fadeToggle(200)
     const resumeForm = document.getElementById('resume-form')
     const formData = new FormData(resumeForm)
 
@@ -324,7 +324,7 @@ $('#create-resume-btn').on('click', async (event) => {
         method: "POST",
         body: formData,
     })
-    $('#cover-spin').hide(100)
+
     if (fetchResult.status === 200) {
         alert("已成功上傳履歷!")
         window.location.href = "/resumes"
@@ -367,7 +367,8 @@ $('#update-resume-btn').on('click', async (event) => {
     event.preventDefault();
     event.stopPropagation()
     if (!$('#resume-name').val() || !$('#name').val() || !$('#contactEmail').val()) {
-        return alert('請填寫標示 * 符號之必填項目')
+        alert('請填寫標示 * 符號之必填項目')
+        return
     }
     $('#cover-spin').fadeToggle(200)
     const resumeForm = document.getElementById('resume-form')
@@ -477,9 +478,6 @@ $('.preview-resume-btn').on('click', () => {
         education_end: $('input[name="educationTimeEnd"]').map(function () { return $(this).val(); }).get(),
     }
 
-    console.log(resumeDetail.bio, resumeDetail.skill_intro, resumeDetail.project_intro)
-
-
     previewResume(resumeDetail)
     $(`#resume-modal`)
         .modal({
@@ -488,4 +486,55 @@ $('.preview-resume-btn').on('click', () => {
         })
         .modal('show')
         ;
+})
+
+$('.download-resume-btn').on('click', (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+
+    let resumeDetail = {
+        user_name: $('#name').val(),
+        gender: $('input[name="gender"]:checked').val(),
+        birthday: $('#birthday').val(),
+        show_birthday: $('#show-birthday-input').is(":checked") ? 1 : 0,
+        phone: $('#phone').val(),
+        contact_email: $('#contactEmail').val(),
+        personal_url: $('#personal-page-url').val(),
+        bio: $('textarea[name="bio"]').val(),
+        skill_name: $('input[name="skillName"]').map(function () { return $(this).val(); }).get(),
+        skill_proficiency: $('select[name="skillProficiency"]').map(function () { return $(this).val(); }).get(),
+        skill_intro: $('textarea[name="skillInfo"]').map(function () { return $(this).val(); }).get(),
+        project_title: $('input[name="projectTitle"]').map(function () { return $(this).val(); }).get(),
+        project_link: $('input[name="projectLink"]').map(function () { return $(this).val(); }).get(),
+        project_intro: $('textarea[name="projectInfo"]').map(function () { return $(this).val(); }).get(),
+        project_image: $('.file-upload-image').map(function () { return $(this).attr('src'); }).get(),
+        experience_title: $('input[name="experienceName"]').map(function () { return $(this).val(); }).get(),
+        experience_org: $('input[name="experienceCompanyName"]').map(function () { return $(this).val(); }).get(),
+        experience_start: $('input[name="experienceTimeStart"]').map(function () { return $(this).val(); }).get(),
+        experience_end: $('input[name="experienceTimeEnd"]').map(function () { return $(this).val(); }).get(),
+        experience_intro: $('textarea[name="experienceInfo"]').map(function () { return $(this).val(); }).get(),
+        education_title: $('input[name="educationName"]').map(function () { return $(this).val(); }).get(),
+        education_department: $('input[name="educationDepartment"]').map(function () { return $(this).val(); }).get(),
+        education_degree: $('input[name="educationDegree"]').map(function () { return $(this).val(); }).get(),
+        education_start: $('input[name="educationTimeStart"]').map(function () { return $(this).val(); }).get(),
+        education_end: $('input[name="educationTimeEnd"]').map(function () { return $(this).val(); }).get(),
+    }
+    previewResume(resumeDetail)
+    $(`#resume-modal`)
+        .modal({
+            blurring: true,
+            duration: 200
+        })
+        .modal('show')
+        ;
+
+    let resume = $('#resume-preview').html()
+    let opt = {
+        margin: [0, 10, 0, 12],
+        filename: "myResume.pdf",
+        image: { type: 'jpeg', quality: 0.99 },
+        html2canvas: { dpi: 300, scale: 2, letterRendering: true, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
+    };
+    html2pdf().set(opt).from(resume).save()
 })
