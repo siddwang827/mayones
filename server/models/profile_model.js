@@ -87,14 +87,9 @@ const userUpdateResume = async (userId, resume,) => {
         }
         console.log(resume)
         await conn.query('START TRANSACTION');
-        // Promise.all([
-        //     conn.query('DELETE FROM mayones.resume_skills WHERE resume_id =?', [resume.resumeId]),
-        //     conn.query('DELETE FROM mayones.resume_experience WHERE resume_id =?', [resume.resumeId]),
-        //     conn.query('DELETE FROM mayones.resume_education WHERE resume_id =?', [resume.resumeId]),
-        // ])
 
         await conn.query(`UPDATE mayones.resume SET ? WHERE id = ?`, [profile, resume.resumeId])
-        if (resume.skillId) {
+        if (resume.skillId[0]) {
             console.log(resume.skillProficiency)
             for (let i = 0; i < resume.skillId.length; i++) {
                 if (resume.skillId[i] == parseInt(resume.skillId[i])) {
@@ -103,33 +98,38 @@ const userUpdateResume = async (userId, resume,) => {
                     skills.push([null, resume.resumeId[0], resume.skillName[i], resume.skillProficiency[i], resume.skillInfo[i]])
                 }
             }
-            await conn.query(`INSERT INTO mayones.resume_skills (id,  resume_id, skill_name, skill_proficiency, skill_intro) VALUES ? 
-                    ON DUPLICATE KEY UPDATE skill_name=VALUES(skill_name), skill_proficiency=VALUES(skill_proficiency), skill_intro=VALUES(skill_intro)`, [skills])
-            // skills.push([resume.skillName[i], resume.skillProficiency[i], resume.skillInfo[i], resume.resumeId])
-            // await conn.query("INSERT INTO mayones.resume_skills (skill_name, skill_proficiency, skill_intro, resume_id) VALUES ?", [skills])
+            await conn.query(`INSERT INTO mayones.resume_skills 
+            (id,  resume_id, skill_name, skill_proficiency, skill_intro) 
+            VALUES ? 
+            ON DUPLICATE KEY UPDATE 
+            skill_name=VALUES(skill_name), 
+            skill_proficiency=VALUES(skill_proficiency), 
+            skill_intro=VALUES(skill_intro)`, [skills])
         }
-        if (resume.projectId) {
+        if (resume.projectId[0]) {
             for (let i = 0; i < resume.projectId.length; i++) {
                 if (resume.projectId[i] == parseInt(resume.projectId[i])) {
-                    projects.push([resume.projectId[i], resume.resumeId[0], resume.projectTitle[i], resume.projectLink[i], resume.projectInfo[i], resume.projectImage[i]])
+                    if (resume.projectImageSrc[i][resume.projectId[i]] === 'upload') {
+                        projects.push([resume.projectId[i], resume.resumeId[0], resume.projectTitle[i], resume.projectLink[i], resume.projectInfo[i], resume.projectImage.shift()])
+                    } else {
+                        projects.push([resume.projectId[i], resume.resumeId[0], resume.projectTitle[i], resume.projectLink[i], resume.projectInfo[i], resume.projectImageSrc[i][resume.projectId[i]]])
+                    }
                 } else {
-                    projects.push([null, resume.resumeId[0], resume.projectTitle[i], resume.projectLink[i], resume.projectInfo[i], resume.projectImage[i]])
+                    projects.push([null, resume.resumeId[0], resume.projectTitle[i], resume.projectLink[i], resume.projectInfo[i], resume.projectImage.shift()])
                 }
 
             }
-            await conn.query(`INSERT INTO mayones.resume_projects (id, resume_id, project_title,  project_link, project_intro, project_image ) VALUES ? 
-            ON DUPLICATE KEY UPDATE project_title=VALUES(project_title), project_link=VALUES(project_link), project_intro=VALUES(project_intro), project_image=VALUES(project_image)`, [projects])
-            // let deleteSql = 'DELETE FROM mayones.resume_projects WHERE resume_id = ? '
-            // if (!resume.projectImage[0] && resume.projectTitle[0]) {
-            //     deleteSql += 'AND project_image IS NOT NULL '
-            // }
-            // await conn.query(deleteSql, [resume.resumeId])
-            // conn.query('DELETE mayones.resume_projects WHERE project_title = ? AND project_image = ?')
-
+            await conn.query(`INSERT INTO mayones.resume_projects 
+            (id, resume_id, project_title,  project_link, project_intro, project_image ) 
+            VALUES ? 
+            ON DUPLICATE KEY UPDATE 
+            project_title=VALUES(project_title), 
+            project_link=VALUES(project_link), 
+            project_intro=VALUES(project_intro), 
+            project_image=VALUES(project_image)`, [projects])
         }
 
-
-        if (resume.experienceId) {
+        if (resume.experienceId[0]) {
             for (let i = 0; i < resume.experienceId.length; i++) {
                 if (resume.experienceId[i] == parseInt(resume.experienceId[i])) {
                     experience.push([resume.experienceId[i], resume.resumeId[0], resume.experienceName[i], resume.experienceCompanyName[i], resume.experienceTimeStart[i], resume.experienceTimeEnd[i], resume.experienceInfo[i]])
@@ -137,20 +137,35 @@ const userUpdateResume = async (userId, resume,) => {
                     experience.push([null, resume.resumeId[0], resume.experienceName[i], resume.experienceCompanyName[i], resume.experienceTimeStart[i], resume.experienceTimeEnd[i], resume.experienceInfo[i]])
                 }
             }
-            await conn.query(`INSERT INTO mayones.resume_experience (id, resume_id, experience_title, experience_org, experience_start, experience_end, experience_intro) VALUES ? 
-            ON DUPLICATE KEY UPDATE experience_title=VALUES(experience_title), experience_org=VALUES(experience_org), experience_start=VALUES(experience_start), experience_end=VALUES(experience_end),  experience_intro=VALUES(experience_intro)`, [experience])
+            await conn.query(`INSERT INTO mayones.resume_experience 
+            (id, resume_id, experience_title, experience_org, experience_start, experience_end, experience_intro) 
+            VALUES ? 
+            ON DUPLICATE KEY UPDATE 
+            experience_title=VALUES(experience_title), 
+            experience_org=VALUES(experience_org), 
+            experience_start=VALUES(experience_start), 
+            experience_end=VALUES(experience_end),  
+            experience_intro=VALUES(experience_intro)`, [experience])
         }
 
-        // if (resume.educationId) {
-        //     for (let i = 0; i < resume.educationId.length; i++) {
-        //         if (resume.educationId[i] == parseInt(resume.educationId[i])) {
-        //             education.push([resume.educationId[i], resume.resumeId[0], resume.educationName[i], resume.educationDepartment[i], resume.educationDegree[i], resume.educationTimeStart[i], resume.educationTimeEnd[i]])
-
-        //         } education.push([null, resume.resumeId[0], resume.educationName, resume.educationDepartment[i], resume.educationDegree[i], resume.educationTimeStart[i], resume.educationTimeEnd[i]])
-        //     }
-        //     await conn.query(`INSERT INTO mayones.resume_education (id , resume_id, education_title, education_department, education_degree, education_start, education_end) VALUES ? 
-        //     ON DUPLICATE KEY UPDATE education_title=VALUES(education_title), education_department=VALUES(education_department), education_degree=VALUES(education_degree), education_start=VALUES(education_start),  education_end=VALUES(education_end)`, [education])
-        // }
+        if (resume.educationId[0]) {
+            for (let i = 0; i < resume.educationId.length; i++) {
+                if (resume.educationId[i] == parseInt(resume.educationId[i])) {
+                    education.push([resume.educationId[i], resume.resumeId[0], resume.educationName[i], resume.educationDepartment[i], resume.educationDegree[i], resume.educationTimeStart[i], resume.educationTimeEnd[i]])
+                } else {
+                    education.push([null, resume.resumeId[0], resume.educationName, resume.educationDepartment[i], resume.educationDegree[i], resume.educationTimeStart[i], resume.educationTimeEnd[i]])
+                }
+            }
+            await conn.query(`INSERT INTO mayones.resume_education 
+            (id , resume_id, education_title, education_department, education_degree, education_start, education_end) 
+            VALUES ? 
+            ON DUPLICATE KEY UPDATE 
+            education_title=VALUES(education_title), 
+            education_department=VALUES(education_department), 
+            education_degree=VALUES(education_degree), 
+            education_start=VALUES(education_start),  
+            education_end=VALUES(education_end)`, [education])
+        }
         await conn.query('COMMIT');
     } catch (error) {
         await conn.query('ROLLBACK')

@@ -117,6 +117,7 @@ $('.action-icon.trash').on('click', async (event) => {
 $('.file.icon.action-icon.read-resume').on('click', async (event) => {
     event.preventDefault();
     event.stopPropagation();
+    $('#cover-spin').fadeToggle(200)
     const resumeId = event.target.getAttribute('resume-id')
     const fetchResult = await fetch(`/api/1.0/resume/${resumeId}`)
     const resumeDetail = await fetchResult.json()
@@ -128,11 +129,13 @@ $('.file.icon.action-icon.read-resume').on('click', async (event) => {
         })
         .modal('show')
         ;
+    $('#cover-spin').fadeToggle(0)
 })
 
 $('.file.icon.action-icon.check-resume').on('click', async (event) => {
     event.preventDefault();
     event.stopPropagation();
+    $('#cover-spin').fadeToggle(200)
     const resumeId = event.target.getAttribute('resume-id')
     const applicationId = event.target.getAttribute('application-id')
     const fetchResult = await fetch(`/manage/check-resume`,
@@ -145,7 +148,6 @@ $('.file.icon.action-icon.check-resume').on('click', async (event) => {
             })
         })
     const resumeDetail = await fetchResult.json()
-    console.log(resumeDetail)
     resumePreview(resumeDetail)
     $(`#resume-modal`)
         .modal({
@@ -154,5 +156,7 @@ $('.file.icon.action-icon.check-resume').on('click', async (event) => {
         })
         .modal('show')
         ;
+    $('#cover-spin').fadeToggle(0)
+
 })
 

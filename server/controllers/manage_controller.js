@@ -128,7 +128,6 @@ const checkUserResume = async (req, res) => {
 
 const inviteInterview = async (req, res) => {
     let { applicationId, action } = req.body
-    console.log(action.interviewDate)
     try {
         const result = await inviteInterviewToSeeker(applicationId, action)
         console.log(result)

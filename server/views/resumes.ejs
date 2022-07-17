@@ -59,6 +59,7 @@
                 </div>
             </div>
             <div class="update-btn fixed">
+                <button class="ui big  black button confirm-btn" id="preview-resume-btn">預覽履歷</button>
                 <button class="ui big inverted secondary button confirm-btn right-side" id="create-resume-btn">新建履歷</button>
             </div>
         </div>
@@ -82,7 +83,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="user-gender-male">性別</label>
-                                <div class="input-wrap" value="男">
+                                <div class="input-wrap" value="">
                                     <input type="radio" name="gender" id="user-gender-male" value="男">
                                     <label for="user-gender-male">男</label>
                                     <input type="radio" name="gender" id="user-gender-female" value="女">
@@ -192,7 +193,7 @@
             </div>
         </form>
     </main>
-
+    <div id="cover-spin"></div>
     <footer>
         <%- include /layout/footer %>
             <!-- for bootstrap modal -->

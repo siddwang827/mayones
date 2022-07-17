@@ -193,6 +193,7 @@
 .tag-label p {
     margin: 0 5px;
     line-height: 1rem;
+    cursor: default;
 }
 
 .tag-label i {
