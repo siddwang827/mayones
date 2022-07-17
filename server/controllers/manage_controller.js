@@ -1,9 +1,12 @@
 const { Company, companyLocations, getALLCategory, getALLCompanyTag } = require('../models/company_model')
 const { Job, jobTypes, jobLocations, getJobsCategory, getJobPositionByCategory, getJobTags } = require('../models/job_model')
 const { getResumeDetail, updateResumeEmployerCheck } = require('../models/profile_model')
-const { getApplicationListbyJobOwner, inviteInterviewToSeeker, } = require('../models/application_model')
+const { getApplicationListbyJobOwner, inviteInterviewToSeeker, getSeekerInfo } = require('../models/application_model')
 const { s3Upload, s3UploadMulti } = require('../models/s3Server')
 const moment = require('moment')
+const nodemailer = require('nodemailer')
+const { GMAIL_ACCOUNT,
+    GMAIL_PW } = process.env
 
 
 const getCompanyManagePage = async (req, res) => {
@@ -131,6 +134,41 @@ const inviteInterview = async (req, res) => {
     try {
         const result = await inviteInterviewToSeeker(applicationId, action)
         console.log(result)
+        if (action.status === "arrange") {
+
+            let transporter = nodemailer.createTransport({
+                host: "smtp.gmail.com",
+                port: 465,
+                auth: {
+                    user: GMAIL_ACCOUNT,
+                    pass: GMAIL_PW,
+                },
+            });
+            const seekerInfo = await getSeekerInfo(applicationId)
+            let info = await transporter.sendMail({
+                from: `Mayones <mayones@website.com>`,
+                // to: `awaitcabal@hotmail.com`,
+                to: `${seekerInfo.seeker_email}`,
+                subject: `來自 ${seekerInfo.company_brand} - ${seekerInfo.job_title} 的面試邀約`,
+                html: `
+                <h3>Hi, ${seekerInfo.username}</h3>
+                <p>${seekerInfo.company_brand} 在此誠摯地邀請您</p>
+                <p>於 ${action.interviewDate}</p>
+                <p>至 ${seekerInfo.company_address} </p>
+                <p>參與 ${seekerInfo.job_title} 的面試！</p>
+                </br>
+                </br>
+                </br>
+                <p>Sincerely,</p>
+                <p>Mayones</P>
+                `,
+            });
+
+            console.log("Message sent: %s", info.messageId);
+        }
+
+
+
         res.status(200).json({ result: 'Invite interview sucess' })
     } catch (error) {
         console.log(error)

@@ -26,9 +26,10 @@ $('.calendar.icon').on('click', (event) => {
 $('.invite-btn').on('click', async (event) => {
     event.preventDefault();
     event.stopPropagation()
+    $('#cover-spin').fadeToggle(200)
     const applicationId = event.target.getAttribute('application-id')
     const interviewDate = $(`#interview-date-input-${applicationId}`).val()
-    console.log(moment(interviewDate).format('YYYY-MM-DD hh:mm:ss'))
+    // console.log(moment(interviewDate).format('YYYY-MM-DD hh:mm'))
     const fetchResult = await fetch('/manage/invite', {
         method: "POST",
         headers:
@@ -37,7 +38,7 @@ $('.invite-btn').on('click', async (event) => {
             applicationId,
             action: {
                 status: 'arrange',
-                interviewDate: moment(interviewDate).format('YYYY-MM-DD hh:mm:ss')
+                interviewDate: moment(interviewDate).format('YYYY-MM-DD hh:mm')
             }
         })
     })
@@ -47,4 +48,5 @@ $('.invite-btn').on('click', async (event) => {
     } else {
         alert('送出面試邀請失敗！')
     }
+    $('#cover-spin').fadeToggle(200)
 })
