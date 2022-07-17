@@ -41,6 +41,23 @@ async function getUserApplicationHistory(userId) {
     return mergeStatus
 }
 
+async function getSeekerInfo(applicationId) {
+    const sql = `
+    SELECT username, contact_email AS seeker_email, job_title, companies.brand AS company_brand, company_address FROM mayones.job_application
+    INNER JOIN mayones.users 
+    ON job_application.seeker_id = users.id
+    INNER JOIN mayones.jobs
+    ON job_application.job_id = jobs.id
+    INNER JOIN mayones.companies
+    ON jobs.companies_id = companies.id
+    INNER JOIN mayones.resume
+    ON job_application.apply_resume_id = resume.id
+    WHERE job_application.id = ? `
+
+    const [result] = await queryDB(sql, [applicationId])
+    return result
+}
+
 
 async function userApplyJobWithResume(userId, jobId, resumeId) {
     const sql = `
@@ -137,5 +154,6 @@ module.exports = {
     userUpdateJobAllication,
     checkUserOwnApplication,
     getApplicationListbyJobOwner,
-    seekerChecked
+    seekerChecked,
+    getSeekerInfo
 }

@@ -176,7 +176,10 @@ function resumePreview(resumeDetail) {
                     <i class="circle icon"></i>
                     <div class="experience-position">${experience}</div>
                     <div class="experience-org">${resumeDetail.experience_org[index] ? resumeDetail.experience_org[index] : ""}</div>
-                    <div class="experience-period">${resumeDetail.experience_start[index]} ~ ${resumeDetail.experience_end[index]}</div>
+                    <div class="experience-period">
+                    ${resumeDetail.experience_start[index] ? moment(resumeDetail.experience_start[index]).format('YYYY-MM') : ""}
+                    ~ ${resumeDetail.experience_end[index] ? moment(resumeDetail.experience_end[index]).format('YYYY-MM') : ""}
+                    </div>
                 </div>
                 <div class="resume-preview-content-item">
                     <div class="experience-intro">
@@ -209,8 +212,8 @@ function resumePreview(resumeDetail) {
                     <i class="book icon"></i>
                     <div class="education-title">${education}</div>
                     <div class="education-period">
-                    ${resumeDetail.education_start[index] ? resumeDetail.education_start[index] : ""}
-                    ~ ${resumeDetail.education_end[index] ? resumeDetail.education_end[index] : ""}</div>
+                    ${resumeDetail.education_start[index] ? moment(resumeDetail.education_start[index]).format('YYYY-MM') : ""}
+                    ~ ${resumeDetail.education_end[index] ? moment(resumeDetail.education_end[index]).format('YYYY-MM') : ""}</div>
                 </div>
                 <div class="resume-preview-content-item">
                     <div class="education-department">

@@ -22,6 +22,7 @@
     "mongoose": "^6.4.1",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^2.3.3",
+    "nodemailer": "^6.7.7",
     "redis": "^4.1.0",
     "semantic-ui-icon": "^2.3.3",
     "serve-favicon": "^2.5.0",

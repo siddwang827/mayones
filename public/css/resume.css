@@ -1,7 +1,7 @@
 /* ===== image upload ===== */
 
 body {
-    /* font-family: sans-serif; */
+    font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
     background-color: #eeeeee;
 }
 
@@ -343,6 +343,10 @@ label {
     margin-left: auto !important
 }
 
+.preview-resume-btn.left-side {
+    margin-left: 0 !important
+}
+
 .download-resume-btn {
     margin-left: 20px !important
 }
@@ -370,6 +374,7 @@ label {
 #update-resume-btn {
     margin-left: auto !important;
 }
+
 
 .confirm-btn.right-side {
     margin-left: auto !important
