@@ -40,7 +40,7 @@ main {
     border-radius: 50%
 }
 
-.resume-item {
+.resume-preview-item {
     display: flex;
     flex-direction: column;
     margin: 10px 5px;
@@ -114,6 +114,11 @@ main {
     color: #3f3f3f;
     margin-left: 30px;
     align-items: center;
+    line-height: 20px;
+}
+
+.resume-preview-content-item.text-pre {
+    white-space: pre-line;
 }
 
 .resume-preview-content-item.basic-info {
@@ -143,7 +148,8 @@ main {
     font-size: 16px
 }
 
-.skill-intro {
+.skill-intro,
+.project-intro {
     margin-left: 2rem;
 }
 

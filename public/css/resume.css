@@ -322,6 +322,10 @@ label {
     border-top-right-radius: 5px;
 }
 
+.resume-items.edit.title {
+    cursor: pointer;
+}
+
 .resume-title {
     margin-bottom: 20px;
     font-size: 30px;
@@ -330,7 +334,26 @@ label {
     border-bottom: 2px solid #414141;
 }
 
-.resume-name {
+.file.icon {
+    line-height: 25px;
+    margin-right: 10px
+}
+
+.preview-resume-btn {
+    margin-left: auto !important
+}
+
+.edit-resume {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    padding: 8px 5px;
+    border-bottom: 2px solid #414141;
+}
+
+.resume-name.outer {
     display: inline;
     margin-left: -7px
 }

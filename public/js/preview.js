@@ -1,18 +1,4 @@
-$('.ui.dropdown')
-    .dropdown()
-    ;
-
-
-$('.item.resume').on('click', async (event) => {
-    const resumeId = event.target.getAttribute('resume-id')
-    const fetchResult = await fetch(`/api/1.0/resume/${resumeId}`)
-    const resume = await fetchResult.json()
-    localStorage.setItem('resumeId', resumeId)
-    // if (resume)
-    resumePreview(resume)
-})
-
-function resumePreview(resumeDetail) {
+function previewResume(resumeDetail) {
 
     if ($('#resume-preview')) {
         $('#resume-preview').remove()
@@ -50,7 +36,7 @@ function resumePreview(resumeDetail) {
     const birthdayDiv = $(`
         <div class="resume-preview-content-item basic-info">
             <i class="birthday cake icon"></i>
-            <div id="birthday" class="profile-content basic-info">${moment(resumeDetail.birthday).format('YYYY-MM-DD')}</div>
+            <div id="birthday" class="profile-content basic-info">${resumeDetail.birthday}</div>
         </div>
     `)
 
@@ -67,10 +53,11 @@ function resumePreview(resumeDetail) {
         <div id="contact-email" class="profile-content basic-info">${resumeDetail.contact_email}</div>
         </div>
     `)
+
     const websiteDiv = $(`
         <div class="resume-preview-content-item basic-info">
             <i class="globe icon"></i>
-            <a href="${resumeDetail.personal_url}" target="_blank">
+            <a href="${resumeDetail.personal_url}">
                 <div id="website" class="profile-content basic-info">${resumeDetail.personal_url}</div>
             </a>
         </div>
@@ -82,14 +69,12 @@ function resumePreview(resumeDetail) {
                 <div class="resume-preview-title bio">
                     簡歷 <span class="title-en">Bio</span>
                 </div>
-                <div class="resume-preview-content-item">
-                    ${resumeDetail.bio.replaceAll('\\r\\n', '<br/>')}
+                <div class="resume-preview-content-item text-pre">
+                    <div class="bio-info">${resumeDetail.bio.replaceAll('\\r\\n', '<br/>')}</div>
                 </div>
             </div>
         `)
     }
-
-
 
     if (resumeDetail.skill_name[0]) {
         skillContainer = $(`
@@ -110,7 +95,7 @@ function resumePreview(resumeDetail) {
                         ${resumeDetail.skill_proficiency[index]} 
                         ${resumeDetail.skill_proficiency[index] === '初階' ? 'Beginner' : resumeDetail.skill_proficiency[index] === '熟練' ? 'Advanced' : 'Expert'}</div>
                     </div>
-                    <div class="resume-preview-content-item">
+                    <div class="resume-preview-content-item text-pre">
                         <div class="skill-intro">${resumeDetail.skill_intro[index] ? resumeDetail.skill_intro[index] : ""}</div>
                     </div>
                 </div>
@@ -141,9 +126,8 @@ function resumePreview(resumeDetail) {
                                 <div class="project-title">${project}</div>
                             </a>
                         </div>
-                        <div class="resume-preview-content-item">
-                            <div class="skill-intro">
-                                ${resumeDetail.project_intro[index] ? resumeDetail.project_intro[index].replaceAll('\\r\\n', '<br/>') : ""}
+                        <div class="resume-preview-content-item text-pre">
+                            <div class="project-intro">${resumeDetail.project_intro[index] ? resumeDetail.project_intro[index].replaceAll('\\r\\n', '<br/>') : ""}
                             </div>
                         </div>
                     </div>
@@ -178,9 +162,8 @@ function resumePreview(resumeDetail) {
                     <div class="experience-org">${resumeDetail.experience_org[index] ? resumeDetail.experience_org[index] : ""}</div>
                     <div class="experience-period">${resumeDetail.experience_start[index]} ~ ${resumeDetail.experience_end[index]}</div>
                 </div>
-                <div class="resume-preview-content-item">
-                    <div class="experience-intro">
-                        ${resumeDetail.experience_intro[index] ? resumeDetail.experience_intro[index].replaceAll('\\r\\n', '<br/>') : ""}
+                <div class="resume-preview-content-item text-pre">
+                    <div class="experience-intro">${resumeDetail.experience_intro[index] ? resumeDetail.experience_intro[index].replaceAll('\\r\\n', '<br/>') : ""}
                     </div>
                 </div>
             </div>
@@ -268,38 +251,4 @@ function resumePreview(resumeDetail) {
     })
     resumeDiv.append(resumeContainer)
     container.append(resumeDiv)
-
 }
-
-$('#apply-btn').on('click', async (event) => {
-    if ($('.selected.active').length === 0 || $('#resume-preview').length === 0) {
-        alert('請選擇欲投遞此職缺之履歷！')
-        return
-    }
-    const checkApply = confirm('確認是否投遞履歷？')
-    if (!checkApply) {
-        return
-    }
-    const jobId = window.location.pathname.split('/')[2]
-    const resumeId = localStorage.getItem('resumeId')
-
-    const fetchResult = await fetch('/api/1.0/application', {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            jobId,
-            resumeId
-        })
-    })
-
-    await fetchResult.json()
-    if (fetchResult.status === 200) {
-        alert("履歷投遞成功！")
-        window.location.href = "/applications"
-    } else if (fetchResult.status === 403) {
-        alert("您已應徵過該職缺，請查看應徵紀錄！")
-        window.location.href = "/applications"
-    } else {
-        alert("履歷投遞失敗，請稍後重試！")
-    }
-})

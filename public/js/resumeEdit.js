@@ -241,15 +241,12 @@ $('#add-education-btn').on('click', (event) => {
 })
 
 $('.ui.medium.negative.button').on('click', removeDomAndFetchDB)
-// document.querySelectorAll('.ui.medium.negative.button').forEach(ele => {
-//     ele.addEventListener('click', function (event) {
-//         removeDomAndFetchDB(event)
-//     })
-// })
 
-document.querySelectorAll('.remove-image').forEach(ele => {
-    ele.addEventListener('click', removeUpload)
-})
+$('.remove-image').on('click', removeUpload)
+
+// document.querySelectorAll('.remove-image').forEach(ele => {
+//     ele.addEventListener('click', removeUpload)
+// })
 
 function removeDOM(event, property) {
     event.preventDefault()
@@ -260,13 +257,13 @@ function removeDOM(event, property) {
 async function removeDomAndFetchDB(event) {
     event.preventDefault()
     event.stopPropagation()
-    $('.ui.dimmable')
-        .dimmer('show')
+    $('#cover-spin').show(0)
     const property = event.target.getAttribute('property')
     const id = event.target.getAttribute(`${property}-index`)
     const fetchResult = await fetch(`/api/1.0/${property}/${id}`,
         { method: 'DELETE' }
     )
+    $('#cover-spin').hide(0)
     if (fetchResult.status === 200) {
         alert('刪除成功')
     } else {
@@ -315,9 +312,11 @@ $('.image-upload-wrap').bind('dragleave', function () {
 $('#create-resume-btn').on('click', async (event) => {
     event.preventDefault();
     event.stopPropagation()
+    $('#cover-spin').fadeToggle(200)
     if (!$('#resume-name').val() || !$('#name').val() || !$('#contactEmail').val()) {
         return alert('請填寫標示 * 符號之必填項目')
     }
+    $('#cover-spin').fadeToggle(100)
     const resumeForm = document.getElementById('resume-form')
     const formData = new FormData(resumeForm)
 
@@ -325,6 +324,7 @@ $('#create-resume-btn').on('click', async (event) => {
         method: "POST",
         body: formData,
     })
+    $('#cover-spin').hide(100)
     if (fetchResult.status === 200) {
         alert("已成功上傳履歷!")
         window.location.href = "/resumes"
@@ -332,6 +332,7 @@ $('#create-resume-btn').on('click', async (event) => {
     } else {
         alert("上傳履歷失敗!")
     }
+    $('#cover-spin').fadeToggle(100)
 });
 
 $('#delete-resume-btn').on('click', async (event) => {
@@ -342,7 +343,7 @@ $('#delete-resume-btn').on('click', async (event) => {
     if (!check) {
         return
     }
-
+    $('#cover-spin').fadeToggle(100)
     const resumeId = window.location.pathname.split('/')[2]
     const fetchResult = await fetch(`/api/1.0/resume/${resumeId}`, {
         method: "DELETE"
@@ -359,6 +360,7 @@ $('#delete-resume-btn').on('click', async (event) => {
     } else {
         alert("刪除履歷失敗!")
     }
+    $('#cover-spin').fadeToggle(100)
 });
 
 $('#update-resume-btn').on('click', async (event) => {
@@ -367,6 +369,7 @@ $('#update-resume-btn').on('click', async (event) => {
     if (!$('#resume-name').val() || !$('#name').val() || !$('#contactEmail').val()) {
         return alert('請填寫標示 * 符號之必填項目')
     }
+    $('#cover-spin').fadeToggle(200)
     const resumeForm = document.getElementById('resume-form')
     const formData = new FormData(resumeForm)
 
@@ -383,7 +386,18 @@ $('#update-resume-btn').on('click', async (event) => {
     const educationId = educations.map((education) => education.getAttribute('education-index'))
 
     const projectImages = Array.from(document.querySelectorAll('.file-upload-image'))
-    const projectImageSrc = Object.values(projectImages).map((image) => image.getAttribute('src'))
+    const projectImageSrc = Object.values(projectImages).map((image) => {
+
+        let srcObj = {}
+        let src = image.getAttribute('src')
+        let id = image.getAttribute('project-index')
+        if (src.slice(0, 5) === 'https') {
+            srcObj[id] = src
+        } else {
+            srcObj[id] = 'upload'
+        }
+        return srcObj
+    })
 
     formData.set('resumeId', resumeId)
     formData.set('projectImageSrc', JSON.stringify(projectImageSrc))
@@ -403,4 +417,75 @@ $('#update-resume-btn').on('click', async (event) => {
     } else {
         alert("更新履歷失敗!")
     }
+    $('#cover-spin').fadeToggle(100)
 });
+
+
+$('.preview-resume-btn').on('click', () => {
+
+    // const user_name = $('#name').val()
+    // const gender = $('input[name="gender"]:checked').val()
+    // const birthday = $('#birthday').val()
+    // const show_birthday = $('#show-birthday-input').is(":checked") ? 1 : 0
+    // const phone = $('#phone').val()
+    // const contact_email = $('#contactEmail').val()
+    // const personal_url = $('#personal-page-url').val()
+    // const bio = $('#bio').html()
+    // const skill_name = $('input[name="skillName"]').map(function () { return $(this).val(); }).get();
+    // const skill_proficiency = $('select[name="skillProficiency"]').map(function () { return $(this).val(); }).get();
+    // const skill_intro = $('textarea[name="skillInfo"]').map(function () { return $(this).html(); }).get();
+    // const project_title = $('input[name="projectTitle"]').map(function () { return $(this).val(); }).get();
+    // const project_link = $('input[name="projectLink"]').map(function () { return $(this).val(); }).get();
+    // const project_intro = $('textarea[name="projectInfo"]').map(function () { return $(this).html(); }).get();
+    // const project_image = $('.file-upload-image').map(function () { return $(this).val(); }).get();
+    // const experience_title = $('input[name="experienceName"]').map(function () { return $(this).val(); }).get();
+    // const experience_org = $('input[name="experienceCompanyName"]').map(function () { return $(this).val(); }).get();
+    // const experience_start = $('input[name="experienceTimeStart"]').map(function () { return $(this).val(); }).get();
+    // const experience_end = $('input[name="experienceTimeEnd"]').map(function () { return $(this).val(); }).get();
+    // const experience_intro = $('textarea[name="experienceInfo"]').map(function () { return $(this).html(); }).get();
+    // const education_title = $('input[name="educationName"]').map(function () { return $(this).val(); }).get();
+    // const education_department = $('input[name="educationDepartment"]').map(function () { return $(this).val(); }).get();
+    // const education_degree = $('input[name="educationDegree"]').map(function () { return $(this).val(); }).get();
+    // const education_start = $('input[name="educationTimeStart"]').map(function () { return $(this).val(); }).get();
+    // const education_end = $('input[name="educationTimeEnd"]').map(function () { return $(this).val(); }).get();
+
+    let resumeDetail = {
+        user_name: $('#name').val(),
+        gender: $('input[name="gender"]:checked').val(),
+        birthday: $('#birthday').val(),
+        show_birthday: $('#show-birthday-input').is(":checked") ? 1 : 0,
+        phone: $('#phone').val(),
+        contact_email: $('#contactEmail').val(),
+        personal_url: $('#personal-page-url').val(),
+        bio: $('textarea[name="bio"]').val(),
+        skill_name: $('input[name="skillName"]').map(function () { return $(this).val(); }).get(),
+        skill_proficiency: $('select[name="skillProficiency"]').map(function () { return $(this).val(); }).get(),
+        skill_intro: $('textarea[name="skillInfo"]').map(function () { return $(this).val(); }).get(),
+        project_title: $('input[name="projectTitle"]').map(function () { return $(this).val(); }).get(),
+        project_link: $('input[name="projectLink"]').map(function () { return $(this).val(); }).get(),
+        project_intro: $('textarea[name="projectInfo"]').map(function () { return $(this).val(); }).get(),
+        project_image: $('.file-upload-image').map(function () { return $(this).attr('src'); }).get(),
+        experience_title: $('input[name="experienceName"]').map(function () { return $(this).val(); }).get(),
+        experience_org: $('input[name="experienceCompanyName"]').map(function () { return $(this).val(); }).get(),
+        experience_start: $('input[name="experienceTimeStart"]').map(function () { return $(this).val(); }).get(),
+        experience_end: $('input[name="experienceTimeEnd"]').map(function () { return $(this).val(); }).get(),
+        experience_intro: $('textarea[name="experienceInfo"]').map(function () { return $(this).val(); }).get(),
+        education_title: $('input[name="educationName"]').map(function () { return $(this).val(); }).get(),
+        education_department: $('input[name="educationDepartment"]').map(function () { return $(this).val(); }).get(),
+        education_degree: $('input[name="educationDegree"]').map(function () { return $(this).val(); }).get(),
+        education_start: $('input[name="educationTimeStart"]').map(function () { return $(this).val(); }).get(),
+        education_end: $('input[name="educationTimeEnd"]').map(function () { return $(this).val(); }).get(),
+    }
+
+    console.log(resumeDetail.bio, resumeDetail.skill_intro, resumeDetail.project_intro)
+
+
+    previewResume(resumeDetail)
+    $(`#resume-modal`)
+        .modal({
+            blurring: true,
+            duration: 200
+        })
+        .modal('show')
+        ;
+})
