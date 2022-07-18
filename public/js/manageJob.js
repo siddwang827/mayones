@@ -66,9 +66,9 @@ $('#update-job-btn').on('click', async (event) => {
         body: formData,
     })
     if (fetchResult.status === 200) {
-        alert("已成功上傳公司!")
+        alert("已成功上傳職缺!")
         window.location.href = "/jobs"
     } else {
-        alert("上傳履歷失敗!")
+        alert("上傳職缺失敗!")
     }
 });

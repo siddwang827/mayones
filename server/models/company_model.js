@@ -1,5 +1,4 @@
 const { queryDB, pool } = require('./mysql_conn.js')
-
 const companyLocations = [
     "台北市",
     "新北市",
@@ -45,9 +44,13 @@ class Company {
             let sqlOtherImage = `INSERT INTO mayones.other_images (companies_id, other_image) VALUES ?`
             let binding = [userId, brand, website, category, shrotDescription, companyLocation, companyAddress, introduction, philosophy, benifit, logoImage.url, bannerImage.url]
 
-            const conn = await pool.getConnection()
+            const conn = await pool.getConnection((err, conn) => {
+                console.log(conn)
+            })
             await conn.query('START TRANSACTION');
-            const result = await conn.query(sql, binding)
+
+            const [result] = await conn.query(sql, binding)
+            console.log(result)
             const companyId = result.insertId
             const otherImagesArray = otherImages.map(image => { return [companyId, image.url] })
             const tagArray = companyTags.map(tag => { return [companyId, tag] })
@@ -55,18 +58,21 @@ class Company {
             await conn.query('COMMIT');
 
         } catch (error) {
-            await conn.query('ROLLBACK')
             console.log(error)
-            return 'create resume failed'
+            await conn.query('ROLLBACK')
+            // console.log(error)
+            throw error
+            // return 'create resume failed'
         }
+        // } finally {
+        //     await conn.release()
+        // }
         return
-
-
     }
 
     static async findCompanies(pageSize, paging, companyQuery) {
-        let condition = []
-        let binding = []
+        let sqlCondition = []
+        let sqlBinding = []
         let queryKeys = Object.keys(companyQuery)
         let sql = `
             SELECT companies.id, brand, short_description, 
@@ -80,38 +86,39 @@ class Company {
             GROUP BY companies.id
         `
 
+        let locationQ = { condition: "", binding: companyQuery.location ? companyQuery.location : null }
+        let categoryQ = { condition: "", binding: companyQuery.category ? companyQuery.category : null }
+        let tagQ = { condition: "", binding: companyQuery.tag ? companyQuery.tag.map(t => `%${t}%`) : null }
+
+        let conditions = [locationQ, categoryQ, tagQ]
         if (queryKeys.length > 0) {
             sql = 'SELECT * FROM ( ' + sql + ') AS all_companies '
 
-            queryKeys.forEach(queryType => {
-                switch (queryType) {
-                    case 'location': {
-                        companyQuery[queryType].forEach(location => {
-                            condition.push('all_companies.company_location = ?')
-                            binding.push(location)
-                        })
+            queryKeys.forEach(type => {
+                switch (type) {
+                    case "location":
+                        locationQ.condition = `( ${(Array(companyQuery[type].length).fill('all_companies.company_location = ?')).join(' or ')} )`
                         break
-                    }
-                    case 'category': {
-                        companyQuery[queryType].forEach(category => {
-                            condition.push('all_companies.category = ?')
-                            binding.push(category)
-                        })
+                    case "category":
+                        categoryQ.condition = `( ${(Array(companyQuery[type].length).fill('all_companies.category = ?')).join(' or ')} )`
                         break
-                    }
-                    case 'tag': {
-                        companyQuery[queryType].forEach(tag => {
-                            condition.push("all_companies.tags like ?")
-                            binding.push(`%${tag}%`)
-                        })
+                    case "tag":
+                        tagQ.condition = `( ${(Array(companyQuery[type].length).fill('all_companies.tags like ?')).join(' or ')} )`
                         break
-                    }
                 }
             })
-            sql += 'WHERE ' + condition.join(' AND ')
+
+            conditions.forEach(cond => {
+                if (cond.binding) {
+                    sqlCondition.push(cond.condition)
+                    sqlBinding = sqlBinding.concat(cond.binding)
+                }
+            })
+
+            sql += 'WHERE ' + sqlCondition.join(' AND ')
         }
 
-        const result = await queryDB(sql, binding)
+        const result = await queryDB(sql, sqlBinding)
 
         return result
     }

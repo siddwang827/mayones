@@ -1,19 +1,19 @@
 const api = 'api/1.0';
 
 async function createTagsDOMFromSearch() {
-    function createDOM(queryType, tag) {
+    function createDOM(queryType, tag, n) {
         tag = decodeURIComponent(tag)
-        const timeStamp = Date.now()
+        // const timeStamp = Date.now()
         if (!$('.tag-list').length) {
             $('<div class="tag-list"></div>').insertBefore($('#jobs'))
         }
         $('.tag-list').append(`
-            <div class= "tag-label ${queryType}" id = "${queryType}-${timeStamp}">
+            <div class= "tag-label ${queryType}" id = "${queryType}-${n}">
                 <p>${tag}</p>
-                <i class="close icon" tag-label="${queryType}-${timeStamp}" data-type="${queryType}"></i>
+                <i class="close icon" tag-label="${queryType}-${n}" data-type="${queryType}"></i>
             </div>
             `)
-        $(`#${queryType}-${timeStamp}`).on('click', removeTag)
+        $(`#${queryType}-${n}`).on('click', removeTag)
     }
     const search = window.location.search.slice(1)
     if (!search) { return }
@@ -23,9 +23,11 @@ async function createTagsDOMFromSearch() {
         createDOM(queryType, tag)
     }
     else {
+        let n = 0
         queryItems.forEach((queryItem) => {
             let [queryType, tag] = queryItem.split('[]=')
-            createDOM(queryType, tag)
+            createDOM(queryType, tag, n)
+            n += 1
         })
     }
 }
@@ -65,6 +67,7 @@ $('.query').on('click', (e) => {
 
 async function removeTag(event) {
     const label = event.target.parentElement
+    console.log(label)
     const queryType = label.getAttribute('id').split('-')[0]
     const query = label.innerText
     label.remove()
