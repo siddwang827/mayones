@@ -89,7 +89,9 @@ class Company {
         let locationQ = { condition: "", binding: companyQuery.location ? companyQuery.location : null }
         let categoryQ = { condition: "", binding: companyQuery.category ? companyQuery.category : null }
         let tagQ = { condition: "", binding: companyQuery.tag ? companyQuery.tag.map(t => `%${t}%`) : null }
-
+        if (tagQ.binding) {
+            tagQ.binding = tagQ.binding.concat(tagQ.binding)
+        }
         let conditions = [locationQ, categoryQ, tagQ]
         if (queryKeys.length > 0) {
             sql = 'SELECT * FROM ( ' + sql + ') AS all_companies '
@@ -103,7 +105,7 @@ class Company {
                         categoryQ.condition = `( ${(Array(companyQuery[type].length).fill('all_companies.category = ?')).join(' or ')} )`
                         break
                     case "tag":
-                        tagQ.condition = `( ${(Array(companyQuery[type].length).fill('all_companies.tags like ?')).join(' or ')} )`
+                        tagQ.condition = `( ${(Array(companyQuery[type].length).fill('all_companies.tags like ? OR all_companies.brand like ?')).join(' or ')} )`
                         break
                 }
             })

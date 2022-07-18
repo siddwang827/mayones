@@ -13,6 +13,18 @@ async function viewCompanyDetail(event) {
     return
 }
 
+$('#search-input').on('keypress', event => {
+    if (event.key === 'Enter' || event.keyCode === 13) {
+        let keyword = event.target.value;
+        if (window.location.search[0] === "?") {
+            window.location.href += `&tag[]=${keyword}`
+        } else {
+            window.location.href = `?tag[]=${keyword}`
+        }
+
+    }
+})
+
 
 async function createTagsDOMFromSearch() {
     function createDOM(queryType, tag, n) {
