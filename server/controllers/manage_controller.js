@@ -1,5 +1,5 @@
 const { Company, companyLocations, getALLCategory, getALLCompanyTag } = require('../models/company_model')
-const { Job, jobTypes, jobLocations, getJobsCategory, getJobPositionByCategory, getJobTags } = require('../models/job_model')
+const { Job, jobTypes, jobLocations, getJobsCategory, getJobPositionByCategory, getJobTags, getCompanyAllOpenings, getJobTextarea } = require('../models/job_model')
 const { getResumeDetail, updateResumeEmployerCheck } = require('../models/profile_model')
 const { getApplicationListbyJobOwner, inviteInterviewToSeeker, getSeekerInfo } = require('../models/application_model')
 const { s3Upload, s3UploadMulti } = require('../models/s3Server')
@@ -7,7 +7,6 @@ const moment = require('moment')
 const nodemailer = require('nodemailer')
 const { GMAIL_ACCOUNT,
     GMAIL_PW } = process.env
-
 
 const getCompanyManagePage = async (req, res) => {
     const header = req.header
@@ -57,18 +56,39 @@ const createCompanyDetail = async (req, res) => {
 
 const getJobManagePage = async (req, res) => {
     const header = req.header
-    const categories = await getJobsCategory()
-    const tags = await getJobTags()
+    const userId = req.user.id
+    let [categories, tags, alljobs] = await Promise.all([
+        getJobsCategory(),
+        getJobTags(),
+        getCompanyAllOpenings(userId)
+    ])
 
-    return res.render('manageJob', { header, jobTypes, jobLocations, categories, tags })
+    return res.render('manageJob', { header, jobTypes, jobLocations, categories, tags, alljobs })
 }
 
+const getJobOpeningEidtPage = async (req, res) => {
+    const header = req.header
+    const jobId = req.params.id
+    let { role, id } = req.user
+    const userInfo = { role, id }
+
+    let [categories, tags, alljobs, jobDetails] = await Promise.all([
+        getJobsCategory(),
+        getJobTags(),
+        getCompanyAllOpenings(userInfo.id),
+        Job.getJobDetailById(jobId, userInfo)
+    ])
+    const positions = await getJobPositionByCategory(jobDetails.category)
+    console.log(positions)
+
+    return res.render('manageJobEdit', { header, jobTypes, jobLocations, categories, tags, alljobs, jobDetails, positions })
+}
 const createJobDetail = async (req, res) => {
     const userId = req.user.id
     const jobDetail = req.body
     jobDetail.jobTags = JSON.parse(jobDetail.jobTags)
     try {
-        const result = await Job.createJob(
+        await Job.createJob(
             userId,
             jobDetail.jobTitle,
             jobDetail.jobIntro,
@@ -97,7 +117,7 @@ const getApplicationsManagePage = async (req, res) => {
 
     try {
         const applications = await getApplicationListbyJobOwner(userId)
-        console.log(applications)
+
         return res.render('employerApplication', { header, applications })
     } catch (error) {
         console.log(error)
@@ -107,8 +127,18 @@ const getApplicationsManagePage = async (req, res) => {
 
 const getPosition = async (req, res) => {
     const category = req.query.category
-    const positions = await getJobPositionByCategory(category)
+
+    let positions = await getJobPositionByCategory(category)
     return res.status(200).json(positions)
+}
+
+const getJobTextareaValue = async (req, res) => {
+    const jobId = req.query.id
+
+    let jobTextarea = await getJobTextarea(jobId)
+
+    return res.status(200).json({ jobTextarea })
+
 }
 
 const checkUserResume = async (req, res) => {
@@ -185,8 +215,12 @@ module.exports = {
     getJobManagePage,
     getApplicationsManagePage,
     getPosition,
+    getJobOpeningEidtPage,
+    getJobTextareaValue,
     createCompanyDetail,
     createJobDetail,
     checkUserResume,
-    inviteInterview
+    inviteInterview,
+
+
 }

@@ -63,7 +63,6 @@ const authentication = (required) => {
 
         // use cookie for ejs authorization
         let accessToken = req.cookies.Authorization
-
         // user header jwt token
         // let accessToken = req.get('Authorization');
         // if (!accessToken) {
@@ -81,7 +80,6 @@ const authentication = (required) => {
             try {
                 const user = await promisify(jwt.verify)(accessToken, TOKEN_SECRET);
                 req.user = user;
-
                 const userDetail = await User.getUserDetail(user.email);
 
                 if (!userDetail) {

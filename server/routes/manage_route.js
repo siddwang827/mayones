@@ -8,7 +8,9 @@ const { getCompanyManagePage,
     getApplicationsManagePage,
     checkUserResume,
     getPosition,
-    inviteInterview } = require('../controllers/manage_controller.js')
+    inviteInterview,
+    getJobOpeningEidtPage,
+    getJobTextareaValue } = require('../controllers/manage_controller.js')
 
 const companyMulter = upload.fields([{ name: "logoImage" }, { name: "bannerImage" }, { name: "otherImages", maxCount: 5 }])
 const jobMulter = upload.none()
@@ -20,6 +22,8 @@ router.route('/manage/company')
 router.route('/manage/company')
     .post(authentication(AUTH.required), companyMulter, asyncHandlerWrapper(createCompanyDetail))
 
+router.route('/manage/job/:id')
+    .get(authentication(AUTH.required), setViewHeader(), asyncHandlerWrapper(getJobOpeningEidtPage))
 
 router.route('/manage/job')
     .get(authentication(AUTH.required), setViewHeader(), asyncHandlerWrapper(getJobManagePage))
@@ -39,6 +43,7 @@ router.route('/manage/invite')
 
 router.route('/api/1.0/positions')
     .get(asyncHandlerWrapper(getPosition))
-
+router.route('/api/1.0/job-textarea')
+    .get(asyncHandlerWrapper(getJobTextareaValue))
 
 module.exports = router;
