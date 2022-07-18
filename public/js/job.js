@@ -87,7 +87,12 @@ async function removeTag(event) {
 $('#search-input').on('keypress', event => {
     if (event.key === 'Enter' || event.keyCode === 13) {
         let keyword = event.target.value;
-        window.location.href = `?tag[]=${keyword}`
+        if (window.location.search[0] === "?") {
+            window.location.href += `&tag[]=${keyword}`
+        } else {
+            window.location.href = `?tag[]=${keyword}`
+        }
+
     }
 })
 
