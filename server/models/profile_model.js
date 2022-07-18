@@ -85,7 +85,7 @@ const userUpdateResume = async (userId, resume,) => {
             bio: resume.bio,
 
         }
-        console.log(resume)
+
         await conn.query('START TRANSACTION');
 
         await conn.query(`UPDATE mayones.resume SET ? WHERE id = ?`, [profile, resume.resumeId])
@@ -237,6 +237,7 @@ const getUserAllResumes = async (userId) => {
         return result
     } catch (error) {
         console.log(error)
+        throw error
     }
 }
 

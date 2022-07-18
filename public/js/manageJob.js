@@ -72,3 +72,6 @@ $('#update-job-btn').on('click', async (event) => {
         alert("上傳職缺失敗!")
     }
 });
+
+
+

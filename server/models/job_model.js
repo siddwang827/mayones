@@ -257,14 +257,6 @@ class Job {
     }
 }
 
-const getCompanyId = async (userId) => {
-    const sql = `
-    SELECT id FROM mayones.companies AS company_id WHERE owner_id = ?
-    `
-    const result = await queryDB(sql, [userId])
-}
-
-
 const getJobsCategory = async () => {
     const sql = `
     SELECT json_arrayagg(t.category) AS categories 
@@ -294,6 +286,37 @@ const getJobPositionByCategory = async (category) => {
 
 }
 
+const getCompanyAllOpenings = async (userId) => {
+    const sql = `
+    SELECT id as job_id , job_title, update_at FROM mayones.jobs
+    WHERE owner_id = ? 
+    `
+    try {
+        const result = await queryDB(sql, [userId])
+        return result
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
 
 
-module.exports = { Job, jobTypes, jobLocations, getJobTags, getJobsCategory, getJobPositionByCategory, getCompanyId }
+const getJobTextarea = async (jobId) => {
+    const sql = `
+    SELECT job_description, skill_required, prefered_qualification 
+    FROM mayones.jobs
+    WHERE id = ?
+    `
+    const result = await queryDB(sql, jobId)
+    return result
+}
+module.exports = {
+    Job,
+    jobTypes,
+    jobLocations,
+    getJobTags,
+    getJobsCategory,
+    getJobPositionByCategory,
+    getCompanyAllOpenings,
+    getJobTextarea
+}

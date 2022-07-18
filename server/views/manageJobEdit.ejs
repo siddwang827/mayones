@@ -15,7 +15,10 @@
     <main>
         <div class="container">
             <div class="left-side-bar job-list">
-                <div class=" job-items edit title">所有職缺</div>
+                <a href="/manage/job">
+                    <div class=" job-items edit title">新建職缺
+                    </div>
+                </a>
                 <% for (let job of alljobs) {%>
                     <a class="job-anchor" href="/manage/job/<%= job.job_id %>">
                         <div class="job-items item">
@@ -23,13 +26,12 @@
                         </div>
                     </a>
                     <%}%>
-
             </div>
             <form class="ui form" id="job-form">
                 <div class="form-group">
                     <div for="name" class="form-label required">職缺名稱</div>
                     <div class="input-wrap">
-                        <input name="jobTitle" class="form-control" id="job-title" value="">
+                        <input name="jobTitle" class="form-control" id="job-title" job-id="<%= jobDetails.id%>" value="<%=jobDetails.title%>">
                     </div>
                 </div>
                 <div class="form-group">
@@ -38,10 +40,10 @@
                         <div class="input-wrap">
                             <select id="job-type" class="ui fluid search dropdown" name="jobType">
                                 <option value=""></option>
-                                <option value="正職">正職</option>
-                                <option value="兼職">兼職</option>
-                                <option value="約聘">約聘</option>
-                                <option value="實習">實習</option>
+                                <option value="正職" <%=jobDetails.job_type==="正職" ? 'selected' : "" %>>正職</option>
+                                <option value="兼職" <%=jobDetails.job_type==="兼職" ? 'selected' : "" %>>兼職</option>
+                                <option value="約聘" <%=jobDetails.job_type==="約聘" ? 'selected' : "" %>>約聘</option>
+                                <option value="實習" <%=jobDetails.job_type==="實習" ? 'selected' : "" %>>實習</option>
                             </select>
                         </div>
                     </div>
@@ -54,19 +56,19 @@
                         <div class="input-wrap">
                             <select id="salary-type" name="salaryType" class="ui fluid search dropdown salary-type">
                                 <option value="">base</option>
-                                <option value="年薪">年薪</option>
-                                <option value="月薪">月薪</option>
-                                <option value="時薪">時薪</option>
+                                <option value="年薪" <%=jobDetails.salary_type==="年薪" ? 'selected' : "" %>>年薪</option>
+                                <option value="月薪" <%=jobDetails.salary_type==="月薪" ? 'selected' : "" %>>月薪</option>
+                                <option value="時薪" <%=jobDetails.salary_type==="時薪" ? 'selected' : "" %>>時薪</option>
 
                             </select>
                         </div>
                         <div class="salary-label">下限</div>
                         <div class="input-wrap">
-                            <input name="salaryBottom" class="form-control" id="salary-bottom" value="">
+                            <input name="salaryBottom" class="form-control" id="salary-bottom" value="<%=jobDetails.salary_bottom%>">
                         </div>
                         <div class="salary-label">上限</div>
                         <div class="input-wrap">
-                            <input name="salaryTop" class="form-control" id="salary-top" value="">
+                            <input name="salaryTop" class="form-control" id="salary-top" value="<%=jobDetails.salary_top%>">
                         </div>
                     </div>
                 </div>
@@ -77,7 +79,7 @@
                         <select id="job-location" class="ui fluid search dropdown">
                             <option value="">Region</option>
                             <%for (let location of jobLocations) {%>
-                                <option value="<%= location%>">
+                                <option value="<%= location%>" <%=jobDetails.location===`${location}` ? 'selected' : "" %>>
                                     <%= location%>
                                 </option>
                                 <%}%>
@@ -87,7 +89,7 @@
                 <div class="form-group">
                     <div class="form-label">工作地址</div>
                     <div class="input-wrap">
-                        <input name="jobAddress" class="form-control" id="job-address" value="">
+                        <input name="jobAddress" class="form-control" id="job-address" value="<%=jobDetails.address%>">
                     </div>
                 </div>
                 <div class="form-group" id="email-form-group">
@@ -96,7 +98,7 @@
                         <select id="job-category" class="ui fluid search dropdown">
                             <option value="">Category</option>
                             <% for (let category of categories) {%>
-                                <option class="category-item" value="<%=category%>">
+                                <option class="category-item" value="<%=category%>" <%=jobDetails.category===`${category}` ? 'selected' : "" %>>
                                     <%=category%>
                                 </option>
                                 <%}%>
@@ -108,6 +110,11 @@
                     <div class="input-wrap" id="job-position-div">
                         <select id="job-position" class="ui fluid search dropdown">
                             <option value="">Position</option>
+                            <% for (let position of positions) {%>
+                                <option class="category-item" value="<%=position[1]%>" <%=jobDetails.position===`${position[0]}` ? 'selected' : "" %>>
+                                    <%=position[0]%>
+                                </option>
+                                <%}%>
                         </select>
                     </div>
                 </div>
@@ -117,7 +124,7 @@
                         <select id="job-tags" class="ui fluid search dropdown" multiple="">
                             <option value="">Tags</option>
                             <% for (let tag of tags) { %>
-                                <option value="<%=tag[1]%>">
+                                <option value="<%=tag[1]%>" <%=jobDetails.tags.includes(`${tag[0]}`) ? 'selected' : "" %>>
                                     <%=tag[0]%>
                                 </option>
                                 <%}%>
@@ -130,9 +137,9 @@
                         <div class="input-wrap">
                             <select id="job-remote" class="ui fluid search dropdown">
                                 <option value="">Remote</option>
-                                <option value="無遠端工作">無遠端工作</option>
-                                <option value="部分遠端工作">部分遠端工作</option>
-                                <option value="完全遠端工作">完全遠端工作</option>
+                                <option value="無遠端工作" <%=jobDetails.remote_work==="無遠端工作" ? 'selected' : "" %>>無遠端工作</option>
+                                <option value="部分遠端工作" <%=jobDetails.remote_work==="部分遠端工作" ? 'selected' : "" %>>部分遠端工作</option>
+                                <option value="完全遠端工作" <%=jobDetails.remote_work==="完全遠端工作" ? 'selected' : "" %>>完全遠端工作</option>
                             </select>
                         </div>
                     </div>
@@ -169,5 +176,6 @@
     <%- include layout/footer %>
         <script src="/js/utils/moment.js"></script>
         <script src="/js/manageJob.js"></script>
+        <script src="/js/manageJobEdit.js"></script>
         <script src="/js/ckeditor.js"></script>
 </footer>
