@@ -97,6 +97,7 @@ const getApplicationsManagePage = async (req, res) => {
 
     try {
         const applications = await getApplicationListbyJobOwner(userId)
+        console.log(applications)
         return res.render('employerApplication', { header, applications })
     } catch (error) {
         console.log(error)

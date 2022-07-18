@@ -10,6 +10,7 @@ const getJobs = async (req, res) => {
 
     // render tempale parameter
     const categoryPositions = await Job.getCategory()
+    console.log(categoryPositions)
     let jobTags = await Job.getJobTags()
     jobTags = jobTags.tags
 

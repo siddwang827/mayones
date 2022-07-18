@@ -17,9 +17,7 @@
         <div class="container">
             <% for (let application of applications) { %>
                 <h1>
-                    <a href="">
-                        <%=application.job_title%>
-                    </a>
+                    <%=application.job_title%>
                 </h1>
                 <div class="job-container">
                     <% if (!application.resume_id[0]) { %>

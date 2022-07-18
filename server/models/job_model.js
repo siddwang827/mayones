@@ -44,8 +44,8 @@ class Job {
 
     static async findJobs(pageSize, paging, jobQuery) {
 
-        let condition = []
-        let binding = []
+        let sqlCondition = []
+        let sqlBinding = []
         let queryKeys = Object.keys(jobQuery)
         let sql = `
             SELECT jobs.id , companies.id AS company_id, brand, job_title AS title, job_type, category_position.category, category_position.position,  salary_top, salary_bottom, location, address, remote_work, logo_image, banner_image, jobs.update_at ,JSON_ARRAYAGG(tags.tag_name) AS tags
@@ -62,58 +62,55 @@ class Job {
             ORDER BY jobs.update_at DESC
         `
 
+        let locationQ = { condition: "", binding: jobQuery.location ? jobQuery.location : null }
+        let categoryQ = { condition: "", binding: jobQuery.category ? jobQuery.category : null }
+        let positionQ = { condition: "", binding: jobQuery.position ? jobQuery.position : null }
+        let jobTypeQ = { condition: "", binding: jobQuery.jobType ? jobQuery.jobType : null }
+        let tagQ = { condition: "", binding: (jobQuery.tag ? jobQuery.tag.map(t => `%${t}%`) : null) }
+        let companyQ = { condition: "", binding: jobQuery.company ? jobQuery.company : null }
+        let conditions = [locationQ, categoryQ, positionQ, jobTypeQ, tagQ, companyQ]
+        if (tagQ.binding) {
+            tagQ.binding = tagQ.binding.concat(tagQ.binding)
+        }
+
         if (queryKeys.length > 0) {
 
             sql = 'SELECT * FROM (' + sql + ' ) AS all_jobs '
-            Object.keys(jobQuery).forEach(queryType => {
-                switch (queryType) {
-                    case 'location': {
-                        jobQuery[queryType].forEach(location => {
-                            condition.push('all_jobs.location = ?')
-                            binding.push(location)
-                        })
+
+            queryKeys.forEach(type => {
+                switch (type) {
+                    case "location":
+                        locationQ.condition = `( ${(Array(jobQuery[type].length).fill('all_jobs.location = ?')).join(' or ')} )`
                         break
-                    }
-                    case 'category': {
-                        jobQuery[queryType].forEach(category => {
-                            condition.push('all_jobs.category = ?')
-                            binding.push(category)
-                        })
+                    case "category":
+                        categoryQ.condition = `( ${(Array(jobQuery[type].length).fill('all_jobs.category = ?')).join(' or ')} )`
                         break
-                    }
-                    case 'position': {
-                        jobQuery[queryType].forEach(position => {
-                            condition.push('all_jobs.position = ?')
-                            binding.push(position)
-                        })
+                    case "position":
+                        positionQ.condition = `( ${(Array(jobQuery[type].length).fill('all_jobs.position = ?')).join(' or ')} )`
                         break
-                    }
-                    case 'jobType': {
-                        jobQuery[queryType].forEach(job_type => {
-                            condition.push('all_jobs.job_type = ?')
-                            binding.push(job_type)
-                        })
+                    case "jobType":
+                        jobTypeQ.condition = `( ${(Array(jobQuery[type].length).fill('all_jobs.job_type = ?')).join(' or ')} )`
                         break
-                    }
-                    case 'tag': {
-                        jobQuery[queryType].forEach(tag => {
-                            condition.push("all_jobs.tags like ?")
-                            binding.push(`%${tag}%`)
-                        })
+                    case "tag":
+                        tagQ.condition = `( ${(Array(jobQuery[type].length).fill('all_jobs.tags like ? OR all_jobs.title like ?')).join(' or ')} )`
                         break
-                    }
-                    case 'company': {
-                        jobQuery[queryType].forEach(tag => {
-                            condition.push('all_jobs.brand = ?')
-                            binding.push(tag)
-                        })
-                    }
+                    case "company":
+                        companyQ.condition = `( ${(Array(jobQuery[type].length).fill('all_jobs.brand = ?')).join(' or ')} )`
+                        break
                 }
             })
-            sql += 'WHERE ' + condition.join(' AND ')
+
+            conditions.forEach(cond => {
+                if (cond.binding) {
+                    sqlCondition.push(cond.condition)
+                    sqlBinding = sqlBinding.concat(cond.binding)
+                }
+            })
+
+            sql += 'WHERE ' + sqlCondition.join(' AND ')
         }
 
-        const result = await queryDB(sql, binding)
+        const result = await queryDB(sql, sqlBinding)
         return result
     }
 

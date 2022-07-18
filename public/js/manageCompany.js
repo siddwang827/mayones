@@ -106,10 +106,10 @@ $('#update-company-btn').on('click', async (event) => {
     })
     if (fetchResult.status === 200) {
         alert("已成功上傳公司!")
-        window.location.href = "/companies"
+        // window.location.href = "/companies"
 
     } else {
-        alert("上傳履歷失敗!")
+        alert("上傳公司失敗!")
     }
 });
 

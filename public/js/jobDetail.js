@@ -60,6 +60,7 @@ async function application(event) {
     const cookie = document.cookie
     if (!cookie) {
         alert('你目前尚未登入，請先登入！')
+        return
     }
     const jobId = event.target.getAttribute('job-id')
     const fetchResult = await fetch(`/application/${jobId}`, {

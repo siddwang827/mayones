@@ -82,8 +82,7 @@ function resumePreview(resumeDetail) {
                 <div class="resume-preview-title bio">
                     簡歷 <span class="title-en">Bio</span>
                 </div>
-                <div class="resume-preview-content-item">
-                    ${resumeDetail.bio.replaceAll('\\r\\n', '<br/>')}
+                <div class="resume-preview-content-item text-pre">${resumeDetail.bio.replaceAll('\\r\\n', '<br/>')}
                 </div>
             </div>
         `)
@@ -110,8 +109,7 @@ function resumePreview(resumeDetail) {
                         ${resumeDetail.skill_proficiency[index]} 
                         ${resumeDetail.skill_proficiency[index] === '初階' ? 'Beginner' : resumeDetail.skill_proficiency[index] === '熟練' ? 'Advanced' : 'Expert'}</div>
                     </div>
-                    <div class="resume-preview-content-item">
-                        <div class="skill-intro">${resumeDetail.skill_intro[index] ? resumeDetail.skill_intro[index] : ""}</div>
+                    <div class="resume-preview-content-item text-pre"><div class="skill-intro">${resumeDetail.skill_intro[index] ? resumeDetail.skill_intro[index] : ""}</div>
                     </div>
                 </div>
             `)
@@ -141,9 +139,8 @@ function resumePreview(resumeDetail) {
                                 <div class="project-title">${project}</div>
                             </a>
                         </div>
-                        <div class="resume-preview-content-item">
-                            <div class="skill-intro">
-                                ${resumeDetail.project_intro[index] ? resumeDetail.project_intro[index].replaceAll('\\r\\n', '<br/>') : ""}
+                        <div class="resume-preview-content-item text-pre">
+                            <div class="skill-intro ">${resumeDetail.project_intro[index] ? resumeDetail.project_intro[index].replaceAll('\\r\\n', '<br/>') : ""}
                             </div>
                         </div>
                     </div>
@@ -182,8 +179,7 @@ function resumePreview(resumeDetail) {
                     </div>
                 </div>
                 <div class="resume-preview-content-item">
-                    <div class="experience-intro">
-                        ${resumeDetail.experience_intro[index] ? resumeDetail.experience_intro[index].replaceAll('\\r\\n', '<br/>') : ""}
+                    <div class="experience-intro text-pre">${resumeDetail.experience_intro[index] ? resumeDetail.experience_intro[index].replaceAll('\\r\\n', '<br/>') : ""}
                     </div>
                 </div>
             </div>
