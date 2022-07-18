@@ -15,7 +15,7 @@
         <div class="container">
             <div id="search-bar" class="search-bar-container">
                 <div class="ui icon input">
-                    <input type="text" placeholder="Search...">
+                    <input type="text" id="search-input" placeholder="Search...">
                     <i class="inverted circular search link icon"></i>
                 </div>
                 <div class="search-filter-container">
@@ -58,10 +58,10 @@
             </div>
             <div class="tag-list">
             </div>
-            <div id="companies" class="company-container">
-                <%if (!companies[0]) {%>
-                    <h1>很抱歉，無符合條件的公司！</h1>
-                    <%}%>
+            <%if (!companies[0]) {%>
+                <h1>很抱歉，無符合條件的公司！</h1>
+                <%}%>
+                    <div id="companies" class="company-container">
                         <% for (let company of companies) { %>
                             <div class="company-card-container card-shadow" company-id=<%=company.id%> >
                                 <div class="company-card-banner">
@@ -122,7 +122,7 @@
                                 </div>
                             </div>
                             <% } %>
-            </div>
+                    </div>
         </div>
     </main>
     <footer>
