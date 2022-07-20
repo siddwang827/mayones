@@ -200,7 +200,6 @@ class Job {
         const jobId = result.insertId
         const tagArray = JobTags.map(tag => { return [jobId, tag] })
         const insertTag = await queryDB(`INSERT INTO mayones.jobs_tags(jobs_id, tags_id) VALUES ?`, [tagArray])
-        console.log(insertTag)
     }
 
     static async deleteJob(id) {
@@ -247,7 +246,8 @@ class Job {
 
     static async getJobSimpleInfo(jobId) {
         const sql = `
-        SELECT jobs.id AS job_id, job_title, companies.id AS company_id, companies.brand FROM mayones.jobs
+        SELECT jobs.id AS job_id, job_title, companies.id AS company_id, companies.brand, companies.logo_image
+        FROM mayones.jobs
         INNER JOIN mayones.companies
         ON jobs.companies_id = companies.id
         WHERE jobs.id = ?; 

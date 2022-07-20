@@ -1,7 +1,7 @@
 $(function () {
     $('.interview-date-input').daterangepicker({
-        startDate: "07/09/2022",
-        endDate: "07/15/2022",
+        startDate: `${moment(Date.now()).format('MM/DD/YYYY')}`,
+        // endDate: "08/19/2022",
         singleDatePicker: true,
         timePicker: true,
         timePicker24Hour: true,
