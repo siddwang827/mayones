@@ -19,7 +19,6 @@ const getResumeEditPage = async (req, res) => {
     const resumeId = req.params.id
 
     const resumeDetail = await getResumeDetail(resumeId, userId)
-    console.log(resumeDetail)
     const allResumes = await getUserAllResumes(userId)
 
     return res.render('resumeEdit', { header, resumeDetail, allResumes, moment, resumeId })

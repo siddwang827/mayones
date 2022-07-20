@@ -282,7 +282,6 @@ const updateResumeEmployerCheck = async (applicationId) => {
 const deleteSingleSkill = async (skillId) => {
     try {
         const result = await queryDB(`DELETE FROM mayones.resume_skills WHERE id = ?`, skillId)
-        console.log(result)
     } catch (error) {
         console.log(error)
         throw error
@@ -292,7 +291,6 @@ const deleteSingleSkill = async (skillId) => {
 const deleteSingleExperience = async (experienceId) => {
     try {
         const result = await queryDB(`DELETE FROM mayones.resume_experience WHERE id = ?`, experienceId)
-        console.log(result)
     } catch (error) {
         console.log(error)
         throw error
@@ -302,7 +300,6 @@ const deleteSingleExperience = async (experienceId) => {
 const deleteSingleProject = async (projectId) => {
     try {
         const result = await queryDB(`DELETE FROM mayones.resume_projects WHERE id = ?`, projectId)
-        console.log(result)
     } catch (error) {
         console.log(error)
         throw error
@@ -312,7 +309,6 @@ const deleteSingleProject = async (projectId) => {
 const deleteSingleEducation = async (educationId) => {
     try {
         const result = await queryDB(`DELETE FROM mayones.resume_education WHERE id = ?`, educationId)
-        console.log(result)
     } catch (error) {
         console.log(error)
         throw error
