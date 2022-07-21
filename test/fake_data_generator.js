@@ -48,7 +48,7 @@ async function _createFakeCategoryPposition(conn) {
 }
 
 async function _createFakeLocations(conn) {
-    const sql = 'INSERT INTO location (name) VALUES ?'
+    const sql = 'INSERT INTO location (name, view_order) VALUES ?'
     const binding = locations.map(location => Object.values(location))
     return await conn.query(sql, [binding])
 }

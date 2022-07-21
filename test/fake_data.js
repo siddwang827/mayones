@@ -93,18 +93,18 @@ const categories = [
 ]
 
 const locations = [
-    { name: "台北市" },
-    { name: "新北市" },
-    { name: "桃園市" },
-    { name: "新竹市" },
-    { name: "新竹縣" },
-    { name: "台中市" },
-    { name: "彰化縣" },
-    { name: "嘉義市" },
-    { name: "台南市" },
-    { name: "高雄市" },
-    { name: "花蓮縣" },
-    { name: "海外" }
+    { name: "台北市", view_order: 1 },
+    { name: "新北市", view_order: 2 },
+    { name: "桃園市", view_order: 3 },
+    { name: "新竹市", view_order: 4 },
+    { name: "新竹縣", view_order: 5 },
+    { name: "台中市", view_order: 6 },
+    { name: "彰化縣", view_order: 7 },
+    { name: "嘉義市", view_order: 8 },
+    { name: "台南市", view_order: 9 },
+    { name: "高雄市", view_order: 10 },
+    { name: "花蓮縣", view_order: 11 },
+    { name: "海外", view_order: 12 }
 ]
 
 const tags = [
