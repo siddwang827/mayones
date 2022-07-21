@@ -44,7 +44,12 @@ const createCompanyDetail = async (req, res) => {
             companyDetail.bannerImage,
             companyDetail.otherImages,
         )
-        return res.status(200).json({ result: "Update company sucess" })
+        if (result) {
+            return res.status(200).json({ result: "Update company sucess" })
+        } else {
+            res.status(403).json({ error: 'Update company failed' })
+        }
+
     } catch (error) {
         if (error.code === 'ER_DUP_ENTRY') {
             res.status(403).json({ error: 'Already create company' })
