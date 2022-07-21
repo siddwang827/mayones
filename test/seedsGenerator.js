@@ -22,6 +22,13 @@ async function generateTags(tags) {
 }
 
 
-generateCatergoryPosition(categoryPosition)
+// generateCatergoryPosition(categoryPosition)
 // generateLocation(location)
 // generateTags(tags)
+
+async function getTags() {
+    const result = await queryDB('SELECT * FROM mayones.category_position ')
+    console.log(result)
+}
+
+getTags()
