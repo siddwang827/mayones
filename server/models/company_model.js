@@ -32,7 +32,6 @@ class Company {
     }
 
     static async createCompany(userId, brand, website, category, shrotDescription, companyLocation, companyAddress, introduction, philosophy, benifit, companyTags, logoImage, bannerImage, otherImages) {
-
         try {
             let sql = `
             INSERT INTO mayones.companies (
@@ -44,30 +43,23 @@ class Company {
             let sqlOtherImage = `INSERT INTO mayones.other_images (companies_id, other_image) VALUES ?`
             let binding = [userId, brand, website, category, shrotDescription, companyLocation, companyAddress, introduction, philosophy, benifit, logoImage.url, bannerImage.url]
 
-            const conn = await pool.getConnection((err, conn) => {
-                console.log(conn)
-            })
+            const conn = await pool.getConnection()
             await conn.query('START TRANSACTION');
 
             const [result] = await conn.query(sql, binding)
-            console.log(result)
             const companyId = result.insertId
             const otherImagesArray = otherImages.map(image => { return [companyId, image.url] })
             const tagArray = companyTags.map(tag => { return [companyId, tag] })
             await Promise.all([conn.query(sqlTag, [tagArray]), conn.query(sqlOtherImage, [otherImagesArray])])
             await conn.query('COMMIT');
-
+            await conn.release()
+            return true
         } catch (error) {
             console.log(error)
             await conn.query('ROLLBACK')
-            // console.log(error)
-            throw error
-            // return 'create resume failed'
+            await conn.release()
+            return false
         }
-        // } finally {
-        //     await conn.release()
-        // }
-        return
     }
 
     static async findCompanies(pageSize, paging, companyQuery) {

@@ -215,7 +215,7 @@ class Job {
         SELECT json_arrayagg(location.name) locations 
         FROM mayones.location 
         GROUP BY 'name' 
-        ORDER BY location.order ASC;
+        ORDER BY location.view_order ASC;
         `
         const result = await queryDB(sql)
         return result
@@ -226,7 +226,7 @@ class Job {
         SELECT  category , JSON_ARRAYAGG(position) AS position 
         FROM mayones.category_position 
         GROUP BY category
-        ORDER BY category_position.order ASC ;
+        ORDER BY category_position.view_order ASC ;
         `
         const result = await queryDB(sql)
         return result
@@ -262,7 +262,7 @@ const getJobsCategory = async () => {
     SELECT json_arrayagg(t.category) AS categories 
     FROM (SELECT distinct category AS category
         FROM mayones.category_position 
-        ORDER BY mayones.category_position.order) t
+        ORDER BY mayones.category_position.view_order) t
     `
     const [result] = await queryDB(sql)
     return result.categories
