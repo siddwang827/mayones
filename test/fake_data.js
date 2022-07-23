@@ -25,6 +25,18 @@ const users = [
         email: 'appworks@test.com',
         password: "1qaz2wsx",
         role_id: 2,
+    },
+    {
+        username: 'Sidd',
+        email: 'siddwang@test.com',
+        password: "1qaz2wsx",
+        role_id: 1,
+    },
+    {
+        username: 'Alice',
+        email: 'alicechin@test.com',
+        password: "1qaz2wsx",
+        role_id: 1,
     }
 ]
 

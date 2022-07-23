@@ -1,8 +1,9 @@
-const server = require('../server')
-const chai = require('chai')
-const chaiHttp = require('chai-http')
-const { NODE_ENV } = process.env
-const { truncateFakeData, createFakeData } = require('./fake_data_generator')
+const app = require("../server");
+const chai = require("chai");
+const chaiHttp = require("chai-http");
+const deepEqualInAnyOrder = require("deep-equal-in-any-order");
+const { NODE_ENV } = process.env;
+const { truncateFakeData, createFakeData } = require("./fake_data_generator");
 
 chai.use(chaiHttp);
 chai.use(deepEqualInAnyOrder);
@@ -12,15 +13,16 @@ const expect = chai.expect;
 const requester = chai.request(app).keepOpen();
 
 before(async () => {
-    if (NODE_ENV !== 'test') {
-        throw 'Not in test env';
+    if (NODE_ENV !== "test") {
+        throw "Not in test env";
     }
 
     await truncateFakeData();
     await createFakeData();
 });
 
-
 module.exports = {
-
-}
+    assert,
+    expect,
+    requester,
+};
