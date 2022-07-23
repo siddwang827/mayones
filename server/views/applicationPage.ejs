@@ -1,49 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <%- include /layout/head %>
+        <link rel="stylesheet" type="text/css" href="/css/main.css" />
+        <link rel="stylesheet" type="text/css" href="/css/apply.css" />
+    </head>
 
-<head>
-    <%- include /layout/head %>
-        <link rel="stylesheet" type="text/css" href="/css/main.css">
-        <link rel="stylesheet" type="text/css" href="/css/apply.css">
-</head>
-
-<body>
-    <header>
-        <%- include layout/header %>
-    </header>
-    <main>
-        <div class="container" id="container">
-            <div class="resume-item">
-                <div class="apply-title-info">
-                    <img class="company-logo" src="<%=opening.logo_image%>">
-                    <a class="apply-title" href="/company/<%=opening.company_id%>" target="_blank">
-                        <%=opening.brand%>
-                    </a> |
-                    <a class="apply-title" href="/job/<%=opening.job_id%>" target="_blank">
-                        <%=opening.job_title%>
-                    </a>
-                    <div id="apply-btn" class="ui animated big button to-right" tabindex="0">
-                        <div class="visible content">確認投遞</div>
-                        <div class="hidden content">
-                            <i class="paper plane outline icon"></i>
+    <body>
+        <header><%- include layout/header %></header>
+        <main>
+            <div class="container" id="container">
+                <div class="resume-item">
+                    <div class="apply-title-info">
+                        <img class="company-logo" src="<%=opening.logo_image%>" />
+                        <a class="apply-title" href="/company/<%=opening.company_id%>" target="_blank"> <%=opening.brand%> </a> |
+                        <a class="apply-title" href="/job/<%=opening.job_id%>" target="_blank"> <%=opening.job_title%> </a>
+                        <div id="apply-btn" class="ui animated big button to-right" tabindex="0">
+                            <div class="visible content">確認投遞</div>
+                            <div class="hidden content">
+                                <i class="paper plane outline icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>選擇欲投遞之履歷</h2>
+                    <div class="ui selection dropdown" style="width: 100%; margin: 0">
+                        <input type="hidden" name="gender" />
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Resume</div>
+                        <div class="menu">
+                            <% for (let resume of allResumes) { %>
+                            <div class="item resume" resume-id="<%=resume.resume_id%>"><%=resume.resume_name%></div>
+                            <% } %>
                         </div>
                     </div>
                 </div>
-                <h2>選擇欲投遞之履歷</h2>
-                <div class=" ui selection dropdown" style="width:100%; margin:0">
-                    <input type="hidden" name="gender">
-                    <i class="dropdown icon"></i>
-                    <div class="default text">Resume</div>
-                    <div class="menu">
-                        <% for (let resume of allResumes) { %>
-                            <div class="item resume" resume-id="<%=resume.resume_id%>">
-                                <%=resume.resume_name%>
-                            </div>
-                            <% } %>
-                    </div>
-                </div>
-            </div>
-            <!-- <div class="resume-item" id="resume-preview">
+                <!-- <div class="resume-item" id="resume-preview">
                 <div class="resume-preview-container">
                     <div class="resume-preview-row basic-info">
                         <div class="resume-preview-title name">
@@ -208,12 +199,14 @@
                     </div>
                 </div>
             </div> -->
-        </div>
-    </main>
-    <div id="cover-spin"></div>
-</body>
-<footer>
-    <%- include layout/footer %>
+            </div>
+        </main>
+        <div id="cover-spin"></div>
+    </body>
+    <footer>
+        <%- include layout/footer %>
         <script src="/js/utils/moment.js"></script>
+        <script src="/js/preview.js"></script>
         <script src="/js/apply.js"></script>
-</footer>
+    </footer>
+</html>

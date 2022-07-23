@@ -139,5 +139,58 @@ describe("user", () => {
             expect(res2).to.have.status(400);
             expect(res2.body.error).to.equal("Lack of necessary information!");
         });
+
+        it("sign in with wrong password by employee", async () => {
+            const user1 = users[2];
+            const user = {
+                email: user1.email,
+                password: "wrongpassword",
+                role: "employee",
+            };
+
+            const res = await requester.post("/api/1.0/signin").send(user);
+
+            expect(res).to.have.status(403);
+            expect(res.body.error).to.equal("Wrong password!");
+        });
+
+        it("sign in with not exist", async () => {
+            const user = {
+                email: "notexist@mail.com",
+                password: "wrongpassword",
+                role: "employee",
+            };
+
+            const res = await requester.post("/api/1.0/signin").send(user);
+            expect(res).to.have.status(403);
+            expect(res.body.error).to.equal("Email is not exist!");
+        });
+
+        it("sign in with malicious password", async () => {
+            const user1 = users[2];
+            const user = {
+                email: user1.email,
+                password: '" OR 1=1; -- ',
+                role: "employee",
+            };
+
+            const res = await requester.post("/api/1.0/signin").send(user);
+            expect(res).to.have.status(403);
+            expect(res.body.error).to.equal("Wrong password!");
+        });
+    });
+
+    describe("user log out", () => {
+        it("log out", async () => {
+            const res = await requester.get("/logout");
+            expect(res).to.have.status(200);
+            expect(res).to.not.have.cookie("Authorization");
+        });
+
+        it("log out without cookie Authorization", async () => {
+            const res = await requester.get("/logout");
+            expect(res).to.have.status(401);
+            expect(res.body.error).to.equal("Unauthorized");
+        });
     });
 });

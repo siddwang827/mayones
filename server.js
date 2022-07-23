@@ -33,8 +33,9 @@ app.use([
 ]);
 
 app.use("/api/" + API_VERSION, [
-    require("./server/routes/api/userActioin_api"),
-    require("./server/routes/api/resume_api"),
+    require("./server/routes/api/employee_action_api"),
+    require("./server/routes/api/employer_manage_api"),
+    require("./server/routes/api/edit_resume_api"),
     require("./server/routes/api/auth_api"),
 ]);
 

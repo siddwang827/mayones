@@ -1,16 +1,15 @@
-require('dotenv').config();
+require("dotenv").config();
 const { TOKEN_SECRET, PORT } = process.env; // 30 days by seconds
-const { User } = require('../server/models/user_model')
-const jwt = require('jsonwebtoken');
-const { promisify } = require('util');
-const multer = require('multer')
+const { User } = require("../server/models/user_model");
+const jwt = require("jsonwebtoken");
+const { promisify } = require("util");
+const multer = require("multer");
 
-
-const storage = multer.memoryStorage()
+const storage = multer.memoryStorage();
 const upload = multer({
     storage,
-    limits: { fileSize: 3000000 }
-})
+    limits: { fileSize: 3000000 },
+});
 
 const asyncHandlerWrapper = (fn) => {
     return function (req, res, next) {
@@ -44,15 +43,16 @@ const thoundsAddComma = (value) => {
         let re = /(\d{1,3})(?=(\d{3})+$)/g;
 
         return arr[0].replace(re, "$1,") + (arr.length == 2 ? "." + arr[1] : "");
+    } else {
+        return "";
     }
-    else { return '' }
-}
+};
 
 const authentication = (required) => {
     return async function (req, res, next) {
-
+        let isApi = req.originalUrl.split("/")[1] === "api" ? true : false;
         // use cookie for ejs authorization
-        let accessToken = req.cookies.Authorization
+        let accessToken = req.cookies.Authorization;
         // user header jwt token
         // let accessToken = req.get('Authorization');
         // if (!accessToken) {
@@ -61,10 +61,13 @@ const authentication = (required) => {
         // }
 
         if (accessToken) {
-            accessToken = accessToken.replace('Bearer ', '');
-            if (accessToken == 'null') {
-                res.status(401).json({ error: 'Unauthorized' });
-                return;
+            accessToken = accessToken.replace("Bearer ", "");
+            if (accessToken == "null") {
+                if (isApi) {
+                    res.status(401).json({ error: "Unauthorized" });
+                    return;
+                }
+                return res.render("signin", { header: { role: "employee" } });
             }
 
             try {
@@ -73,52 +76,58 @@ const authentication = (required) => {
                 const userDetail = await User.getUserDetail(user.email);
 
                 if (!userDetail) {
-                    res.status(403).json({ error: 'Forbidden' });
+                    if (isApi) {
+                        res.status(403).json({ error: "Forbidden" });
+                        return;
+                    }
+                    return res.render("signin", { header: { role: "employee" } });
                 } else {
-                    next()
+                    next();
                 }
-                return
-
+                return;
             } catch (err) {
-                console.log(err)
-                res.status(403).json({ error: 'Forbidden' });
+                console.log(err);
+                if (isApi) {
+                    res.status(403).json({ error: "Forbidden" });
+                    return;
+                }
+                return res.render("signin", { header: { role: "employee" } });
+            }
+        } else {
+            if (required) {
+                if (isApi) {
+                    res.status(401).json({ error: "Unauthorized" });
+                    return;
+                }
+                return res.render("signin", { header: { role: "employee" } });
+            } else {
+                next();
                 return;
             }
         }
-        else {
-            if (required) {
-                res.status(401).json({ error: 'Unauthorized' });
-                return;
-            }
-            else {
-                next()
-                return
-            }
-        };
     };
-}
+};
 const setViewHeader = (view) => {
     return async function (req, res, next) {
         if (!req.user) {
-            let headerInfo = { view }
+            let headerInfo = { view };
 
-            req.header = headerInfo
+            req.header = headerInfo;
             next();
-            return
+            return;
         }
 
         let headerInfo = {
             view,
             auth: true,
             role: req.user.role,
-            username: req.user.username
-        }
-        req.header = headerInfo
-        next()
-        return
-    }
-}
-
+            username: req.user.username,
+        };
+        req.header = headerInfo;
+        next();
+        return;
+    };
+};
 
 module.exports = {
     upload,
@@ -126,5 +135,5 @@ module.exports = {
     rateLimiterRoute,
     thoundsAddComma,
     authentication,
-    setViewHeader
-}
+    setViewHeader,
+};
