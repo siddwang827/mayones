@@ -1,5 +1,4 @@
-const followJob = document.querySelectorAll(".follow-heart");
-followJob.forEach((job) => job.addEventListener("click", clickHeart));
+$(".follow-heart").on("click", clickHeart);
 
 async function clickHeart(event) {
     event.preventDefault();

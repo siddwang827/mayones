@@ -1,4 +1,4 @@
-$("#profile-btn").on("click", (event) => {
+$("#profile-btn").on("click", () => {
     $("#profile-dropdown").fadeToggle(200);
 });
 
