@@ -1,17 +1,12 @@
-const router = require('express').Router();
-const { asyncHandlerWrapper, authentication } = require('../../../utils/utils.js')
+const router = require("express").Router();
+const { AUTH } = require("../../models/user_model");
+const { asyncHandlerWrapper, authentication } = require("../../../utils/utils.js");
+const { signIn, signUp, logout } = require("../../controllers/user_controller");
 
-const {
-    signIn,
-    signUp,
-} = require('../../controllers/user_controller')
+router.route("/signup").post(asyncHandlerWrapper(signUp));
 
+router.route("/signin").post(asyncHandlerWrapper(signIn));
 
-router.route('/signup')
-    .post(asyncHandlerWrapper(signUp));
+router.route("/logout").get(authentication(AUTH.required), asyncHandlerWrapper(logout));
 
-router.route('/signin')
-    .post(asyncHandlerWrapper(signIn));
-
-
-module.exports = router
+module.exports = router;

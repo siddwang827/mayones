@@ -10,6 +10,7 @@ chai.use(deepEqualInAnyOrder);
 
 const assert = chai.assert;
 const expect = chai.expect;
+const agent = chai.request.agent(app);
 const requester = chai.request(app).keepOpen();
 
 before(async () => {
@@ -24,5 +25,6 @@ before(async () => {
 module.exports = {
     assert,
     expect,
+    agent,
     requester,
 };
