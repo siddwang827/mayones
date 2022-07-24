@@ -1,7 +1,5 @@
-const { expect, requester, assert } = require("./set_up");
+const { expect, requester, assert, agent } = require("./set_up");
 const { users } = require("./fake_data");
-const { pool } = require("../server/models/mysql_conn");
-const { User } = require("../server/models/user_model");
 const TOKEN_EXPIRE_TIME = parseInt(process.env.TOKEN_EXPIRE_TIME);
 
 describe("user", () => {
@@ -181,14 +179,24 @@ describe("user", () => {
     });
 
     describe("user log out", () => {
-        it("log out", async () => {
-            const res = await requester.get("/logout");
-            expect(res).to.have.status(200);
-            expect(res).to.not.have.cookie("Authorization");
+        it("log out with cookie Authorization", async () => {
+            const user1 = users[2];
+            const user = {
+                email: user1.email,
+                password: user1.password,
+                role: "employee",
+            };
+            const resSignin = await agent.post("/api/1.0/signin").send(user);
+            expect(resSignin).to.have.cookie("Authorization");
+
+            const resLogout = await agent.get("/api/1.0/logout");
+            expect(resLogout).to.have.status(200);
+            expect(resLogout).to.not.have.cookie("Authorization");
+            agent.close();
         });
 
         it("log out without cookie Authorization", async () => {
-            const res = await requester.get("/logout");
+            const res = await requester.get("/api/1.0/logout");
             expect(res).to.have.status(401);
             expect(res.body.error).to.equal("Unauthorized");
         });

@@ -8,13 +8,9 @@ function previewResume(resumeDetail) {
     const container = $("#container");
     const resumeDiv = $(`<div class="resume-preview-item" id="resume-preview"></div>`);
     const resumeContainer = $(`<div class="resume-preview-container"></div>`);
-
     const basicInfoContainer = $(`<div class="resume-preview-row basic-info"></div>`);
-
     const userNameDiv = $(`<div class="resume-preview-title name">${resumeDetail.user_name}</div>`);
-
     const profileDiv = $(`<div class="resume-preview-content profile"></div>`);
-
     const genderDiv = $(`
         <div class="resume-preview-content-item basic-info">
             <i class="user icon"></i>

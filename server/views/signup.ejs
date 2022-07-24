@@ -1,39 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <%- include /layout/head %>
-        <link rel="stylesheet" type="text/css" href="/css/main.css" />
-        <link rel="stylesheet" type="text/css" href="/css/auth.css" />
-    </head>
 
-    <body>
-        <header><%- include /layout/header %></header>
-        <main>
-            <div class="sign-up profile-container disable">
-                <div class="auth-header">SIGN UP</div>
-                <div class="greeting">Hi <%=header.role%><br /><br />Welcome to MAYONES</div>
-                <div class="title">Username</div>
-                <input class="name-input" id="signup-name-input" name="name" placeholder="不超過20個字元" />
-                <div class="title">Email</div>
-                <input class="email-input" id="signup-email-input" name="email" placeholder="example@gmail.com" />
-                <div class="title">Password</div>
-                <input
-                    class="password-input"
-                    id="signup-password-input"
-                    name="password"
-                    type="password"
-                    minlength="8"
-                    required
-                    placeholder="介於8-20個字元"
-                />
-                <div class="ask-sign">Already have an account? <a href="/<%=header.role%>/signin" id="anchor-sign-in">Sign In</a></div>
-                <button class="btn-submit" id="btn-signup" type="button">Sign Up</button>
-            </div>
-        </main>
+<head>
+  <%- include /layout/head %>
+  <link rel="stylesheet" type="text/css" href="/css/main.css" />
+  <link rel="stylesheet" type="text/css" href="/css/auth.css" />
+</head>
 
-        <footer>
-            <%- include /layout/footer %>
-            <script src="/js/auth.js"></script>
-        </footer>
-    </body>
+<body>
+  <header><%- include /layout/header %></header>
+  <main>
+    <div class="sign-up profile-container disable">
+      <div class="auth-header">SIGN UP</div>
+      <div class="greeting">Hi <%=header.role%><br /><br />Welcome to MAYONES</div>
+      <div class="title">Username</div>
+      <input class="name-input" id="signup-name-input" name="name" placeholder="不超過20個字元" />
+      <div class="title">Email</div>
+      <input class="email-input" id="signup-email-input" name="email" placeholder="example@gmail.com" />
+      <div class="title">Password</div>
+      <input class="password-input" id="signup-password-input" name="password" type="password" minlength="8" required placeholder="介於8-20個字元" />
+      <div class="ask-sign">Already have an account? <a href="/<%=header.role%>/signin" id="anchor-sign-in">Sign In</a></div>
+      <button class="btn-submit" id="btn-signup" type="button">Sign Up</button>
+    </div>
+  </main>
+
+  <footer>
+    <%- include /layout/footer %>
+    <script src="/js/auth.js"></script>
+  </footer>
+</body>
+
 </html>

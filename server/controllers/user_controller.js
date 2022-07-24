@@ -129,8 +129,7 @@ const signIn = async (req, res) => {
     }
 };
 
-const logout = async (req, res) => {
-    console.log(1);
+const logOut = async (req, res) => {
     res.clearCookie("Authorization", { path: "/" });
     res.status(200).json({ result: "Log out sucess" });
     return;
@@ -141,5 +140,5 @@ module.exports = {
     getSignInPage,
     signIn,
     signUp,
-    logout,
+    logOut,
 };

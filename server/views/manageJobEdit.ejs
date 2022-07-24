@@ -3,9 +3,9 @@
 
 <head>
     <%- include /layout/head %>
-        <link rel="stylesheet" type="text/css" href="/css/main.css">
-        <link rel="stylesheet" type="text/css" href="/css/manage.css">
-        <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/decoupled-document/ckeditor.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/manage.css">
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/decoupled-document/ckeditor.js"></script>
 </head>
 
 <body>
@@ -25,7 +25,7 @@
                             <%= job.job_title%>
                         </div>
                     </a>
-                    <%}%>
+                <% } %>
             </div>
             <form class="ui form" id="job-form">
                 <div class="form-group">
@@ -82,7 +82,7 @@
                                 <option value="<%= location%>" <%=jobDetails.location===`${location}` ? 'selected' : "" %>>
                                     <%= location%>
                                 </option>
-                                <%}%>
+                            <%}%>
                         </select>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
                                 <option class="category-item" value="<%=category%>" <%=jobDetails.category===`${category}` ? 'selected' : "" %>>
                                     <%=category%>
                                 </option>
-                                <%}%>
+                            <%}%>
                         </select>
                     </div>
                 </div>
@@ -114,7 +114,7 @@
                                 <option class="category-item" value="<%=position[1]%>" <%=jobDetails.position===`${position[0]}` ? 'selected' : "" %>>
                                     <%=position[0]%>
                                 </option>
-                                <%}%>
+                            <%}%>
                         </select>
                     </div>
                 </div>
@@ -127,7 +127,7 @@
                                 <option value="<%=tag[1]%>" <%=jobDetails.tags.includes(`${tag[0]}`) ? 'selected' : "" %>>
                                     <%=tag[0]%>
                                 </option>
-                                <%}%>
+                            <%}%>
                         </select>
                     </div>
                 </div>
@@ -174,8 +174,8 @@
 </body>
 <footer>
     <%- include layout/footer %>
-        <script src="/js/utils/moment.js"></script>
-        <script src="/js/manageJob.js"></script>
-        <script src="/js/manageJobEdit.js"></script>
-        <script src="/js/ckeditor.js"></script>
+    <script src="/js/utils/moment.js"></script>
+    <script src="/js/manageJob.js"></script>
+    <script src="/js/manageJobEdit.js"></script>
+    <script src="/js/ckeditor.js"></script>
 </footer>

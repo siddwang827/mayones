@@ -162,7 +162,7 @@ async function main() {
     await closeConnection();
 }
 
-// execute when called directly.
+// execute node fake_data_generator.js directly
 if (require.main === module) {
     main();
 }

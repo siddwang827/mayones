@@ -1,212 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <%- include /layout/head %>
-        <link rel="stylesheet" type="text/css" href="/css/main.css" />
-        <link rel="stylesheet" type="text/css" href="/css/apply.css" />
-    </head>
 
-    <body>
-        <header><%- include layout/header %></header>
-        <main>
-            <div class="container" id="container">
-                <div class="resume-item">
-                    <div class="apply-title-info">
-                        <img class="company-logo" src="<%=opening.logo_image%>" />
-                        <a class="apply-title" href="/company/<%=opening.company_id%>" target="_blank"> <%=opening.brand%> </a> |
-                        <a class="apply-title" href="/job/<%=opening.job_id%>" target="_blank"> <%=opening.job_title%> </a>
-                        <div id="apply-btn" class="ui animated big button to-right" tabindex="0">
-                            <div class="visible content">確認投遞</div>
-                            <div class="hidden content">
-                                <i class="paper plane outline icon"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <h2>選擇欲投遞之履歷</h2>
-                    <div class="ui selection dropdown" style="width: 100%; margin: 0">
-                        <input type="hidden" name="gender" />
-                        <i class="dropdown icon"></i>
-                        <div class="default text">Resume</div>
-                        <div class="menu">
-                            <% for (let resume of allResumes) { %>
-                            <div class="item resume" resume-id="<%=resume.resume_id%>"><%=resume.resume_name%></div>
-                            <% } %>
-                        </div>
-                    </div>
-                </div>
-                <!-- <div class="resume-item" id="resume-preview">
-                <div class="resume-preview-container">
-                    <div class="resume-preview-row basic-info">
-                        <div class="resume-preview-title name">
-                            王浩宇
-                        </div>
-                        <div class="resume-preview-content profile">
-                            <div class="resume-preview-content-item">
-                                <i class="user icon"></i>
-                                <div id="gender" class="profile-content">男</div>
-                            </div>
-                            <div class="resume-preview-content-item">
-                                <i class="birthday cake icon"></i>
-                                <div id="birthday" class="profile-content">1991-08-27</div>
-                            </div>
-                            <div class="resume-preview-content-item">
-                                <i class="phone icon"></i>
-                                <div id="phone" class="profile-content">09123456789</div>
-                            </div>
-                            <div class="resume-preview-content-item">
-                                <i class="envelope icon"></i>
-                                <div id="contact-email" class="profile-content">123@123.com</div>
-                            </div>
-                            <div class="resume-preview-content-item">
-                                <i class="globe icon"></i>
-                                <a href="https://www.google.com">
-                                    <div id="website" class="profile-content">https://www.google.com</div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="resume-preview-row detail-info">
-                        <div class="resume-preview-title bio">
-                            簡歷 <span class="title-en">Bio</span>
-                        </div>
-                        <div class="resume-preview-content-item">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ligula tellus, porta in elit at, sollicitudin
-                            tempor lectus. Aliquam non porttitor odio, condimentum aliquam erat. Maecenas nec lacus et erat mollis pulvinar sit
-                            amet a orci. Maecenas ut placerat urna, tempor feugiat augue. Nulla luctus, nunc vel iaculis auctor, sapien nunc
-                            rhoncus velit, quis rutrum massa felis non nisl. Curabitur sagittis auctor venenatis. Aliquam maximus lacinia
-                            ultrices. Nunc ac mattis ante. Mauris ultricies est diam, at ullamcorper turpis euismod cursus. Proin at varius urna.
+<head>
+  <%- include /layout/head %>
+  <link rel="stylesheet" type="text/css" href="/css/main.css" />
+  <link rel="stylesheet" type="text/css" href="/css/apply.css" />
+</head>
 
-                            Nulla rhoncus arcu vitae elit semper molestie. Donec sit amet aliquet massa, id euismod velit. Cras pharetra tincidunt
-                            tellus et pharetra. Cras a nunc eget elit mattis hendrerit. Aliquam in suscipit libero. Aliquam dapibus quis turpis eu
-                            placerat. Aenean sed quam tempus, blandit lectus in, pellentesque mauris. Fusce lorem ipsum, tempor sed velit sit
-                            amet, consequat efficitur lectus. Aliquam malesuada lacinia justo, quis fringilla lectus facilisis quis. Aenean sed
-                            risus sit amet eros vehicula auctor et sit amet urna. Quisque congue mollis porttitor. Lorem ipsum dolor sit amet,
-                            consectetur adipiscing elit.
-                        </div>
-                    </div>
-                    <div class="resume-preview-row detail-info">
-                        <div class="resume-preview-title skills">
-                            專業技能 <span class="title-en">Skills</span>
-                        </div>
-                        <div class="profile-content">
-                            <div class="resume-preview-content-item">
-                                <i class="check circle icon"></i>
-                                <div class="skill-name">煮飯</div>
-                                <div class="skill-proficiency">初學 beginner</div>
-                            </div>
-                            <div class="resume-preview-content-item">
-                                <div class="skill-intro">蛋炒飯是我的拿手絕活</div>
-                            </div>
-                        </div>
-                        <div class="profile-content">
-                            <div class="resume-preview-content-item">
-                                <i class="check circle icon"></i>
-                                <div class="skill-name">跑步</div>
-                                <div class="skill-proficiency">熟練 Advanced</div>
-                            </div>
-                            <div class="resume-preview-content-item">
-                                <div class="skill-intro">鐵人三項我最行</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="resume-preview-row detail-info">
-                        <div class="resume-preview-title skills">
-                            專案作品 <span class="title-en">Protfolios</span>
-                        </div>
-                        <div class="profile-content  project">
-                            <div class="project-col project-info">
-                                <div class="resume-preview-content-item">
-                                    <i class="linkify icon"></i>
-                                    <a href="https://www.google.com">
-                                        <div class="project-title">ccPartner</div>
-                                    </a>
-                                </div>
-                                <div class="resume-preview-content-item">
-                                    <div class="skill-intro">
-                                        - 使用python完成的專案
-                                        - 使用python完成的專案
-                                        - 使用python完成的專案
-                                        - 使用python完成的專案
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="project-col">
-                                <img class="project-img" src="/img/default.jpg">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="resume-preview-row detail-info">
-                        <div class="resume-preview-title experience">
-                            工作經歷 <span class="title-en">Experience</span>
-                        </div>
-                        <div class="profile-content experience">
-                            <div class="resume-preview-content-item title">
-                                <i class="circle icon"></i>
-                                <div class="experience-position">職位</div>
-                                <div class="experience-org">組織名稱</div>
-                                <div class="experience-period"><span>1999-01</span> ~ <span></span>2004-05</div>
-                            </div>
-                            <div class="resume-preview-content-item">
-                                <div class="experience-intro">hsfdsshdh
-                                    dshshsd
-                                    hddhsfdfdh<br>
-                                    shlsadhl<br>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="profile-content experience">
-                            <div class="resume-preview-content-item title">
-                                <i class="circle icon"></i>
-                                <div class="experience-position">職位</div>
-                                <div class="experience-org">組織名稱</div>
-                                <div class="experience-period"><span>1999-01</span> ~ <span></span>2004-05</div>
-                            </div>
-                            <div class="resume-preview-content-item">
-                                <div class="experience-intro">hsfdsshdh
-                                    dshshsd
-                                    hddhsfdfdh<br>
-                                    shlsadhl<br>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="resume-preview-row detail-info">
-                        <div class="resume-preview-title education">
-                            學歷 <span class="title-en">Education</span>
-                        </div>
-                        <div class="profile-content education">
-                            <div class="resume-preview-content-item title">
-                                <i class="book icon"></i>
-                                <div class="education-title">學校</div>
-                                <div class="education-period"><span>1999-01</span> ~ <span></span>2004-05</div>
-                            </div>
-                            <div class="resume-preview-content-item">
-                                <div class="education-department">系所</div>
-                                <div class="education-degree">學位</div>
-                            </div>
-                        </div>
-                        <div class="profile-content education">
-                            <div class="resume-preview-content-item title">
-                                <i class="book icon"></i>
-                                <div class="education-title">學校</div>
-                                <div class="education-period"><span>1999-01</span> ~ <span></span>2004-05</div>
-                            </div>
-                            <div class="resume-preview-content-item">
-                                <div class="education-department">材料所</div>
-                                <div class="education-degree">碩士</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
+<body>
+  <header><%- include layout/header %></header>
+  <main>
+    <div class="container" id="container">
+      <div class="resume-item">
+        <div class="apply-title-info">
+          <img class="company-logo" src="<%=opening.logo_image%>" />
+          <a class="apply-title" href="/company/<%=opening.company_id%>" target="_blank"> <%=opening.brand%> </a> |
+          <a class="apply-title" href="/job/<%=opening.job_id%>" target="_blank"> <%=opening.job_title%> </a>
+          <div id="apply-btn" class="ui animated big button to-right" tabindex="0">
+            <div class="visible content">確認投遞</div>
+            <div class="hidden content">
+              <i class="paper plane outline icon"></i>
             </div>
-        </main>
-        <div id="cover-spin"></div>
-    </body>
-    <footer>
-        <%- include layout/footer %>
-        <script src="/js/utils/moment.js"></script>
-        <script src="/js/preview.js"></script>
-        <script src="/js/apply.js"></script>
-    </footer>
+          </div>
+        </div>
+        <h2>選擇欲投遞之履歷</h2>
+        <div class="ui selection dropdown" style="width: 100%; margin: 0">
+          <input type="hidden" name="gender" />
+          <i class="dropdown icon"></i>
+          <div class="default text">Resume</div>
+          <div class="menu">
+            <% for (let resume of allResumes) { %>
+            <div class="item resume" resume-id="<%=resume.resume_id%>"><%=resume.resume_name%></div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div id="cover-spin"></div>
+</body>
+<footer>
+  <%- include layout/footer %>
+  <script src="/js/utils/moment.js"></script>
+  <script src="/js/preview.js"></script>
+  <script src="/js/apply.js"></script>
+</footer>
+
 </html>

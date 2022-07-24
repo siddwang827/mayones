@@ -53,12 +53,6 @@ const authentication = (required) => {
         let isApi = req.originalUrl.split("/")[1] === "api" ? true : false;
         // use cookie for ejs authorization
         let accessToken = req.cookies.Authorization;
-        // user header jwt token
-        // let accessToken = req.get('Authorization');
-        // if (!accessToken) {
-        //     res.status(401).json({ error: 'Unauthorized' });
-        //     return;
-        // }
 
         if (accessToken) {
             accessToken = accessToken.replace("Bearer ", "");
