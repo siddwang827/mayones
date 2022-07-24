@@ -77,10 +77,11 @@ input {
     border-radius: 5px;
 }
 
+/* 
 .password-input {
     font-size: 14px;
     letter-spacing: 1px;
-}
+} */
 
 input:focus {
     outline: none;

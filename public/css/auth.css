@@ -86,10 +86,10 @@ input {
 }
 
 
-.password-input {
+/* .password-input {
     font-size: 14px;
     letter-spacing: 1px;
-}
+} */
 
 input:focus {
     outline: none;

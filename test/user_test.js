@@ -1,7 +1,5 @@
 const { expect, requester, assert, agent } = require("./set_up");
 const { users } = require("./fake_data");
-const { pool } = require("../server/models/mysql_conn");
-const { User } = require("../server/models/user_model");
 const TOKEN_EXPIRE_TIME = parseInt(process.env.TOKEN_EXPIRE_TIME);
 
 describe("user", () => {
@@ -194,7 +192,6 @@ describe("user", () => {
             const resLogout = await agent.get("/api/1.0/logout");
             expect(resLogout).to.have.status(200);
             expect(resLogout).to.not.have.cookie("Authorization");
-
             agent.close();
         });
 

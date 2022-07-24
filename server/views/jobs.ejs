@@ -2,162 +2,152 @@
 <html lang="en">
 
 <head>
-    <%- include layout/head %>
-        <link rel="stylesheet" type="text/css" href="/css/main.css">
-        <link rel="stylesheet" type="text/css" href="/css/job.css">
+  <%- include layout/head %>
+  <link rel="stylesheet" type="text/css" href="/css/main.css">
+  <link rel="stylesheet" type="text/css" href="/css/job.css">
 </head>
 
 <body>
-    <header>
-        <%- include layout/header %>
-    </header>
-    <main>
-        <div class="container">
-            <div id="search-bar" class="search-bar-container">
-                <div class="ui icon input">
-                    <input id="search-input" type="text" placeholder="請輸入欲搜尋之關鍵字">
-                    <i id="search-btn" class="inverted circular search link icon" input-id="search-input"></i>
-                </div>
-                <div class="search-filter-container">
-                    <div class="ui menu">
-                        <div class="ui pointing dropdown link item">
-                            <span class="text">選擇地點</span>
-                            <i class="dropdown icon"></i>
-                            <div class="menu">
-                                <% for (let location of jobLocations) { %>
-                                    <div class="item query" query="location">
-                                        <%=location%>
-                                    </div>
-                                    <% } %>
-
-                            </div>
-                        </div>
-                        <div class="ui pointing dropdown link item">
-                            <span class="text">選擇產業</span>
-                            <i class="dropdown icon"></i>
-                            <div class="menu">
-                                <% for (let category of categoryPositions) { %>
-                                    <div class="item">
-                                        <i class="dropdown icon"></i>
-                                        <span class="text">
-                                            <%= category.category %>
-                                        </span>
-                                        <div class="menu">
-                                            <% for (let position of category.position) { %>
-                                                <div class="item query" query="position">
-                                                    <%=position%>
-                                                </div>
-                                                <% } %>
-                                        </div>
-                                    </div>
-                                    <% } %>
-                            </div>
-                        </div>
-                        <div class="ui pointing dropdown link item">
-                            <span class="text">工作類型</span>
-                            <i class="dropdown icon"></i>
-                            <div class="menu">
-                                <% for (let type of jobTypes) { %>
-                                    <div class="item query" query="jobType">
-                                        <%= type %>
-                                    </div>
-                                    <% } %>
-                            </div>
-                        </div>
-                        <div class="ui pointing dropdown link item">
-                            <span class="text">工作標籤</span>
-                            <i class="dropdown icon"></i>
-                            <div class="menu">
-                                <% for (let tag of jobTags) { %>
-                                    <div class="item query" query="tag">
-                                        <%= tag %>
-                                    </div>
-                                    <% } %>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tag-list">
-            </div>
-            <div id="jobs" class="jobs-container">
-                <%if (!jobs[0]) {%>
-                    <h1>很抱歉，無符合條件的職缺！</h1>
-                    <%}%>
-                        <% for (let job of jobs) { %>
-                            <div class="job-card">
-                                <div class="job-card-img">
-                                    <a href="job/<%=job.id%>">
-                                        <img src=<%=job.banner_image%>>
-                                    </a>
-                                </div>
-                                <div class="line"></div>
-                                <div class="job-card-content">
-                                    <div class="job-card-content-title">
-                                        <%=job.title%>
-                                    </div>
-                                    <a href="company/<%=job.company_id%>">
-                                        <div class="job-card-content-brand">
-                                            <%=job.brand%>
-                                        </div>
-                                    </a>
-                                    <div class="job-card-content-location">
-                                        <svg width="16px" height="16px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
-                                            <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                transform="translate(4 2)">
-                                                <path
-                                                    d="m6.5 16.5407715.6311176-.7118691c.71585099-.8191184 1.36011688-1.5983525 1.93279767-2.3377022l.4733382-.6239608c1.97516433-2.6615039 2.96274653-4.77276704 2.96274653-6.33378943 0-3.33218241-2.6862915-6.03344997-6-6.03344997s-6 2.70126756-6 6.03344997c0 1.56102239.98758218 3.67228553 2.96274653 6.33378943l.4733382.6239608c.73630387.9505925 1.5909423 1.9671163 2.56391527 3.0495713z" />
-                                                <circle cx="6.5" cy="6.5" r="2.5" />
-                                            </g>
-                                        </svg>
-                                        <a href="/jobs?location[]=<%=job.location%>">
-                                            <%=job.location%>
-                                        </a>
-                                    </div>
-                                    <div class="job-card-content-catergory">
-                                        <svg width="16px" height="16px" viewBox="0 0 35 35" data-name="Layer 2"
-                                            id="e73e2821-510d-456e-b3bd-9363037e93e3" xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M11.933,15.055H3.479A3.232,3.232,0,0,1,.25,11.827V3.478A3.232,3.232,0,0,1,3.479.25h8.454a3.232,3.232,0,0,1,3.228,3.228v8.349A3.232,3.232,0,0,1,11.933,15.055ZM3.479,2.75a.73.73,0,0,0-.729.728v8.349a.73.73,0,0,0,.729.728h8.454a.729.729,0,0,0,.728-.728V3.478a.729.729,0,0,0-.728-.728Z" />
-                                            <path
-                                                d="M11.974,34.75H3.52A3.233,3.233,0,0,1,.291,31.521V23.173A3.232,3.232,0,0,1,3.52,19.945h8.454A3.232,3.232,0,0,1,15.2,23.173v8.348A3.232,3.232,0,0,1,11.974,34.75ZM3.52,22.445a.73.73,0,0,0-.729.728v8.348a.73.73,0,0,0,.729.729h8.454a.73.73,0,0,0,.728-.729V23.173a.729.729,0,0,0-.728-.728Z" />
-                                            <path
-                                                d="M31.522,34.75H23.068a3.233,3.233,0,0,1-3.229-3.229V23.173a3.232,3.232,0,0,1,3.229-3.228h8.454a3.232,3.232,0,0,1,3.228,3.228v8.348A3.232,3.232,0,0,1,31.522,34.75Zm-8.454-12.3a.73.73,0,0,0-.729.728v8.348a.73.73,0,0,0,.729.729h8.454a.73.73,0,0,0,.728-.729V23.173a.729.729,0,0,0-.728-.728Z" />
-                                            <path
-                                                d="M27.3,15.055a7.4,7.4,0,1,1,7.455-7.4A7.437,7.437,0,0,1,27.3,15.055Zm0-12.3a4.9,4.9,0,1,0,4.955,4.9A4.935,4.935,0,0,0,27.3,2.75Z" />
-                                        </svg>
-                                        <a class="job-card-category-item" href="/jobs?category[]=<%= job.category%>">
-                                            <%= job.category%>
-                                        </a>
-                                        <a class="job-card-category-item" href="/jobs?position[]=<%= job.position%>">
-                                            <%= job.position%>
-                                        </a>
-                                    </div>
-                                    <% if(job.tags[0]) {%>
-                                        <div class="job-card-content-tags">
-                                            <svg width="16px" height="16px" viewBox="0 0 32 32" id="i-tag" xmlns="http://www.w3.org/2000/svg"
-                                                fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                                <circle cx="24" cy="8" r="2" />
-                                                <path d="M2 18 L18 2 30 2 30 14 14 30 Z" />
-                                            </svg>
-
-                                            <% for (let tag of job.tags) { %>
-                                                <a class="job-tag" href="/jobs?tag[]=<%= tag%>">
-                                                    <%= tag%>
-                                                </a>
-                                                <% } %>
-                                        </div>
-                                        <%}%>
-                                </div>
-                            </div>
-                            <%} %>
-            </div>
+  <header>
+    <%- include layout/header %>
+  </header>
+  <main>
+    <div class="container">
+      <div id="search-bar" class="search-bar-container">
+        <div class="ui icon input">
+          <input id="search-input" type="text" placeholder="請輸入欲搜尋之關鍵字">
+          <i id="search-btn" class="inverted circular search link icon" input-id="search-input"></i>
         </div>
-    </main>
-    <footer>
-        <%- include layout/footer %>
-            <script src="/js/job.js"></script>
-    </footer>
+        <div class="search-filter-container">
+          <div class="ui menu">
+            <div class="ui pointing dropdown link item">
+              <span class="text">選擇地點</span>
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                <% for (let location of jobLocations) { %>
+                <div class="item query" query="location">
+                  <%=location%>
+                </div>
+                <% } %>
+              </div>
+            </div>
+            <div class="ui pointing dropdown link item">
+              <span class="text">選擇產業</span>
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                <% for (let category of categoryPositions) { %>
+                <div class="item">
+                  <i class="dropdown icon"></i>
+                  <span class="text">
+                    <%= category.category %>
+                  </span>
+                  <div class="menu">
+                    <% for (let position of category.position) { %>
+                    <div class="item query" query="position">
+                      <%=position%>
+                    </div>
+                    <% } %>
+                  </div>
+                </div>
+                <% } %>
+              </div>
+            </div>
+            <div class="ui pointing dropdown link item">
+              <span class="text">工作類型</span>
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                <% for (let type of jobTypes) { %>
+                <div class="item query" query="jobType">
+                  <%= type %>
+                </div>
+                <% } %>
+              </div>
+            </div>
+            <div class="ui pointing dropdown link item">
+              <span class="text">工作標籤</span>
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                <% for (let tag of jobTags) { %>
+                <div class="item query" query="tag">
+                  <%= tag %>
+                </div>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tag-list">
+      </div>
+      <div id="jobs" class="jobs-container">
+        <%if (!jobs[0]) {%>
+        <h1>很抱歉，無符合條件的職缺！</h1>
+        <%}%>
+        <% for (let job of jobs) { %>
+        <div class="job-card">
+          <div class="job-card-img">
+            <a href="job/<%=job.id%>">
+              <img src=<%=job.banner_image%>>
+            </a>
+          </div>
+          <div class="line"></div>
+          <div class="job-card-content">
+            <div class="job-card-content-title">
+              <%=job.title%>
+            </div>
+            <a href="company/<%=job.company_id%>">
+              <div class="job-card-content-brand">
+                <%=job.brand%>
+              </div>
+            </a>
+            <div class="job-card-content-location">
+              <svg width="16px" height="16px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(4 2)">
+                  <path d="m6.5 16.5407715.6311176-.7118691c.71585099-.8191184 1.36011688-1.5983525 1.93279767-2.3377022l.4733382-.6239608c1.97516433-2.6615039 2.96274653-4.77276704 2.96274653-6.33378943 0-3.33218241-2.6862915-6.03344997-6-6.03344997s-6 2.70126756-6 6.03344997c0 1.56102239.98758218 3.67228553 2.96274653 6.33378943l.4733382.6239608c.73630387.9505925 1.5909423 1.9671163 2.56391527 3.0495713z" />
+                  <circle cx="6.5" cy="6.5" r="2.5" />
+                </g>
+              </svg>
+              <a href="/jobs?location[]=<%=job.location%>">
+                <%=job.location%>
+              </a>
+            </div>
+            <div class="job-card-content-catergory">
+              <svg width="16px" height="16px" viewBox="0 0 35 35" data-name="Layer 2" id="e73e2821-510d-456e-b3bd-9363037e93e3" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.933,15.055H3.479A3.232,3.232,0,0,1,.25,11.827V3.478A3.232,3.232,0,0,1,3.479.25h8.454a3.232,3.232,0,0,1,3.228,3.228v8.349A3.232,3.232,0,0,1,11.933,15.055ZM3.479,2.75a.73.73,0,0,0-.729.728v8.349a.73.73,0,0,0,.729.728h8.454a.729.729,0,0,0,.728-.728V3.478a.729.729,0,0,0-.728-.728Z" />
+                <path d="M11.974,34.75H3.52A3.233,3.233,0,0,1,.291,31.521V23.173A3.232,3.232,0,0,1,3.52,19.945h8.454A3.232,3.232,0,0,1,15.2,23.173v8.348A3.232,3.232,0,0,1,11.974,34.75ZM3.52,22.445a.73.73,0,0,0-.729.728v8.348a.73.73,0,0,0,.729.729h8.454a.73.73,0,0,0,.728-.729V23.173a.729.729,0,0,0-.728-.728Z" />
+                <path d="M31.522,34.75H23.068a3.233,3.233,0,0,1-3.229-3.229V23.173a3.232,3.232,0,0,1,3.229-3.228h8.454a3.232,3.232,0,0,1,3.228,3.228v8.348A3.232,3.232,0,0,1,31.522,34.75Zm-8.454-12.3a.73.73,0,0,0-.729.728v8.348a.73.73,0,0,0,.729.729h8.454a.73.73,0,0,0,.728-.729V23.173a.729.729,0,0,0-.728-.728Z" />
+                <path d="M27.3,15.055a7.4,7.4,0,1,1,7.455-7.4A7.437,7.437,0,0,1,27.3,15.055Zm0-12.3a4.9,4.9,0,1,0,4.955,4.9A4.935,4.935,0,0,0,27.3,2.75Z" />
+              </svg>
+              <a class="job-card-category-item" href="/jobs?category[]=<%= job.category%>">
+                <%= job.category%>
+              </a>
+              <a class="job-card-category-item" href="/jobs?position[]=<%= job.position%>">
+                <%= job.position%>
+              </a>
+            </div>
+            <% if(job.tags[0]) {%>
+            <div class="job-card-content-tags">
+              <svg width="16px" height="16px" viewBox="0 0 32 32" id="i-tag" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <circle cx="24" cy="8" r="2" />
+                <path d="M2 18 L18 2 30 2 30 14 14 30 Z" />
+              </svg>
+              <% for (let tag of job.tags) { %>
+              <a class="job-tag" href="/jobs?tag[]=<%= tag%>">
+                <%= tag%>
+              </a>
+              <% } %>
+            </div>
+            <%}%>
+          </div>
+        </div>
+        <%} %>
+          </div>
+        </div>
+  </main>
+  <footer>
+    <%- include layout/footer %>
+    <script src="/js/job.js"></script>
+  </footer>
 </body>
 
 

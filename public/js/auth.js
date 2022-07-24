@@ -13,7 +13,6 @@ async function signUpFetch() {
     let username = $("#signup-name-input").val();
     let email = $("#signup-email-input").val();
     let password = $("#signup-password-input").val();
-
     let result = checkWhiteSpace.test(username);
 
     if (result) {
@@ -25,11 +24,15 @@ async function signUpFetch() {
         alert("請填寫完整資料！");
         return;
     }
+
     if (!checkPassword(password)) {
         alert("密碼需介於8-20個字元，且必須包含大小寫英文字母與數字！");
         return;
     }
 
+    if (username.length > 20) {
+        alert("使用者名稱不可超過20個字元！");
+    }
     const fetchResult = await fetch(`/api/1.0/signup`, {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -49,13 +52,16 @@ async function signUpFetch() {
             case "Email has already signed up!":
                 alert("此電子郵箱已經註冊！");
                 break;
+            case "Username too long!":
+                alert("使用者名稱不可超過20個字元！");
+                break;
             case "Database Query Error!":
                 alert("系統錯誤，請聯繫客服人員！");
                 break;
         }
         return;
     }
-    localStorage.setItem("access_token", "Bearer " + signUpResponse.data.access_token);
+    // localStorage.setItem("access_token", "Bearer " + signUpResponse.data.access_token);
     window.location.href = "/jobs";
 }
 
@@ -86,7 +92,7 @@ async function signInFetch() {
                 case "Invalid email format!":
                     alert("請輸入正確的電子郵箱格式！");
                     break;
-                case "Email is not exisit!":
+                case "Email is not exist!":
                     alert("此電子郵箱尚未註冊");
                     break;
                 case "Wrong password!":
@@ -99,7 +105,7 @@ async function signInFetch() {
             return;
         }
     }
-    localStorage.setItem("access_token", "Bearer " + signInResponse.data.access_token);
+    // localStorage.setItem("access_token", "Bearer " + signInResponse.data.access_token);
     window.location.href = "/jobs";
 }
 

@@ -37,6 +37,11 @@ const signUp = async (req, res) => {
         return;
     }
 
+    if (username.length > 20) {
+        res.status(403).json({ error: "Username too long!" });
+        return;
+    }
+
     if (!validator.isEmail(email)) {
         res.status(400).json({ error: "Invalid email format!" });
         return;
@@ -124,7 +129,8 @@ const signIn = async (req, res) => {
     }
 };
 
-const logout = async (req, res) => {
+
+const logOut = async (req, res) => {
     res.clearCookie("Authorization", { path: "/" });
     res.status(200).json({ result: "Log out sucess" });
     return;
@@ -135,5 +141,6 @@ module.exports = {
     getSignInPage,
     signIn,
     signUp,
-    logout,
+    logOut,
+
 };
