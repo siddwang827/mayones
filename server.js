@@ -24,34 +24,34 @@ app.set("view engine", "ejs");
 
 // Route
 app.use([
-  require("./server/routes/job_route"),
-  require("./server/routes/company_route"),
-  require("./server/routes/user_route"),
-  require("./server/routes/profile_route"),
-  require("./server/routes/application_route"),
-  require("./server/routes/manage_route"),
+    require("./server/routes/job_route"),
+    require("./server/routes/company_route"),
+    require("./server/routes/user_route"),
+    require("./server/routes/profile_route"),
+    require("./server/routes/application_route"),
+    require("./server/routes/manage_route"),
 ]);
 
 app.use("/api/" + API_VERSION, [
-  require("./server/routes/api/employee_action_api"),
-  require("./server/routes/api/employer_manage_api"),
-  require("./server/routes/api/edit_resume_api"),
-  require("./server/routes/api/auth_api"),
+    require("./server/routes/api/employee_action_api"),
+    require("./server/routes/api/employer_manage_api"),
+    require("./server/routes/api/edit_resume_api"),
+    require("./server/routes/api/auth_api"),
 ]);
 
 // page not found
 app.use((req, res, next) => {
-  res.status(404).render("404", { header: {} });
+    res.status(404).render("404", { header: {} });
 });
 
 // internal error
 app.use((err, req, res, next) => {
-  console.log(err);
-  res.status(500).render("500", { header: {} });
+    console.log(err);
+    res.status(500).render("500", { header: {} });
 });
 
 app.listen(PORT, () => {
-  console.log(`Server listen on port: ${PORT}`);
+    console.log(`Server listen on port: ${PORT}`);
 });
 
 module.exports = app;
