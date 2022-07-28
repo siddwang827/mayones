@@ -5,6 +5,13 @@ if ($("#btn-signin")) {
     $("#btn-signin").on("click", signInFetch);
 }
 
+if ($("#signin-password-input")) {
+    $("#signin-password-input").on("keypress", keypressSubmit);
+}
+if ($("#signup-password-input")) {
+    $("#signup-password-input").on("keypress", keypressSubmit);
+}
+
 async function signUpFetch() {
     const url = new URL(window.location);
     let re = /employe[er]/;
@@ -61,7 +68,7 @@ async function signUpFetch() {
         }
         return;
     }
-    // localStorage.setItem("access_token", "Bearer " + signUpResponse.data.access_token);
+
     window.location.href = "/jobs";
 }
 
@@ -105,7 +112,7 @@ async function signInFetch() {
             return;
         }
     }
-    // localStorage.setItem("access_token", "Bearer " + signInResponse.data.access_token);
+
     window.location.href = "/jobs";
 }
 
@@ -115,5 +122,19 @@ function checkPassword(inputtxt) {
         return true;
     } else {
         return false;
+    }
+}
+
+function keypressSubmit(event) {
+    if (event.key === "Enter" || event.keyCode === 13) {
+        let submitType = event.target.getAttribute("submit");
+        switch (submitType) {
+            case "signin":
+                signInFetch();
+                break;
+            case "signup":
+                signUpFetch();
+                break;
+        }
     }
 }

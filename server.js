@@ -5,7 +5,7 @@ const engine = require("ejs-locals");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const path = require("path");
-const { rateLimiterRoute } = require("./utils/utils.js");
+const { rateLimiter } = require("./utils/ratelimiter.js");
 const { PORT, API_VERSION } = process.env;
 const app = express();
 
@@ -22,6 +22,7 @@ app.engine("ejs", engine);
 app.set("views", "./server/views");
 app.set("view engine", "ejs");
 
+app.use(rateLimiter);
 // Route
 app.use([
     require("./server/routes/job_route"),
@@ -39,13 +40,19 @@ app.use("/api/" + API_VERSION, [
     require("./server/routes/api/auth_api"),
 ]);
 
-app.use("/", (req, res) => {
+app.get("/", (req, res) => {
     res.redirect("/jobs");
 });
 
-app.use(function (err, req, res, next) {
+// page not found
+app.use((req, res, next) => {
+    res.status(404).render("404", { header: {} });
+});
+
+// internal error
+app.use((err, req, res, next) => {
     console.log(err);
-    res.status(500).send("Internal Server Error");
+    res.status(500).render("500", { header: {} });
 });
 
 app.listen(PORT, () => {

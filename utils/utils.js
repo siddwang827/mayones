@@ -51,7 +51,6 @@ const thoundsAddComma = (value) => {
 const authentication = (required) => {
     return async function (req, res, next) {
         let isApi = req.originalUrl.split("/")[1] === "api" ? true : false;
-        // use cookie for ejs authorization
         let accessToken = req.cookies.Authorization;
 
         if (accessToken) {
