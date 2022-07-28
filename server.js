@@ -5,7 +5,7 @@ const engine = require("ejs-locals");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const path = require("path");
-const { rateLimiterRoute } = require("./utils/utils.js");
+const { rateLimiter } = require("./utils/ratelimiter.js");
 const { PORT, API_VERSION } = process.env;
 const app = express();
 
@@ -22,6 +22,7 @@ app.engine("ejs", engine);
 app.set("views", "./server/views");
 app.set("view engine", "ejs");
 
+app.use(rateLimiter);
 // Route
 app.use([
     require("./server/routes/job_route"),
@@ -38,6 +39,10 @@ app.use("/api/" + API_VERSION, [
     require("./server/routes/api/edit_resume_api"),
     require("./server/routes/api/auth_api"),
 ]);
+
+app.get("/", (req, res) => {
+    res.redirect("/jobs");
+});
 
 // page not found
 app.use((req, res, next) => {
