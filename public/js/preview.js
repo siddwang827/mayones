@@ -226,7 +226,9 @@ function previewResume(resumeDetail) {
                 break;
 
             case contacEmailDiv:
-                profileDiv.append(info);
+                if (resumeDetail.contact_email !== "") {
+                    profileDiv.append(info);
+                }
                 break;
 
             case websiteDiv:
