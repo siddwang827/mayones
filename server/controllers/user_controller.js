@@ -7,26 +7,35 @@ const bcrypt = require("bcrypt");
 
 const getSignUpPage = async (req, res) => {
     const header = { role: req.path.split("/")[1] };
-    switch (header.role) {
-        case "employer":
-            res.render("employerSignup", { header });
-            break;
-        case "employee":
-            res.render("signup", { header });
-            break;
+    try {
+        switch (header.role) {
+            case "employer":
+                res.render("employerSignup", { header });
+                break;
+            case "employee":
+                res.render("signup", { header });
+                break;
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).render("500", { header: {} });
     }
 };
 
 const getSignInPage = async (req, res) => {
     const header = { role: req.path.split("/")[1] };
-
-    switch (header.role) {
-        case "employer":
-            res.render("employerSignin", { header });
-            break;
-        case "employee":
-            res.render("signin", { header });
-            break;
+    try {
+        switch (header.role) {
+            case "employer":
+                res.render("employerSignin", { header });
+                break;
+            case "employee":
+                res.render("signin", { header });
+                break;
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).render("500", { header: {} });
     }
 };
 
@@ -129,7 +138,6 @@ const signIn = async (req, res) => {
     }
 };
 
-
 const logOut = async (req, res) => {
     res.clearCookie("Authorization", { path: "/" });
     res.status(200).json({ result: "Log out sucess" });
@@ -142,5 +150,4 @@ module.exports = {
     signIn,
     signUp,
     logOut,
-
 };
