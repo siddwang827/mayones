@@ -8,7 +8,7 @@ async function follow(event) {
     const cookie = document.cookie;
     if (!cookie) {
         alert("你目前尚未登入，請先登入！");
-        window.location.href = "/employee/signin";
+        return;
     }
     const jobId = event.target.getAttribute("job-id");
     const fetchResult = await fetch(`/api/1.0/follow`, {

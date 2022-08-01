@@ -1,6 +1,11 @@
 const redisClient = require("../server/models/redis");
+const Cache = require("../server/models/redis");
 
 const rateLimiter = async (req, res, next) => {
+    if (!Cache.ready) {
+        return next();
+    }
+
     try {
         const EXPIRATION = 1;
         const MAX_QUERY_TIMES = 20;

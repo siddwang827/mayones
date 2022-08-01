@@ -8,7 +8,19 @@ const redisClient = Redis.createClient({
     },
 });
 
-redisClient.on("error", (err) => console.log("Redis Client Error", err));
+redisClient.ready = false;
+
+redisClient.on("ready", () => {
+    redisClient.ready = true;
+    console.log("Redis is ready");
+});
+
+redisClient.on("error", (err) => {
+    redisClient.ready = false;
+    if (process.env.NODE_ENV == "production") {
+        console.log("Error in Redis");
+    }
+});
 
 redisClient.connect();
 

@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { TOKEN_SECRET, PORT } = process.env; // 30 days by seconds
+const { TOKEN_SECRET } = process.env;
 const { User } = require("../server/models/user_model");
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");

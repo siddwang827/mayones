@@ -30,7 +30,7 @@ const getApplicationPage = async (req, res) => {
         return res.render("applicationPage", { header, opening, allResumes });
     } catch (error) {
         console.log(error);
-        return res.status(500).json(error);
+        res.status(500).render("500", { header: {} });
     }
 };
 
@@ -38,7 +38,7 @@ const sendApplication = async (req, res) => {
     const userId = req.user.id;
     const { jobId, resumeId } = req.body;
     try {
-        const result = await userApplyJobWithResume(userId, jobId, resumeId);
+        await userApplyJobWithResume(userId, jobId, resumeId);
         return res.status(200).json({ result: "Apply job success" });
     } catch (error) {
         if (error.code === "ER_DUP_ENTRY") {
@@ -58,7 +58,7 @@ const getApplicationListPage = async (req, res) => {
         return res.render("applicationHistory", { header, applications, moment });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error });
+        res.status(500).render("500", { header: {} });
     }
 };
 
@@ -70,7 +70,7 @@ const updateApplication = async (req, res) => {
         if (!isOwner) {
             res.status(403).json({ error: "Forbidden" });
         }
-        const result = await userUpdateJobAllication(userId, applicationId);
+        await userUpdateJobAllication(userId, applicationId);
 
         return res.status(200).json({ result: "Update application success!" });
     } catch (error) {
@@ -87,7 +87,7 @@ const cancelApplication = async (req, res) => {
         if (!isOwner) {
             res.status(403).json({ error: "Forbidden" });
         }
-        const result = await userCancelJobAllication(userId, applicationId);
+        await userCancelJobAllication(userId, applicationId);
 
         return res.status(200).json({ result: "Delete application success!" });
     } catch (error) {
