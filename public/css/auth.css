@@ -1,6 +1,15 @@
-main {
-    /* min-height: calc(100vh - 150px) !important; */
+body {
+    height: calc(100vh - 170px) !important;
+    min-height: calc(100vh - 170px);
 }
+
+main {
+    height: calc(100vh - 170px) !important;
+    min-height: calc(100vh - 170px) !important;
+
+}
+
+
 
 .profile-container {
     display: flex;
@@ -12,7 +21,7 @@ main {
     padding: 30px 80px;
     background-color: #fff;
     border: .5px solid rgba(0, 0, 0, .1);
-    border-radius: 5px;
+    border-radius: 8px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
 }
 
@@ -25,7 +34,8 @@ main {
     letter-spacing: 2px;
     font-size: 40px;
     margin-left: auto;
-    color: #3f3a3a
+    color: #3f3a3a;
+    margin-top: 10px
 }
 
 .profile-container > img {
@@ -34,7 +44,7 @@ main {
 }
 
 .greeting {
-    font-family: fantasy, Papyrus;
+    font-family: 'Permanent Marker', cursive;
     font-size: 18px;
     margin: 100px 0 50px;
     text-align: right;
@@ -71,12 +81,15 @@ input {
     font-size: 16px;
     color: #3f3a3a;
     letter-spacing: 1px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 }
 
-.password-input {
+
+/* .password-input {
     font-size: 14px;
     letter-spacing: 1px;
-}
+} */
 
 input:focus {
     outline: none;
@@ -113,7 +126,7 @@ input:focus {
 
 .btn-submit:active {
     box-shadow: none;
-    transform: translate(-1px, -1px);
+    transform: translate(1px, 1px);
     background-color: black;
     box-shadow: 0.5px 1px 1px 0.5px rgb(79, 79, 79, 0.4);
 }

@@ -1,105 +1,153 @@
-const { User } = require('../models/user_model');
-const validator = require('validator');
-const jwt = require('jsonwebtoken');
-const { TOKEN_SECRET } = process.env
-const TOKEN_EXPIRE_TIME = parseInt(process.env.TOKEN_EXPIRE_TIME)
-
-
+const { User } = require("../models/user_model");
+const validator = require("validator");
+const jwt = require("jsonwebtoken");
+const { TOKEN_SECRET } = process.env;
+const TOKEN_EXPIRE_TIME = parseInt(process.env.TOKEN_EXPIRE_TIME);
+const bcrypt = require("bcrypt");
 
 const getSignUpPage = async (req, res) => {
-    const header = { role: req.path.split('/')[1] }
-    res.render('signup', { header })
-}
+    const header = { role: req.path.split("/")[1] };
+    try {
+        switch (header.role) {
+            case "employer":
+                res.render("employerSignup", { header });
+                break;
+            case "employee":
+                res.render("signup", { header });
+                break;
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).render("500", { header: {} });
+    }
+};
 
 const getSignInPage = async (req, res) => {
-    const header = { role: req.path.split('/')[1] }
-    res.render('signin', { header })
-}
+    const header = { role: req.path.split("/")[1] };
+    try {
+        switch (header.role) {
+            case "employer":
+                res.render("employerSignin", { header });
+                break;
+            case "employee":
+                res.render("signin", { header });
+                break;
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).render("500", { header: {} });
+    }
+};
 
 const signUp = async (req, res) => {
-    const { username, role, email, password } = req.body
+    const { username, role, email, password } = req.body;
     if (!username || !email || !password) {
-        res.status(400).json({ error: 'Error: Lack of necessary information.' });
+        res.status(400).json({ error: "Lack of necessary information!" });
+        return;
+    }
+
+    if (username.length > 20) {
+        res.status(403).json({ error: "Username too long!" });
         return;
     }
 
     if (!validator.isEmail(email)) {
-        res.status(400).json({ error: 'Error: Invalid email format.' });
+        res.status(400).json({ error: "Invalid email format!" });
         return;
     }
 
     try {
-        const user = await User.createUser(email, password, role, username)
+        const result = await User.createUser(email, password, role, username);
 
+        const id = result.insertId;
 
-        res.cookie('Authorization', `${user.accessToken}`)
+        const accessToken = jwt.sign({ id, username, email, role }, TOKEN_SECRET, { expiresIn: TOKEN_EXPIRE_TIME });
+
+        res.cookie("Authorization", `${accessToken}`);
         res.status(200).send({
             data: {
-                access_token: user.accessToken,
-                TOKEN_EXPIRE_TIME,
-                id: user.id,
-                username: user.username,
-                email: user.email,
-                role: user.role
-            }
-        })
+                access_token: accessToken,
+                tokenExpireTime: TOKEN_EXPIRE_TIME,
+                id,
+                username,
+                email,
+                role,
+            },
+        });
     } catch (err) {
-        if (err.code === 'ER_DUP_ENTRY') {
-            return res.status(403).json({ error: 'Error: Email has already signed up!' })
+        if (err.code === "ER_DUP_ENTRY") {
+            return res.status(403).json({ error: "Email has already signed up!" });
         }
-        console.log(err)
-        res.status(500).json({ error: 'Error: Database Query Error' })
+        console.log(err);
+        res.status(500).json({ error: "Database Query Error!" });
     }
-}
+};
 
 const signIn = async (req, res) => {
     const { email, password, role } = req.body;
 
-    if (!email || !password) { res.status(400).json({ error: 'Lack of necessary information!' }); return }
+    if (!email || !password) {
+        res.status(400).json({ error: "Lack of necessary information!" });
+        return;
+    }
+
+    if (!validator.isEmail(email)) {
+        res.status(400).json({ error: "Invalid email format!" });
+        return;
+    }
 
     try {
-        const result = await User.signIn(email, password, role)
-
-        if (result.error) {
-            const status_code = result.status ? result.status : 403;
-            res.status(status_code).send({ error: result.error });
-            return;
-        }
-        const user = result.user
+        const user = await User.signIn(email, password, role);
 
         if (!user) {
-            res.status(500).json({ error: 'Error: Database Query Error' })
-            return;
+            return res.status(403).json({ error: "Email is not exist!" });
         }
-        res.cookie('Authorization', `${user.accessToken}`)
-        res.status(200).json({
-            data: {
-                access_token: user.accessToken,
+
+        const compareResult = bcrypt.compareSync(password, user.password);
+
+        if (!compareResult) {
+            return res.status(403).json({ error: "Wrong password!" });
+        }
+        const accessToken = jwt.sign(
+            {
                 id: user.id,
                 username: user.username,
                 email: user.email,
-                role: user.role
-            }
-        })
+                role: user.role,
+            },
+            TOKEN_SECRET,
+            { expiresIn: TOKEN_EXPIRE_TIME }
+        );
+
+        user.accessToken = accessToken;
+
+        res.cookie("Authorization", `${user.accessToken}`);
+        return res.status(200).json({
+            data: {
+                access_token: user.accessToken,
+                tokenExpireTime: TOKEN_EXPIRE_TIME,
+                id: user.id,
+                username: user.username,
+                email: user.email,
+                role: user.role,
+            },
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: "Database Query Error!" });
     }
-    catch (err) {
-        console.log(err)
-        res.status(500).send(err)
-    }
-}
+};
 
-const logout = async (req, res) => {
-    const user = req.user;
-    res.status(200).clearCookie('Authorization', { path: "/" })
-    res.redirect('/jobs')
-
-}
-
+const logOut = async (req, res) => {
+    res.clearCookie("Authorization", { path: "/" });
+    res.status(200).json({ result: "Log out sucess" });
+    return;
+};
 
 module.exports = {
     getSignUpPage,
     getSignInPage,
     signIn,
     signUp,
-    logout
-}
+    logOut,
+};

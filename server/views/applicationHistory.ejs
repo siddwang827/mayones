@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include /layout/head %>
+  <link rel="stylesheet" type="text/css" href="/css/main.css">
+  <link rel="stylesheet" type="text/css" href="/css/apply.css">
+  <link rel="stylesheet" type="text/css" href="/css/application.css">
+</head>
+
+<body>
+  <header>
+    <%- include layout/header %>
+  </header>
+  <main>
+    <div class="container">
+      <h1>待回覆紀錄</h1>
+      <div class="job-container">
+        <% if (!applications.pending) { %>
+        <h1 style="text-align: center;">目前無待回應的應徵紀錄!</h1>
+        <%} else {%>
+        <% for (let i=0; i < applications.pending.job_title.length; i++) { %>
+        <a href="/job/<%=applications.pending.job_id[i]%>" id="application-id-<%=applications.pending.application_id[i]%>">
+          <div class="job-list">
+            <div class="job-content">
+              <img class="job-item logo" src=<%=applications.pending.logo_image[i] %>>
+              <div class="job-item info">
+                <div class="job-info job-title">
+                  <%= applications.pending.job_title[i] %>
+                </div>
+                <div class="job-info brand">
+                  <%= applications.pending.brand[i] %>
+                </div>
+              </div>
+            </div>
+            <div class="job-content action">
+              <% if (applications.pending.employer_checked[i]===1 ) { %>
+              <div class="action-item">
+                <i class=" eye large icon "></i>
+                <span>已閱讀</span>
+              </div>
+              <%}%>
+                                    <div class="action-item">
+                                        <i class="file large alternate icon action-icon read-resume"
+                                            resume-id="<%=applications.pending.resume_id[i]%>"></i>
+              <span>應徵履歷</span>
+            </div>
+            <div class="action-item">
+              <i class="archive large alternate icon action-icon" application-id="<%=applications.pending.application_id[i]%>"></i>
+              <span>封存紀錄</span>
+            </div>
+            <div class="action-item">
+              <i class="trash large alternate icon action-icon" application-id="<%=applications.pending.application_id[i]%>"></i>
+              <span>取消應徵</span>
+            </div>
+          </div>
+
+      </div>
+      </a>
+      <% } %>
+      <% } %>
+    </div>
+    <h1>已回覆紀錄</h1>
+    <div class="job-container">
+      <% if (!applications.arrange) { %>
+      <h1 style="text-align: center;">尚未收到任何面試安排!</h1>
+      <%} else {%>
+      <% for (let i=0; i < applications.arrange.job_title.length; i++) { %>
+      <a href="/job/<%=applications.arrange.job_id[i]%>" id="application-id-<%=applications.arrange.application_id[i]%>">
+        <% if (applications.arrange.seeker_checked[i]===1) { %>
+        <div class="job-list">
+          <% } else { %>
+          <div class="job-list unchecked">
+            <% } %>
+            <div class="job-content">
+              <img class="job-item logo" src=<%=applications.arrange.logo_image[i] %>>
+              <div class="job-item info">
+                <div class="job-info job-title">
+                  <%= applications.arrange.job_title[i] %>
+                </div>
+                <div class="job-info brand">
+                  <%= applications.arrange.brand[i] %>
+                </div>
+
+              </div>
+            </div>
+            <div class="job-content calendar">
+              <div class="action-item">
+                <i class="file large alternate icon action-icon read-resume" resume-id="<%=applications.arrange.resume_id[i]%>"></i>
+                <span>應徵履歷</span>
+              </div>
+              <div class="action-item calendar">
+                <i class="calendar large check icon action-icon check-interview"></i>
+                <div class="interview-date hide">
+                  <%= moment(applications.arrange.interview_date[i]).format('YYYY-MM-DD')%>
+                </div>
+              </div>
+            </div>
+          </div>
+      </a>
+      <% } %>
+      <% } %>
+    </div>
+    <div class="application-title">
+      封存紀錄
+      <div class="hide"><i class="thumbtack small icon action-icon"></i></div>
+    </div>
+
+    <div class="job-container archived hide">
+      <% if (!applications.archived) { %>
+      <h1 style="text-align: center;">無封存的職缺紀錄!</h1>
+      <%} else {%>
+      <% for (let i=0; i < applications.archived.job_title.length; i++) { %>
+      <a href="/job/<%=applications.archived.job_id[i]%>" id="application-id-<%=applications.archived.application_id[i]%>">
+        <div class="job-list">
+          <div class="job-content">
+            <img class="job-item logo" src=<%=applications.archived.logo_image[i] %>>
+            <div class="job-item info">
+              <div class="job-info job-title">
+                <%= applications.archived.job_title[i] %>
+              </div>
+              <div class="job-info brand">
+                <%= applications.archived.brand[i] %>
+              </div>
+            </div>
+          </div>
+          <div class="job-content action">
+            <% if (applications.archived.employer_checked[i]===1) { %>
+            <div class="action-item">
+              <i class=" eye large icon"></i>
+              <span>已閱讀</span>
+            </div>
+            <%}%>
+            <div class="action-item">
+              <i class="file large alternate icon action-icon read-resume" resume-id="<%=applications.archived.resume_id[i]%>"></i>
+            <span>應徵履歷</span>
+          </div>
+          <div class="action-item">
+            <i class="trash large alternate icon action-icon" application-id="<%=applications.archived.application_id[i]%>"></i>
+            <span>取消應徵</span>
+          </div>
+        </div>
+    </div>
+    </a>
+    <% } %>
+    <% } %>
+    </div>
+    </div>
+  </main>
+  <div class="modal" id="resume-modal">
+    <div id="container"></div>
+  </div>
+  <div id="cover-spin"></div>
+  <footer>
+    <%- include layout/footer %>
+    <script src="/js/utils/moment.js"></script>
+    <script src="/js/preview.js"></script>
+    <script src="/js/application.js"></script>
+  </footer>
+</body>

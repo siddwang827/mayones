@@ -1,63 +1,76 @@
 <div class="navigation">
     <div class="navigation-logo">
-        <a id="logo" href="/jobs ">Mayones
-        </a>
+        <a id="logo" href="/jobs ">Mayones </a>
     </div>
     <div class="navigation-list">
         <% if (!header.view) { %>
-            <a class="navigation-item " href="/jobs">職缺</a>
-            <a class="navigation-item " href="/companies">公司</a>
-            <% } else { -%>
-                <% if (header.view==="job" ) { -%>
-                    <a class="navigation-item active" href="/jobs">職缺</a>
-                    <a class="navigation-item" href="/companies">公司</a>
-                    <% } else if (header.view==="company" ) { -%>
-                        <a class="navigation-item " href="/jobs">職缺</a>
-                        <a class="navigation-item active" href="/companies">公司</a>
-                        <% }else { -%>
-                            <a class="navigation-item " href="/jobs">職缺</a>
-                            <a class="navigation-item " href="/companies">公司</a>
-                            <% } %>
-                                <% } %>
+        <a class="navigation-item" href="/jobs">職缺</a>
+        <a class="navigation-item" href="/companies">公司</a>
+        <% } else { -%> <% if (header.view==="job" ) { -%>
+        <a class="navigation-item active" href="/jobs">職缺</a>
+        <a class="navigation-item" href="/companies">公司</a>
+        <% } else if (header.view==="company" ) { -%>
+        <a class="navigation-item" href="/jobs">職缺</a>
+        <a class="navigation-item active" href="/companies">公司</a>
+        <% }else { -%>
+        <a class="navigation-item" href="/jobs">職缺</a>
+        <a class="navigation-item" href="/companies">公司</a>
+        <% } %> <% } %>
     </div>
     <div class="navigation-role profile">
         <% if (header.auth) { %>
-            <div id="profile-btn" class="navigation-item profile-btn">
-                <i class="user icon"></i>
-                <p>
-                    <%= header.username%>
-                </p>
-            </div>
-            <% } else { -%>
-                <% if (header.role==="employer" ) { -%>
-                    <a class="navigation-item active" href="/employer/signin">企業主</a>
-                    <a class="navigation-item" href="/employee/signin">求職者</a>
-                    <% } else if (header.role==="employee" ) { -%>
-                        <a class="navigation-item" href="/employer/signin">企業主</a>
-                        <a class="navigation-item active" href="/employee/signin">求職者</a>
-                        <% } else { %>
-                            <a class="navigation-item" href="/employer/signin">企業主</a>
-                            <a class="navigation-item" href="/employee/signin">求職者</a>
-                            <% } %>
-                                <% } %>
-
+        <div id="profile-btn" class="navigation-item profile-btn">
+            <i class="user large icon"></i>
+            <p><%= header.username%></p>
+        </div>
+        <% } else { -%> <% if (header.role==="employer" ) { -%>
+        <a class="navigation-item active" href="/employer/signin">企業主</a>
+        <a class="navigation-item" href="/employee/signin">求職者</a>
+        <% } else if (header.role==="employee" ) { -%>
+        <a class="navigation-item" href="/employer/signin">企業主</a>
+        <a class="navigation-item active" href="/employee/signin">求職者</a>
+        <% } else { %>
+        <a class="navigation-item" href="/employer/signin">企業主</a>
+        <a class="navigation-item" href="/employee/signin">求職者</a>
+        <% } %> <% } %>
     </div>
+    <% if (header.role==="employee" ) { %>
     <div id="profile-dropdown" class="profile-dropdown">
-        <div class="profile-dropdown-items">
+        <a class="profile-dropdown-items" href="/resumes">
             <i class="file alternate icon profile-icon"></i>
-            <a href="/resumes">管理履歷</a>
-        </div>
-        <div class="profile-dropdown-items">
+            履歷管理
+        </a>
+        <a class="profile-dropdown-items" href="/follows">
             <i class="heart icon profile-icon"></i>
-            <a href="/follows">收藏職缺</a>
-        </div>
-        <div class="profile-dropdown-items">
+            收藏管理
+        </a>
+        <a class="profile-dropdown-items" href="/applications">
             <i class="paper plane icon profile-icon"></i>
-            <a href="/application">投遞職缺</a>
-        </div>
-        <div class="profile-dropdown-items">
+            投遞紀錄
+        </a>
+        <a class="profile-dropdown-items" id="logout">
             <i class="user outline icon profile-icon"></i>
-            <a href="/logout">登出</a>
-        </div>
+            登出
+        </a>
     </div>
+    <%} else if (header.role==="employer" ){ %>
+    <div id="profile-dropdown" class="profile-dropdown">
+        <a class="profile-dropdown-items" href="/manage/company">
+            <i class="building icon profile-icon"></i>
+            公司管理
+        </a>
+        <a class="profile-dropdown-items" href="/manage/job">
+            <i class="list ul icon profile-icon"></i>
+            職缺管理
+        </a>
+        <a class="profile-dropdown-items" href="/manage/applications">
+            <i class="history icon profile-icon"></i>
+            應徵紀錄
+        </a>
+        <a class="profile-dropdown-items" id="logout">
+            <i class="user outline icon profile-icon"></i>
+            登出
+        </a>
+    </div>
+    <%}%>
 </div>

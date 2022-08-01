@@ -2,23 +2,26 @@
 
 .company-container {
     margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    flex-wrap: wrap
+    /* display: flex;
+    justify-content: left; */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px 20px;
+    /* flex-direction: row;
+    flex-wrap: wrap */
 }
 
 .company-card-container {
     position: relative;
     display: flex;
     flex-direction: column;
-    height: 350px;
-    width: 310px;
+    height: 360px;
+    width: 318px;
     padding: 1rem;
     background: #fff;
     border: 1px solid #f2f2f2;
     border-radius: 8px;
-    margin-bottom: 20px;
+    /* margin: 11px; */
 }
 
 .card-shadow {
@@ -40,8 +43,9 @@
 }
 
 .company-card-banner img {
+    height: 130px;
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     border-radius: 8px;
 
 }
@@ -181,7 +185,7 @@
     padding: 4px 10px;
     /* height: 20px; */
     border-radius: 15px;
-    background-color: #da9898;
+    background-color: #f0a6a6;
     font-size: 0.8rem;
     margin-right: 10px
 }
@@ -189,6 +193,7 @@
 .tag-label p {
     margin: 0 5px;
     line-height: 1rem;
+    cursor: default;
 }
 
 .tag-label i {
@@ -198,17 +203,17 @@
 }
 
 .tag-label.location {
-    background-color: #7dbdee
+    background-color: #8ec6f0
 }
 
 .tag-label.jobType {
-    background-color: #dd8d8d
+    background-color: #f0a6a6
 }
 
 .tag-label.tag {
-    background-color: rgba(136, 236, 158, 0.815)
+    background-color: rgba(128, 214, 147, 0.815)
 }
 
 .tag-label.position {
-    background-color: rgb(255, 221, 176)
+    background-color: rgb(238, 215, 186)
 }

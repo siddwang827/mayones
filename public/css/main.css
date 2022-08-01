@@ -1,6 +1,6 @@
 * {
     box-sizing: border-box;
-    font-family: "Quicksand", sans-serif;
+    /* font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif; */
     margin: 0;
     border: 0;
     padding: 0;
@@ -8,9 +8,11 @@
 
 body {
     --nav-header-height: 50px;
-    --footer-height: 100px;
-    display: flex;
-    flex-direction: column;
+    --footer-height: 70px;
+    height: calc(100vh - 170px) !important;
+    min-height: calc(100vh - 170px);
+    /* display: flex;
+    flex-direction: column; */
     font-size: 16px;
     margin: 0;
     height: 100%;
@@ -36,14 +38,6 @@ a {
 a:hover {
     color: black;
     text-decoration: none
-}
-
-ul {
-    margin: 0
-}
-
-li {
-    list-style: none;
 }
 
 button {
@@ -127,7 +121,7 @@ button {
 /* ========== main ========== */
 
 main {
-    margin-top: var(--nav-header-height);
+    margin-top: calc(var(--nav-header-height) + 50px);
     padding-bottom: 60px;
 }
 
@@ -136,9 +130,10 @@ main {
     width: 100%;
     margin: 0 auto;
     margin-top: 50px;
-    min-height: calc(100vh - 160px);
+    min-height: calc(100vh - 230px);
     display: flex;
     flex-direction: column;
+    position: relative
 }
 
 #search-bar {
@@ -193,11 +188,15 @@ select.price {
 footer {
     color: rgb(224, 224, 224);
     width: 100%;
-    height: var(--footer-height);
+    height: var(--footer-height) !important;
     background-color: rgb(39, 39, 39);
     display: flex;
     justify-content: center;
     align-items: center
+}
+
+footer p {
+    margin: 0
 }
 
 /* ========= profile dropdown ========= */
@@ -226,12 +225,13 @@ footer {
 
 .profile-btn {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
     padding: 0;
     line-height: 1.2rem;
     cursor: pointer;
     padding: 0 7px;
+    width: 180px;
 }
 
 i.icon.profile-icon {
@@ -262,4 +262,55 @@ i.icon.profile-icon {
 
 .profile-dropdown-items:active {
     background-color: rgb(233, 233, 233)
+}
+
+
+/* =========  Loading spinner  ========= */
+#cover-spin {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 9999;
+    display: none;
+}
+
+@-webkit-keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+#cover-spin::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 48%;
+    top: 40%;
+    width: 40px;
+    height: 40px;
+    border-style: solid;
+    border-color: black;
+    border-top-color: transparent;
+    border-width: 4px;
+    border-radius: 50%;
+    -webkit-animation: spin .8s linear infinite;
+    animation: spin .8s linear infinite;
 }

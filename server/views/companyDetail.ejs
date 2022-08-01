@@ -80,28 +80,36 @@
                                         <%= companyDetail.category %>
                                     </a>
                                 </div>
-                                <div class="company-basic-info-tags">
-                                    <svg width="16px" height="16px" viewBox="0 0 32 32" id="i-tag" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                        stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                        <circle cx="24" cy="8" r="2"></circle>
-                                        <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
-                                    </svg>
-                                    <% for (let tag of companyDetail.tags) { %>
-                                        <a href="/companies?tag[]=<%= tag %>" class="company-tag">
-                                            <%=tag %>
-                                        </a>
-                                        <% } %>
-                                </div>
+                                <% if (companyDetail.tags[0]) {%>
+                                    <div class="company-basic-info-tags">
+                                        <svg width="16px" height="16px" viewBox="0 0 32 32" id="i-tag" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                            <circle cx="24" cy="8" r="2"></circle>
+                                            <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+                                        </svg>
+                                        <% for (let tag of companyDetail.tags) { %>
+                                            <a href="/companies?tag[]=<%= tag %>" class="company-tag">
+                                                <%=tag %>
+                                            </a>
+                                            <% } %>
+                                    </div>
+                                    <% } %>
                             </div>
                             <div class="basic-button-container">
-                                <button class="big ui inverted red button">
-                                    <i class="heart outline icon"></i>
-                                    加入收藏
-                                </button>
-                                <button class="big ui black button">
-                                    <i class="search icon"></i></i>
-                                    所有職缺
-                                </button>
+                                <% if(!companyDetail.follow) {%>
+                                    <button class="big ui inverted red button follow" company-id="<%=companyDetail.id%>">
+                                        <i class="heart outline icon"></i>
+                                        加入收藏
+                                    </button>
+                                    <%} else {%>
+                                        <button class="huge ui red button followed" follow-id=<%=companyDetail.follow_id%>>
+                                            已收藏
+                                        </button>
+                                        <%}%>
+                                            <button class="big ui black button all-jobs-btn" company-id="<%=companyDetail.id%>">
+                                                <i class="search icon"></i></i>
+                                                所有職缺
+                                            </button>
                             </div>
                         </div>
                     </div>
@@ -139,22 +147,29 @@
                 </div>
                 <div class="sidebar">
                     <div class="sidebar-button-container">
-                        <button class="huge ui black button">
+                        <button class="big ui black button all-jobs-btn" company-id="<%=companyDetail.id%>">
                             <i class="search icon"></i></i>
                             所有職缺
                         </button>
-                        <button class="huge ui inverted red button">
-                            <i class="heart outline icon"></i>
-                            加入收藏
-                        </button>
+                        <% if(!companyDetail.follow) {%>
+                            <button class="big ui inverted red button follow" company-id="<%=companyDetail.id%>">
+                                <i class="heart outline icon"></i>
+                                加入收藏
+                                <%} else {%>
+                                    <button class="huge ui red button followed" follow-id=<%=companyDetail.follow_id%>>
+                                        已收藏
+                                        <%}%>
+                                    </button>
                     </div>
                 </div>
             </div>
         </div>
         </div>
+        </div>
     </main>
     <footer>
         <%- include layout/footer %>
+            <script src="/js/companyDetail.js"></script>
     </footer>
 </body>
 

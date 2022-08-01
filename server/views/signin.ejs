@@ -2,32 +2,30 @@
 <html lang="en">
 
 <head>
-    <%- include /layout/head %>
-        <link rel="stylesheet" type="text/css" href="/css/main.css">
-        <link rel="stylesheet" type="text/css" href="/css/auth.css">
+  <%- include /layout/head %>
+  <link rel="stylesheet" type="text/css" href="/css/main.css" />
+  <link rel="stylesheet" type="text/css" href="/css/auth.css" />
 </head>
 
 <body>
-    <header>
-        <%- include /layout/header %>
-    </header>
-    <main>
-        <div class="sign-in profile-container">
-            <div class="auth-header">SIGN IN</div>
-            <div class="greeting">Hi <%=header.role%><br><br>Welcome to MAYONES</div>
-            <div class="title">Email</div>
-            <input class="account-input" id="signin-email-input" placeholder="example@gmail.com">
-            <div class="title">Password</div>
-            <input class="password-input" id="signin-password-input" type="password">
-            <div class="ask-sign">New user? <a href="/<%=header.role%>/signup" id="anchor-sign-up">Sign Up</a></div>
-            <button class="btn-submit" id="btn-signin" type="button">Sign In</button>
-        </div>
-    </main>
+  <header><%- include /layout/header %></header>
+  <main>
+    <div class="sign-in profile-container">
+      <div class="auth-header">SIGN IN</div>
+      <div class="greeting">Hi <%=header.role%><br /><br />Welcome to MAYONES</div>
+      <div class="title">Email</div>
+      <input class="account-input" id="signin-email-input" value="seeker@mayo.com" />
+      <div class="title">Password</div>
+      <input class="password-input" id="signin-password-input" type="password" submit="signin" value="!QAZ2wsx" />
+      <div class="ask-sign">New user? <a href="/<%=header.role%>/signup" id="anchor-sign-up">Sign Up</a></div>
+      <button class="btn-submit" id="btn-signin" type="button">Sign In</button>
+    </div>
+  </main>
 
-    <footer>
-        <%- include /layout/footer %>
-            <script src="/js/auth.js"></script>
-    </footer>
+  <footer>
+    <%- include /layout/footer %>
+    <script src="/js/auth.js"></script>
+  </footer>
 </body>
 
 </html>

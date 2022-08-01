@@ -1,7 +1,9 @@
+.follow-container,
 .job-container {
     width: 100%;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    gap: 20px;
+    padding: 20px 20px;
     background-color: #fff;
     border: .5px solid rgba(0, 0, 0, .1);
     border-radius: 5px;
@@ -9,56 +11,275 @@
     padding-top: 20px
 }
 
+.follow-type {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
 
+.follow-type.job {
+    margin-top: 50px
+}
 
+.follow-list,
 .job-list {
     display: flex;
     justify-content: space-between;
-    margin: 0 20px 20px;
     background-color: rgb(236, 236, 236);
     border: .5px solid rgba(0, 0, 0, .1);
     border-radius: 5px;
     padding: 10px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
+    align-items: center
 }
 
+.unchecked {
+    background-color: #bebebe;
+}
+
+.follow-list:hover {
+    background-color: rgb(228, 228, 228);
+    transform: translate(-2px, -2px);
+}
+
+.follow-list:active {
+    transform: translate(0px, 0px);
+}
+
+.follow-content,
 .job-content {
     display: flex;
     align-items: center;
 }
 
+.follow-content > .logo,
 .job-content > .logo {
     border-radius: 50%;
     height: 60px;
     width: 60px
 }
 
+
+.follow-content > .info,
 .job-content > .info {
-    margin-left: 10px
+    margin-left: 15px
 }
 
+.follow-content.follow-heart {
+    margin-right: 10px
+}
+
+
+.follow-heart:hover {
+    color: rgb(136, 136, 136);
+    transition: color 150ms;
+}
+
+
+.follow-info,
+.job-info {
+    font-size: 16px;
+}
+
+.follow-title,
 .job-title {
     font-size: 20px;
     font-weight: bold;
 }
 
+
+.job-info.brand {
+    margin-top: 5px
+}
+
+.company-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.follow-item,
 .job-item {
     display: flex;
     flex-direction: column
 }
 
-.follow-heart:hover {
-    width: 40px;
-    height: 40px;
-    background-image: url('/img/heart-empty.png');
-    background-size: 40px 40px;
-    background-position: center;
+
+.follow-content.action,
+.follow-content.calendar,
+.job-content.action,
+.job-content.calendar {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 40px;
+    cursor: default
 }
 
-.follow-heart {
-    width: 40px;
-    height: 40px;
-    background-image: url('/img/heart-full.png');
-    background-size: 40px 40px;
-    background-position: center
+.follow-content .action-item,
+.job-content .action-item {
+    display: flex;
+    justify-content: center;
+    cursor: pointer
+}
+
+.follow-content.calendar,
+.follow-content .action-item .eye,
+
+.job-content.calendar,
+.job-content .action-item .eye {
+    cursor: default
+}
+
+.follow-content.calendar,
+.job-content.calendar {
+    position: relative;
+}
+
+
+.action-icon:hover {
+    transform: translate(-1px, -1px);
+    cursor: pointer
+}
+
+.action-item {
+    position: relative
+}
+
+.action-item span {
+    display: none
+}
+
+
+.action-item:hover span {
+    display: block;
+    position: absolute;
+    top: -40px;
+    left: 20px;
+    width: 60px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #000000;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    font-size: 12px;
+    border-radius: 5px;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, .4);
+}
+
+
+.action-icon:active {
+    transform: translate(0px, 0px);
+}
+
+.interview-date {
+    background-color: rgb(36, 36, 36);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    position: absolute;
+    left: 80px;
+    top: -10px;
+    width: 120px;
+    text-align: center
+}
+
+.hide {
+    display: none;
+    opacity: 0;
+}
+
+.action-item.calendar:hover + .hide {
+    display: block;
+}
+
+.application-title:hover + .hide,
+.application-title:hover .hide {
+    display: grid;
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s, opacity 0.1s linear;
+}
+
+.application-title {
+    margin: calc(2rem - .14285714em) 0 1rem;
+    display: flex;
+    justify-content: left;
+    font-size: 2rem;
+    font-weight: bold;
+    position: relative;
+    width: 300px
+}
+
+.thumbtack.icon {
+    position: absolute;
+    left: 120px;
+    cursor: pointer
+}
+
+.resume-item {
+    width: 1000px
+}
+
+.ui.dimmer {
+    text-align: left !important
+}
+
+
+.col-container {
+    display: flex;
+    flex-direction: column;
+    cursor: default;
+
+}
+
+.interview-date-picker.hide {
+    display: none
+}
+
+.interview-date-picker {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    top: -25px;
+    left: 80px;
+    width: 250px;
+    height: 70;
+    border-radius: 8px;
+    background-color: rgb(0, 0, 0);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
+    padding: 10px 5px;
+}
+
+interview-date-picker:hover + span {
+    display: none;
+}
+
+.interview-date-input {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif !important;
+    text-align: center;
+    margin: 0 5px !important;
+    border-radius: 3px;
+}
+
+.interview-date-input:focus {
+    outline: none;
+    border: none;
+}
+
+.col-container {
+    margin: 0 10px 0 0;
+    width: 150px
+}
+
+.col-container > p {
+    margin-bottom: 5px !important;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
+.invite-btn {
+    height: 50px;
+    display: flex !important;
+    align-items: center;
 }
