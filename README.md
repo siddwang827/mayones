@@ -1,13 +1,10 @@
-<center>![logo](/public/doc/logo.png)</center>
-<center> A job searching platform with dual user perspectives for job seekers and employers.</center>
+# Mayones
 
----
+A job searching platform with dual user perspectives for job seekers and employers.
 
-### Website
+Website URL: https://www.mayones.website
 
-[www.mayones.website](https://www.mayones.website)
-
-### Test Account
+#### Test Account
 
 Seeker [sign in link](https://mayones.website/employee/signin)
 
@@ -23,15 +20,22 @@ Employer [sign in link](https://mayones.website/employer/signin)
 
 -   Seeker
     -   Search job openings and companies by multiple criteria filter
+        ![](/public/doc/seeker1.gif)
     -   Manage and edit multiple resume
     -   Preview resume and export to pdf
+        ![](/public/doc/seeker3.gif)
     -   Follow job openings and companies in interested
     -   Send job application with designated resume
+        ![](/public/doc/seeker4.gif)
     -   Manage job application histroy records including archive, cancel, preview and check state
+        ![](/public/doc/seeker2.gif)
 -   Employer
-    -   Upload company detail while the image stored on S3
+
+    -   Upload company detail while the image stored on AWS S3
+
     -   Manage job openings detail
-    -   Confirm the interview date and send and invite email
+    -   Confirm the interview date and send and invite email throgh nodemailer
+        ![](/public/doc/employer.gif)
 
 ## System Architecture
 
