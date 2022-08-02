@@ -36,4 +36,4 @@ jobs:
           echo DB_CONNECTION_LIMIT=${{secrets.DB_CONNECTION_LIMIT}} >> .env
     
     - name: Run npm test
-      run: npm test
+      run: npm run test
