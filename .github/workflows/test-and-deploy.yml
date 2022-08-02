@@ -34,6 +34,9 @@ jobs:
           echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
           echo DB_DATABASE_TEST=${{ secrets.DB_DATABASE_TEST }} >> .env
           echo DB_CONNECTION_LIMIT=${{secrets.DB_CONNECTION_LIMIT}} >> .env
+          echo REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }} >> .env
+          echo REDIS_HOST=${{ secrets.REDIS_HOST }} >> .env
+          echo REDIS_PORT=${{ secrets.REDIS_PORT }} >> .env
     
     - name: Run npm test
       run: npm run test
