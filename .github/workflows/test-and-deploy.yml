@@ -28,6 +28,7 @@ jobs:
     - name: Bulid the .env file
       run: |
         touch .env
+          echo API_VERSION=${{API_VERSION}} >> .env
           echo DB_HOST=${{ secrets.DB_HOST }} >> .env
           echo DB_USERNAME=${{ secrets.DB_USERNAME }} >> .env
           echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
