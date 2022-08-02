@@ -6,7 +6,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const path = require("path");
 const { rateLimiter } = require("./utils/ratelimiter.js");
-const { PORT, API_VERSION } = process.env;
+const { PORT, API_VERSION, NODE_ENV } = process.env;
 const app = express();
 
 // Middleware
@@ -55,8 +55,9 @@ app.use((err, req, res, next) => {
     res.status(500).render("500", { header: {} });
 });
 
-app.listen(PORT, () => {
-    console.log(`Server listen on port: ${PORT}`);
-});
-
+if (NODE_ENV !== "test") {
+    app.listen(PORT, () => {
+        console.log(`Server listen on port: ${PORT}`);
+    });
+}
 module.exports = app;
