@@ -15,7 +15,7 @@ describe("user", () => {
             const res = await requester.post("/api/1.0/signup").send(user);
 
             const data = res.body.data;
-
+            console.log(data);
             expect(Object.keys(data)).to.have.lengthOf(6);
             expect(data.access_token).to.be.a("string");
             expect(data.tokenExpireTime).to.equal(TOKEN_EXPIRE_TIME);
@@ -111,6 +111,7 @@ describe("user", () => {
             const res = await requester.post("/api/1.0/signin").send(user);
 
             const data = res.body.data;
+            console.log(data);
             expect(Object.keys(data)).to.have.lengthOf(6);
             expect(data.access_token).to.be.a("string");
             expect(data.tokenExpireTime).to.equal(TOKEN_EXPIRE_TIME);
@@ -187,6 +188,7 @@ describe("user", () => {
                 role: "employee",
             };
             const resSignin = await agent.post("/api/1.0/signin").send(user);
+            console.log(resSignin.cookie);
             expect(resSignin).to.have.cookie("Authorization");
 
             const resLogout = await agent.get("/api/1.0/logout");
