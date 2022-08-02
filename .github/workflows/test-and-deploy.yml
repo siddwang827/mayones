@@ -1,0 +1,38 @@
+name: test and deploy mayones app
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: 
+      - main
+      
+jobs:
+  test:
+    name: TEST
+    runs-on: ubuntu-latest    
+    
+    steps:
+    - name: Checkout version
+      uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: "16.x"
+    
+    - name: Install npm package
+      run: npm install
+      
+    - name: Bulid the .env file
+      run: |
+        touch .env
+          echo DB_HOST=${{ secrets.DB_HOST }} >> .env
+          echo DB_USERNAME=${{ secrets.DB_USERNAME }} >> .env
+          echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
+          echo DB_DATABASE_TEST=${{ secrets.DB_DATABASE_TEST }} >> .env
+          echo DB_CONNECTION_LIMIT=${{secrets.DB_CONNECTION_LIMIT}} >> .env
+    
+    - name: Run npm test
+      run: npm test
